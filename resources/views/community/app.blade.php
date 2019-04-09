@@ -13,7 +13,7 @@
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
     <script>
-        // 这段代码为所有的 Axios 和 Ajax 请求添加 CSRF-TOKEN，因此需要在所有的请求发起之前执行
+        // 这段代码为所有的 Ajax 和 Axios 请求添加 CSRF-TOKEN，因此需要在所有的请求发起之前执行
         // 别放在 $(document).ready(function () {}) 里面，也别放在页面底部
         let csrfToken = document.head.querySelector('meta[name="csrf-token"]');
         let apiToken = document.head.querySelector('meta[name="csrf-token"]');
@@ -42,7 +42,6 @@
     @yield('js')
 </head>
 <body style="min-width: 1600px">
-
 <!-- head -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Logo</a>

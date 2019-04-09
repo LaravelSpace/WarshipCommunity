@@ -3,15 +3,19 @@
 namespace App\Community\Article\Service;
 
 
-use App\Community\Article\Model\Article;
+use App\Community\Article\Repository\ArticleRepository;
 
 class ArticleService
 {
     /**
+     * 获取文章列表
+     *
      * @return array
      */
     public function getArticleList()
     {
-        return Article::with('user')->get()->toArray();
+        $articleList = (new ArticleRepository())->getArticleList();
+
+        return $articleList;
     }
 }

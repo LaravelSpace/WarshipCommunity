@@ -25,6 +25,10 @@ Route::prefix('community/article')->namespace('Community\Article')->group(functi
     Route::get('list', 'ArticleController@getArticleList');
 });
 
+Route::prefix('community/user')->namespace('Community\User')->group(function () {
+    Route::get('register', 'UserController@pageRegister');
+});
+
 if (env('APP_DEBUG')) {
     Route::get('/test', 'Test\TestController@test');
 }

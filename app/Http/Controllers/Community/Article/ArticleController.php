@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Community\Article;
 
 use App\Community\Article\Service\ArticleService;
+use App\Http\Controllers\WebController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class ArticleController extends Controller
+class ArticleController extends WebController
 {
     public function getArticleList()
     {
@@ -14,10 +14,6 @@ class ArticleController extends Controller
 
         $articleList = $service->getArticleList();
 
-        return response()->json([
-            'status'  => 200,
-            'message' => 'success',
-            'data'    => $articleList,
-        ]);
+        return $this->response($articleList);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Community\Index;
 
+use App\Http\Controllers\WebController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class IndexController extends Controller
+class IndexController extends WebController
 {
     public function index()
     {
