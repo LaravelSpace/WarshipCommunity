@@ -5,40 +5,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="api-token" content="{{ Auth::check() ? 'Bearer '.Auth::user()->api_token : 'Bearer ' }}">
     <title>@yield('title','WarshipCommunity')</title>
-    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     @yield('css')
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
-    <script>
-        // 这段代码为所有的 Ajax 和 Axios 请求添加 CSRF-TOKEN，因此需要在所有的请求发起之前执行
-        // 别放在 $(document).ready(function () {}) 里面，也别放在页面底部
-        let csrfToken = document.head.querySelector('meta[name="csrf-token"]');
-        let apiToken = document.head.querySelector('meta[name="csrf-token"]');
-        if (csrfToken != null && apiToken != null) {
-            // $.ajaxSetup({
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            //         'Authorization': $('meta[name="api-token"]').attr('content')
-            //     }
-            // });
-            window.jQuery.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken.content,
-                    'Authorization': apiToken.content
-                }
-            });
-            window.axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken.content;
-        } else {
-            if (csrfToken == null) {
-                console.error('CSRF token not found');
-            } else if (apiToken == null) {
-                console.error('API token not found');
-            }
-        }
-    </script>
+    @include('community.global-config')
+    @include('community.global-variables')
     @yield('js')
 </head>
 <body style="min-width: 1600px">
@@ -78,28 +55,25 @@
             <li class="nav-item">
                 <div class="form-inline">
                     <input class="form-control mr-md-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit">
+                        <i class="fa fa-search"></i> 搜索
+                    </button>
                 </div>
             </li>
         </ul>
         <ul class="navbar-nav col-md-2">
             <li class="nav-item mr-md-2">
-                <button type="button" class="btn btn-outline-primary">Login</button>
+                <button type="button" class="btn btn-outline-primary">登录</button>
             </li>
             <li class="nav-item">
-                <button type="button" class="btn btn-outline-primary">Register</button>
+                <button type="button" class="btn btn-outline-primary">注册</button>
             </li>
         </ul>
     </div>
 </nav>
 <div class="jumbotron text-center">
-    <h1 class="display-4">判天地之美，析万物之理！</h1>
-    <p class="lead">判天地之美，析万物之理！</p>
+    <p class="lead">公告</p>
     <hr class="my-4">
-    <p>判天地之美，析万物之理！</p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
 </div>
 
 <!-- body -->

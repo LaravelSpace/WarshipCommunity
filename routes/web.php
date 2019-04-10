@@ -27,6 +27,7 @@ Route::prefix('community/article')->namespace('Community\Article')->group(functi
 
 Route::prefix('community/user')->namespace('Community\User')->group(function () {
     Route::get('register', 'UserController@pageRegister');
+    Route::post('sign-up', 'UserController@signUp');
 });
 
 if (env('APP_DEBUG')) {

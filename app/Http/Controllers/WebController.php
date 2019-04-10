@@ -27,7 +27,7 @@ class WebController extends Controller
      *
      * @return $this
      */
-    public function setStatusCode($statusCode)
+    public function setStatusCode(int $statusCode)
     {
         $this->statusCode = $statusCode;
 
@@ -41,7 +41,7 @@ class WebController extends Controller
      *
      * @return mixed
      */
-    public function response($data)
+    public function response(array $data)
     {
         return response()->json([
             'status'      => 'success',
@@ -53,17 +53,18 @@ class WebController extends Controller
     /**
      * 请求失败，返回错误
      *
-     * @param $message
+     * @param int    $errorCode
+     * @param string $message
      *
      * @return mixed
      */
-    public function responseError($message)
+    public function responseError(int $errorCode, string $message)
     {
         return response()->json([
             'status'      => 'failed',
             'status_code' => $this->getStatusCode(),
             'error'       => [
-                'error_code' => 500,
+                'error_code' => $errorCode,
                 'message'    => $message
             ]
         ]);
@@ -76,9 +77,9 @@ class WebController extends Controller
      *
      * @return mixed
      */
-    public function responseNotFound($message = 'Not Found')
+    public function responseNotFound(string $message = 'Not Found')
     {
         // 链式操作需要在前面执行的方法返回 $this
-        return $this->setStatusCode(404)->responseError($message);
+        return $this->setStatusCode(404)->responseError(500, $message);
     }
 }
