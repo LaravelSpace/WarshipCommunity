@@ -80,6 +80,6 @@ class WebController extends Controller
     public function responseNotFound(string $message = 'Not Found')
     {
         // 链式操作需要在前面执行的方法返回 $this
-        return $this->setStatusCode(404)->responseError(500, $message);
+        return $this->setStatusCode(404)->responseError(404, $message);
     }
 }

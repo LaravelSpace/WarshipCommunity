@@ -97,19 +97,17 @@
             registerPost: function () {
                 let thisVue = this;
                 axios.post(
-                    '/community/article/list', {
+                    '/community/user/register/sign-up', {
                         'username': thisVue.emailRegister,
-                        'password': thisVue.passwordRegister
+                        'password': thisVue.passwordRegister,
+                        'password_confirmation': thisVue.confirmPassword
                     }
                 ).then(function (response) {
-                    thisVue.articleList = response.data.data;
-                    if (thisVue.articleList.length > 0) {
-                        thisVue.vifShow = true;
-                    }
-                }).catch(function (response) {
-                    console.log(response.status);
-                    console.log(response.headers);
                     console.log(response.data);
+                }).catch(function (error) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
                 });
             },
             registerReset: function () {
@@ -178,10 +176,10 @@
                 }
             },
             registerValid: function () {
-                return this.emailValidTag && this.passwordValidTag && this.confirmValidTag;
+                return true;
+                // return this.emailValidTag && this.passwordValidTag && this.confirmValidTag;
             }
         },
-
     });
     new Vue({el: "#register-form"});
 </script>

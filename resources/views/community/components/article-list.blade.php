@@ -35,10 +35,10 @@
                             thisVue.vifShow = true;
                         }
                     })
-                    .catch(function (response) {
-                        console.log(response.status);
-                        console.log(response.headers);
-                        console.log(response.data);
+                    .catch(function (error) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
                     });
             }
         }
