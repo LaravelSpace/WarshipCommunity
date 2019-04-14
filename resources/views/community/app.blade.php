@@ -75,15 +75,12 @@
     <p class="lead">公告</p>
     <hr class="my-4">
 </div>
-
 <!-- body -->
 <div class="container" style="min-width: 1600px">
     @yield('body')
 </div>
-
 <!-- foot -->
 <div>
-
 </div>
 </body>
 </html>
