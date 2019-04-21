@@ -63,10 +63,10 @@
         </ul>
         <ul class="navbar-nav col-md-2">
             <li class="nav-item mr-md-2">
-                <button type="button" class="btn btn-outline-primary">登录</button>
+                <a type="button" class="btn btn-outline-primary">登录</a>
             </li>
             <li class="nav-item">
-                <button type="button" class="btn btn-outline-primary">注册</button>
+                <a type="button" class="btn btn-outline-primary" href="/community/user/register/page">注册</a>
             </li>
         </ul>
     </div>

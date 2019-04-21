@@ -27,8 +27,8 @@ Route::prefix('community/article')->namespace('Community\Article')->group(functi
 
 Route::prefix('community/user')->namespace('Community\User')->group(function () {
     Route::get('register/page', 'UserController@registerPage');
-    Route::post('register/{classification?}', 'UserController@register');
-    Route::put('register/{classification?}', 'UserController@register');
+    Route::post('register/{classification?}', 'UserController@registerData');
+    Route::put('register/{classification?}', 'UserController@registerData');
 });
 
 if (env('APP_DEBUG')) {

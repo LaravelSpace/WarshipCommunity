@@ -3,44 +3,33 @@
 namespace App\Community\User\Service;
 
 
+use App\Community\User\Handler\RegisterHandler;
+
 class UserService
 {
+    /**
+     * @param string $classification
+     * @param array  $inputData
+     *
+     * @return array
+     */
     public function register(string $classification, array $inputData)
     {
-        switch ($classification){
+        $handler = new RegisterHandler();
+        switch ($classification) {
             case 'sign-up':
-                $this->iSignUp($inputData);
+                $retultData = $handler->signUp($inputData);
                 break;
             case 'sign-in':
-                $this->iSignIn($inputData);
+                $retultData = $handler->signIn($inputData);
                 break;
             case 'sign-out':
-                $this->iSignOut($inputData);
+                $retultData = $handler->signOut($inputData);
                 break;
             default:
+                $retultData = [];
         }
-    }
 
-    private function iSignUp(array $inputData)
-    {
-        $emailName = explode('@', $inputData['username']);
-        $userInfo = [
-            'name'           => $emailName[0],
-            'email'          => $inputData['username'],
-            'password'       => $inputData['password'],
-            'avatar'         => '/image/avatar/default_avatar.jpg',
-            'remember_token' => str_random(64),
-        ];
-        \Log::info($userInfo);
-    }
-
-    private function iSignIn(array $inputData)
-    {
-
-    }
-
-    private function iSignOut(array $inputData)
-    {
-
+        return $retultData;
     }
 }

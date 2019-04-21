@@ -15,14 +15,14 @@ class UserController extends WebController
         return view('community.user.register');
     }
 
-    public function register(RegisterRequest $request, string $classification)
+    public function registerData(RegisterRequest $request, string $classification)
     {
         $userService = new UserService();
 
         $inputData = $request->all();
 
-        $resultData = $userService->register($classification,$inputData);
+        $resultData = $userService->register($classification, $inputData);
 
-        $this->response($resultData);
+        return $this->response($resultData);
     }
 }

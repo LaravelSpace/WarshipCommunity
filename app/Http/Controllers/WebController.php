@@ -8,7 +8,15 @@ class WebController extends Controller
     /**
      * @var int 状态码
      */
-    protected $statusCode = 200;
+    protected $statusCode;
+
+    /**
+     * WebController constructor.
+     */
+    public function __construct()
+    {
+        $this->statusCode = 200;
+    }
 
     /**
      * 获取状态码
@@ -37,11 +45,27 @@ class WebController extends Controller
     /**
      * 请求成功，返回结果
      *
-     * @param $data
+     * @param array $data
      *
-     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
      */
     public function response(array $data)
+    {
+        if ($data['status'] == 'success') {
+            return $this->responseSuccess(isset($data['data']) ? $data['data'] : []);
+        } else {
+            return $this->responseFailed(isset($data['data']) ? $data['data'] : []);
+        }
+    }
+
+    /**
+     * 请求成功，返回结果
+     *
+     * @param array $data
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function responseSuccess(array $data = [])
     {
         return response()->json([
             'status'      => 'success',
@@ -51,23 +75,35 @@ class WebController extends Controller
     }
 
     /**
-     * 请求失败，返回错误
+     * 请求成功，返回错误
      *
-     * @param int    $errorCode
-     * @param string $message
+     * @param array $data
      *
-     * @return mixed
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function responseError(int $errorCode, string $message)
+    public function responseFailed(array $data = [])
     {
         return response()->json([
             'status'      => 'failed',
             'status_code' => $this->getStatusCode(),
-            'error'       => [
-                'error_code' => $errorCode,
-                'message'    => $message
-            ]
+            'data'        => $data
         ]);
+    }
+
+    /**
+     * 请求失败，返回错误码和错误信息
+     *
+     * @param int    $errorCode
+     * @param string $message
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function responseError(int $errorCode, string $message)
+    {
+        return response()->json([
+            'error_code'    => $errorCode,
+            'error_message' => $message
+        ], $errorCode);
     }
 
     /**
