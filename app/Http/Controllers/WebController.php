@@ -15,7 +15,7 @@ class WebController extends Controller
      */
     public function __construct()
     {
-        $this->statusCode = 200;
+        $this->statusCode = config('constant.http_success_code');
     }
 
     /**
@@ -51,7 +51,7 @@ class WebController extends Controller
      */
     public function response(array $data)
     {
-        if ($data['status'] == 'success') {
+        if ($data['status'] === config('constant.success')) {
             return $this->responseSuccess(isset($data['data']) ? $data['data'] : []);
         } else {
             return $this->responseFailed(isset($data['data']) ? $data['data'] : []);
@@ -68,7 +68,7 @@ class WebController extends Controller
     public function responseSuccess(array $data = [])
     {
         return response()->json([
-            'status'      => 'success',
+            'status'      => config('constant.success'),
             'status_code' => $this->getStatusCode(),
             'data'        => $data,
         ]);
@@ -84,7 +84,7 @@ class WebController extends Controller
     public function responseFailed(array $data = [])
     {
         return response()->json([
-            'status'      => 'failed',
+            'status'      => config('constant.fail'),
             'status_code' => $this->getStatusCode(),
             'data'        => $data
         ]);

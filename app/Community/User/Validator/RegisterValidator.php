@@ -20,7 +20,7 @@ class RegisterValidator
         ];
         $validator = Validator::make($inputData, $rules, $messages);
 
-        return [
+        return $returnData = [
             'fails'  => $validator->fails(),
             'errors' => $validator->errors()->messages()
         ];

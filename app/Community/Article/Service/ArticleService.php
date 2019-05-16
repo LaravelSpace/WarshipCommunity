@@ -15,7 +15,11 @@ class ArticleService
     public function getArticleList()
     {
         $articleList = (new ArticleRepository())->getArticleList();
+        $returnData = [
+            'status' => config('constant.success'),
+            'data'   => $articleList,
+        ];
 
-        return $articleList;
+        return $returnData;
     }
 }

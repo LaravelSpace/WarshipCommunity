@@ -18,14 +18,12 @@ class RegisterHandler
         $validatorResult = (new RegisterValidator())->validatePasswordConfirm($inputData);
         if ($validatorResult['fails']) {
             return $returnData = [
-                'status' => 'failed',
-                'data'   => [
-                    'errors' => $validatorResult['errors']
-                ]
+                'status' => config('constant.fail'),
+                'data'   => ['errors' => $validatorResult['errors']]
             ];
         }
 
-        return (new UserRepository())->userCreate($inputData);
+        return $returnData = (new UserRepository())->userCreate($inputData);
     }
 
     public function signIn(array $inputData)

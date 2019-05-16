@@ -23,16 +23,12 @@ class UserRepository
             'remember_token' => str_random(64),
         ];
         $newUser = User::create($userInfo);
-        if ($newUser != null && $newUser != '') {
-
-            return $returnData = [
-                'status' => 'success'
-            ];
+        if ($newUser !== null && $newUser !== '') {
+            $returnData = ['status' => config('constant.success')];
         } else {
-
-            return $returnData = [
-                'status' => 'failed'
-            ];
+            $returnData = ['status' => config('constant.fail')];
         }
+
+        return $returnData;
     }
 }

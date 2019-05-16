@@ -4,6 +4,7 @@ namespace App\Community\User\Service;
 
 
 use App\Community\User\Handler\RegisterHandler;
+use App\Exceptions\ValidateException;
 
 class UserService
 {
@@ -12,6 +13,7 @@ class UserService
      * @param array  $inputData
      *
      * @return array
+     * @throws ValidateException
      */
     public function register(string $classification, array $inputData)
     {
@@ -27,7 +29,7 @@ class UserService
                 $retultData = $handler->signOut($inputData);
                 break;
             default:
-                $retultData = [];
+                throw new ValidateException('未定义的标识', 500);
         }
 
         return $retultData;

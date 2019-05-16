@@ -11,7 +11,6 @@ class ArticleController extends WebController
     public function getArticleList()
     {
         $service = new ArticleService();
-
         $articleList = $service->getArticleList();
 
         return $this->response($articleList);
