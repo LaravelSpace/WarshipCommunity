@@ -2,29 +2,26 @@
 
 namespace App\Http\Controllers\Test;
 
-use App\SystemHelper\SensitiveWord\Service\SensitiveWordService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 
 class TestController extends Controller
 {
+    /**
+     * TestController constructor.
+     */
+    public function __construct()
+    {
+        // 如果不是测试环境直接返回 404 页面
+        if (!env('APP_DEBUG')) {
+            abort(404);
+        }
+    }
+
     public function test()
     {
-        if (!env('APP_DEBUG')) {
-            return redirect('/');
-        }
+        $resultData = (new TestSensitiveWordController())->test();
 
-        $checkString = '王八羔子啊啊兔崽子王八蛋';
-        // $sensitiveWordMap = (new SensitiveWordService())->getSensitiveWordMapByDFA();
-        $sensitiveWordMap = (new SensitiveWordService())->checkSensitiveWordByDFA($checkString);
-
-        $responseData = [$sensitiveWordMap];
-
-        return response()->json([
-            'controller' => 'TestController',
-            'function'   => 'test',
-            'data'       => $responseData,
-        ]);
+        return response()->json($resultData);
     }
 }
