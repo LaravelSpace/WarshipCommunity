@@ -14,10 +14,10 @@ class UserRepository
      */
     public function userCreate($inputData)
     {
-        $emailName = explode('@', $inputData['username']);
+        $emailName = explode('@', $inputData['identity']);
         $userInfo = [
             'name'           => $emailName[0],
-            'email'          => $inputData['username'],
+            'email'          => $inputData['identity'],
             'password'       => $inputData['password'],
             'avatar'         => '/images/avatar/default_avatar.jpg',
             'remember_token' => str_random(64),
@@ -28,7 +28,6 @@ class UserRepository
         } else {
             $returnData = ['status' => config('constant.fail')];
         }
-
         return $returnData;
     }
 }

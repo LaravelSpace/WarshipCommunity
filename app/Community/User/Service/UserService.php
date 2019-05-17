@@ -29,9 +29,9 @@ class UserService
                 $retultData = $handler->signOut($inputData);
                 break;
             default:
-                throw new ValidateException('未定义的标识', 500);
+                $message = ValidateException::SWITCH_NON_EXISTENT_CASE . 'CASE=' . $classification;
+                throw new ValidateException($message, config('constant.http_code_500'));
         }
-
         return $retultData;
     }
 }

@@ -15,11 +15,12 @@ class RegisterHandler
      */
     public function signUp($inputData)
     {
-        $validatorResult = (new RegisterValidator())->validatePasswordConfirm($inputData);
+        $validatorResult = (new RegisterValidator())->validateRegister($inputData, 'sign-up');
         if ($validatorResult['fails']) {
             return $returnData = [
-                'status' => config('constant.fail'),
-                'data'   => ['errors' => $validatorResult['errors']]
+                'status'      => config('constant.fail'),
+                'status_code' => config('constant.http_code_422'),
+                'data'        => ['errors' => $validatorResult['errors']]
             ];
         }
 
@@ -28,7 +29,14 @@ class RegisterHandler
 
     public function signIn(array $inputData)
     {
-
+        $validatorResult = (new RegisterValidator())->validateRegister($inputData, 'sign-in');
+        if ($validatorResult['fails']) {
+            return $returnData = [
+                'status'      => config('constant.fail'),
+                'status_code' => config('constant.http_code_422'),
+                'data'        => ['errors' => $validatorResult['errors']]
+            ];
+        }
     }
 
     public function signOut(array $inputData)

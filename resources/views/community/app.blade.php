@@ -63,10 +63,12 @@
         </ul>
         <ul class="navbar-nav col-md-2">
             <li class="nav-item mr-md-2">
-                <a type="button" class="btn btn-outline-primary">登录</a>
+                <a type="button" class="btn btn-outline-primary"
+                   href="/community/user/register/page?target=sign-in">登录</a>
             </li>
             <li class="nav-item">
-                <a type="button" class="btn btn-outline-primary" href="/community/user/register/page">注册</a>
+                <a type="button" class="btn btn-outline-primary"
+                   href="/community/user/register/page?target=sign-up">注册</a>
             </li>
         </ul>
     </div>

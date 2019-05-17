@@ -15,7 +15,7 @@ class WebController extends Controller
      */
     public function __construct()
     {
-        $this->statusCode = config('constant.http_success_code');
+        $this->statusCode = config('constant.http_code_200');
     }
 
     /**
@@ -51,10 +51,18 @@ class WebController extends Controller
      */
     public function response(array $data)
     {
-        if ($data['status'] === config('constant.success')) {
+        if (isset($data['status']) && $data['status'] === config('constant.success')) {
             return $this->responseSuccess(isset($data['data']) ? $data['data'] : []);
+        } else if (isset($data['status']) && $data['status'] === config('constant.fail')) {
+            if (isset($data['status_code'])) {
+                $message = isset($data['data']) ? $data['data'] : [];
+
+                return $this->setStatusCode($data['status_code'])->responseError($data['status_code'], $message);
+            } else {
+                return $this->responseFail(isset($data['data']) ? $data['data'] : []);
+            }
         } else {
-            return $this->responseFailed(isset($data['data']) ? $data['data'] : []);
+            return $this->responseSuccess($data);
         }
     }
 
@@ -81,7 +89,7 @@ class WebController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function responseFailed(array $data = [])
+    public function responseFail(array $data = [])
     {
         return response()->json([
             'status'      => config('constant.fail'),
@@ -93,12 +101,12 @@ class WebController extends Controller
     /**
      * 请求失败，返回错误码和错误信息
      *
-     * @param int    $errorCode
-     * @param string $message
+     * @param int          $errorCode
+     * @param string|array $message
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function responseError(int $errorCode, string $message)
+    public function responseError(int $errorCode, $message)
     {
         return response()->json([
             'error_code'    => $errorCode,

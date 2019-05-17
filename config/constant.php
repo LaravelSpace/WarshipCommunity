@@ -12,5 +12,7 @@ return [
     'put'    => 'PUT',
     'delete' => 'DELETE',
 
-    'http_success_code' => 200,
+    'http_code_200' => 200,
+    'http_code_422' => 422,
+    'http_code_500' => 500,
 ];
