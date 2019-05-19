@@ -137,7 +137,7 @@
                         this.identityValidTag = false;
                     }
                     if (this.identityRegister !== null && this.identityRegister !== '') {
-                        if (regEmail.test(this.identityRegister)) {
+                        if (REG_EMAIL.test(this.identityRegister)) {
                             this.identityValidMsg = '';
                             this.identityValidTag = true;
                             return 'is-valid';
@@ -153,7 +153,7 @@
                         this.passwordValidTag = false;
                     }
                     if (this.passwordRegister !== null && this.passwordRegister !== '') {
-                        if (regPassword.test(this.passwordRegister)) {
+                        if (REG_PASSWORD.test(this.passwordRegister)) {
                             this.passwordValidMsg = '';
                             this.passwordValidTag = true;
                             return 'is-valid';

@@ -5,6 +5,7 @@ namespace App\Community\User\Handler;
 
 use App\Community\User\Repository\UserRepository;
 use App\Community\User\Validator\RegisterValidator;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterHandler
 {
@@ -37,6 +38,23 @@ class RegisterHandler
                 'data'        => ['errors' => $validatorResult['errors']]
             ];
         }
+
+        $checkData = [
+            'email'    => $inputData['identity'],
+            'password' => $inputData['password'],
+        ];
+        if (Auth::attempt($checkData)) {
+            $returnData = [
+                'status' => config('constant.success'),
+                'data'   => ['identity_id' => Auth::user()->id],
+            ];
+        } else {
+            $returnData = [
+                'status' => config('constant.fail'),
+                'data'   => ['message' => '登录信息错误']
+            ];
+        }
+        return $returnData;
     }
 
     public function signOut(array $inputData)

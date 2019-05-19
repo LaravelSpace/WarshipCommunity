@@ -15,7 +15,7 @@
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
     @include('community.global-config')
-    @include('community.global-variables')
+    @include('community.global-constant')
     @yield('js')
 </head>
 <body style="min-width: 1600px">
@@ -76,6 +76,12 @@
 <div class="jumbotron text-center">
     <p class="lead">公告</p>
     <hr class="my-4">
+    <nav class="nav nav-pills nav-fill">
+        <a class="nav-item nav-link active" href="#">Active</a>
+        <a class="nav-item nav-link" href="#">Link</a>
+        <a class="nav-item nav-link" href="#">Link</a>
+        <a class="nav-item nav-link disabled" href="#">Disabled</a>
+    </nav>
 </div>
 <!-- body -->
 <div class="container" style="min-width: 1600px">

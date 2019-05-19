@@ -19,6 +19,9 @@ class UserService
     {
         $handler = new RegisterHandler();
         switch ($classification) {
+            case 'check-sign':
+
+                break;
             case 'sign-up':
                 $retultData = $handler->signUp($inputData);
                 break;

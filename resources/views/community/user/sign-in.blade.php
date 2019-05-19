@@ -92,7 +92,11 @@
                             'password': thisVue.passwordRegister,
                         }
                     ).then(function (response) {
-                        console.debug(response.data);
+                        if (response.data.status === STATUS_SUCCESS) {
+                            window.location.href = '/';
+                        } else {
+                            alert(response.data.data.message);
+                        }
                     }).catch(function (error) {
                         console.error(error.response.data);
                         console.error(error.response.status);
@@ -109,7 +113,7 @@
                         this.identityValidTag = false;
                     }
                     if (this.identityRegister !== null && this.identityRegister !== '') {
-                        if (regEmail.test(this.identityRegister)) {
+                        if (REG_EMAIL.test(this.identityRegister)) {
                             this.identityValidMsg = '';
                             this.identityValidTag = true;
                             return 'is-valid';
@@ -125,7 +129,7 @@
                         this.passwordValidTag = false;
                     }
                     if (this.passwordRegister !== null && this.passwordRegister !== '') {
-                        if (regPassword.test(this.passwordRegister)) {
+                        if (REG_PASSWORD.test(this.passwordRegister)) {
                             this.passwordValidMsg = '';
                             this.passwordValidTag = true;
                             return 'is-valid';

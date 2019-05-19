@@ -26,7 +26,10 @@ class UserRepository
         if ($newUser !== null && $newUser !== '') {
             $returnData = ['status' => config('constant.success')];
         } else {
-            $returnData = ['status' => config('constant.fail')];
+            $returnData = [
+                'status'      => config('constant.fail'),
+                'status_code' => config('constant.http_code_500'),
+            ];
         }
         return $returnData;
     }

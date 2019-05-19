@@ -3,7 +3,7 @@
     // 别放在 $(document).ready(function () {}) 里面，也别放在页面底部
     var csrfToken = document.head.querySelector('meta[name="csrf-token"]');
     var apiToken = document.head.querySelector('meta[name="api-token"]');
-    if (csrfToken != null && csrfToken !== '' && apiToken != null && apiToken !== '') {
+    if (csrfToken !== null && csrfToken !== '' && apiToken !== null && apiToken !== '') {
         // $.ajaxSetup({
         //     headers: {
         //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -18,9 +18,9 @@
         });
         window.axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken.content;
     } else {
-        if (csrfToken == null && csrfToken !== '') {
+        if (csrfToken === null && csrfToken !== '') {
             console.error('CSRF token not found');
-        } else if (apiToken == null && apiToken !== '') {
+        } else if (apiToken === null && apiToken !== '') {
             console.error('API token not found');
         }
     }
