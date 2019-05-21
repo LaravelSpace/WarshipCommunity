@@ -106,7 +106,7 @@
                 signUpPost: function () {
                     let thisVue = this;
                     axios.post(
-                        '/community/user/register/sign-up', {
+                        '/user/register/sign-up', {
                             'identity': thisVue.identityRegister,
                             'password': thisVue.passwordRegister,
                             'password_confirmation': thisVue.confirmPassword

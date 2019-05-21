@@ -17,18 +17,20 @@
 
 Route::get('/', 'Community\Index\IndexController@index');
 
-Route::prefix('community/index')->namespace('Community\Index')->group(function () {
-    Route::get('/', 'IndexController@index');
+Route::prefix('articles')->namespace('Community\Article')->group(function () {
+    Route::get('/', 'ArticleController@articlePage');
+
+    Route::get('{classification?}', 'ArticleController@articleData');
+    Route::post('{classification?}', 'ArticleController@articleData');
 });
 
-Route::prefix('community/article')->namespace('Community\Article')->group(function () {
-    Route::get('list', 'ArticleController@getArticleList');
-});
+Route::prefix('user')->namespace('Community\User')->group(function () {
+    Route::get('register', 'UserController@registerPage');
 
-Route::prefix('community/user')->namespace('Community\User')->group(function () {
-    Route::get('register/page', 'UserController@registerPage');
-    Route::post('register/{classification?}', 'UserController@registerData');
-    Route::put('register/{classification?}', 'UserController@registerData');
+    Route::post('register/sign-check', 'UserController@signCheck');
+    Route::post('register/sign-up', 'UserController@signUp');
+    Route::post('register/sign-in', 'UserController@signIn');
+    Route::post('register/sign-out', 'UserController@signOut');
 });
 
 if (env('APP_DEBUG')) {

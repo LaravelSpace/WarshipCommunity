@@ -9,17 +9,17 @@ use App\Exceptions\ValidateException;
 class UserService
 {
     /**
-     * @param string $classification
      * @param array  $inputData
+     * @param string $classification
      *
-     * @return array
+     * @return array|void
      * @throws ValidateException
      */
-    public function register(string $classification, array $inputData)
+    public function register(array $inputData, string $classification)
     {
         $handler = new RegisterHandler();
         switch ($classification) {
-            case 'check-sign':
+            case 'sign-check':
 
                 break;
             case 'sign-up':

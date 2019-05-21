@@ -87,7 +87,7 @@
                 signInPost: function () {
                     let thisVue = this;
                     axios.post(
-                        '/community/user/register/sign-in', {
+                        '/user/register/sign-in', {
                             'identity': thisVue.identityRegister,
                             'password': thisVue.passwordRegister,
                         }
@@ -104,7 +104,7 @@
                     });
                 },
                 signUpPage: function () {
-                    window.location.href = '/community/user/register/page?target=sign-up';
+                    window.location.href = '/user/register?target=sign-up';
                 }
             },
             computed: {
