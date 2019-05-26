@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Community\User;
+namespace App\Http\Controllers\Community;
 
 
 use App\Community\User\Service\UserService;
@@ -22,10 +22,8 @@ class UserController extends WebController
         switch ($target) {
             case 'sign-in':
                 return view('community.user.sign-in');
-                break;
             case 'sign-up':
                 return view('community.user.sign-up');
-                break;
             default:
                 return view('community.user.sign-in');
         }
@@ -35,28 +33,28 @@ class UserController extends WebController
     {
         $inputData = $request->all();
 
-        return $this->registerData($inputData, 'sign-check');
+        return $this->registerData($inputData, 'signCheck');
     }
 
     public function signUp(Request $request)
     {
         $inputData = $request->all();
 
-        return $this->registerData($inputData, 'sign-up');
+        return $this->registerData($inputData, 'signUp');
     }
 
     public function signIn(Request $request)
     {
         $inputData = $request->all();
 
-        return $this->registerData($inputData, 'sign-in');
+        return $this->registerData($inputData, 'signIn');
     }
 
     public function signOut(Request $request)
     {
         $inputData = $request->all();
 
-        return $this->registerData($inputData, 'sign-out');
+        return $this->registerData($inputData, 'signOut');
     }
 
     /**
@@ -65,11 +63,11 @@ class UserController extends WebController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    private function registerData(array $inputData, $classification = '')
+    public function registerData(array $inputData, $classification = '')
     {
-        $userService = new UserService();
+        $service = new UserService();
         try {
-            $resultData = $userService->register($inputData, $classification);
+            $resultData = $service->register($inputData, $classification);
 
             return $this->response($resultData);
         } catch (ValidateException $exception) {

@@ -65,7 +65,7 @@
             <div class="form-group text-center">
                 <div class="btn-group">
                     <button type="button" class="btn btn-lg btn-primary px-5"
-                            v-if="signUpValid" @click="signUpPost()">确认注册
+                            v-if="signUpValid" @click="signUpSubmit()">确认注册
                     </button>
                     <button type="button" class="btn btn-lg btn-primary px-5"
                             v-else disabled>确认注册
@@ -103,7 +103,7 @@
                         $('[data-toggle="popover"]').popover()
                     })
                 },
-                signUpPost: function () {
+                signUpSubmit: function () {
                     let thisVue = this;
                     axios.post(
                         '/user/register/sign-up', {

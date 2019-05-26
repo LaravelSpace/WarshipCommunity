@@ -12,23 +12,23 @@ class UserService
      * @param array  $inputData
      * @param string $classification
      *
-     * @return array|void
+     * @return array
      * @throws ValidateException
      */
     public function register(array $inputData, string $classification)
     {
         $handler = new RegisterHandler();
         switch ($classification) {
-            case 'sign-check':
-
+            case 'signCheck':
+                $retultData = $handler->signCheck($inputData);
                 break;
-            case 'sign-up':
+            case 'signUp':
                 $retultData = $handler->signUp($inputData);
                 break;
-            case 'sign-in':
+            case 'signIn':
                 $retultData = $handler->signIn($inputData);
                 break;
-            case 'sign-out':
+            case 'signOut':
                 $retultData = $handler->signOut($inputData);
                 break;
             default:

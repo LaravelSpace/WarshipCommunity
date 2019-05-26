@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Community\Index;
+namespace App\Http\Controllers\Community;
 
 use App\Http\Controllers\WebController;
 use Illuminate\Http\Request;

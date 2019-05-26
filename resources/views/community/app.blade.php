@@ -14,8 +14,9 @@
     <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>
-    @include('community.global-config')
     @include('community.global-constant')
+    @include('community.global-config')
+    @include('community.global-function')
     @yield('js')
 </head>
 <body style="min-width: 1600px">

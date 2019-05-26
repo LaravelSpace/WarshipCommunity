@@ -1,8 +1,8 @@
 <script>
     // 这段代码为所有的 Ajax 和 Axios 请求添加 CSRF-TOKEN，因此需要在所有的请求发起之前执行
     // 别放在 $(document).ready(function () {}) 里面，也别放在页面底部
-    var csrfToken = document.head.querySelector('meta[name="csrf-token"]');
-    var apiToken = document.head.querySelector('meta[name="api-token"]');
+    let csrfToken = document.head.querySelector('meta[name="csrf-token"]');
+    let apiToken = document.head.querySelector('meta[name="api-token"]');
     if (csrfToken !== null && csrfToken !== '' && apiToken !== null && apiToken !== '') {
         // $.ajaxSetup({
         //     headers: {

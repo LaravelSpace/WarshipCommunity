@@ -12,7 +12,7 @@ class ArticleRepository
      *
      * @return array
      */
-    public function getArticleList()
+    public function articleList()
     {
         return Article::with('user')->get()->toArray();
     }

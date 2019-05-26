@@ -15,16 +15,14 @@
 //    return view('welcome');
 //});
 
-Route::get('/', 'Community\Index\IndexController@index');
+Route::get('/', 'Community\IndexController@index');
 
-Route::prefix('articles')->namespace('Community\Article')->group(function () {
-    Route::get('/', 'ArticleController@articlePage');
+Route::prefix('articles')->namespace('Community')->group(function () {
+    Route::get('/{id?}', 'ArticleController@articlePage')->where('id','[1-9]+\d*'); // id >= 0;
 
-    Route::get('{classification?}', 'ArticleController@articleData');
-    Route::post('{classification?}', 'ArticleController@articleData');
 });
 
-Route::prefix('user')->namespace('Community\User')->group(function () {
+Route::prefix('user')->namespace('Community')->group(function () {
     Route::get('register', 'UserController@registerPage');
 
     Route::post('register/sign-check', 'UserController@signCheck');

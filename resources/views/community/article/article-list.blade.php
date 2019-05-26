@@ -28,7 +28,7 @@
             },
             getArticleList: function () {
                 let thisVue = this;
-                axios.get('/community/article/list')
+                axios.get(COMMUNITY_URL.article_list)
                     .then(function (response) {
                         thisVue.articleList = response.data.data;
                         if (thisVue.articleList.length > 0) {

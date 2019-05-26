@@ -3,23 +3,41 @@
 namespace App\Community\Article\Service;
 
 
-use App\Community\Article\Repository\ArticleRepository;
+use App\Community\Article\Handler\ArticleHandler;
+use App\Exceptions\ValidateException;
 
 class ArticleService
 {
     /**
-     * 获取文章列表
+     * @param array  $inputData
+     * @param string $classification
      *
-     * @return array
+     * @return mixed
+     * @throws ValidateException
      */
-    public function getArticleList()
+    public function article(array $inputData, string $classification)
     {
-        $articleList = (new ArticleRepository())->getArticleList();
-        $returnData = [
-            'status' => config('constant.success'),
-            'data'   => $articleList,
-        ];
-
-        return $returnData;
+        $handler = new ArticleHandler();
+        switch ($classification) {
+            case 'articleList':
+                $resultData = $handler->articleList($inputData);
+                break;
+            case 'articleCreate':
+                $resultData = $handler->articleCreate($inputData);
+                break;
+            case 'articleSelect':
+                $resultData = $handler->articleSelect($inputData);
+                break;
+            case 'articleUpdate':
+                $resultData = $handler->articleUpdate($inputData);
+                break;
+            case 'articleDelete':
+                $resultData = $handler->articleDelete($inputData);
+                break;
+            default:
+                $message = ValidateException::SWITCH_NON_EXISTENT_CASE . 'CASE=' . $classification;
+                throw new ValidateException($message, config('constant.http_code_500'));
+        }
+        return $resultData;
     }
 }
