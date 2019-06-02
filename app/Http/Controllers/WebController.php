@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-class WebController extends Controller
+abstract class WebController extends Controller
 {
     /**
      * @var int 状态码

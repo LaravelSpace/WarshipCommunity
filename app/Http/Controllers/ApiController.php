@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-class ApiController extends Controller
+abstract class ApiController extends Controller
 {
     /**
      * @var int 状态码

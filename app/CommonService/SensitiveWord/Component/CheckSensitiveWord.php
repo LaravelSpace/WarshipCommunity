@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SystemHelper\SensitiveWord\BaseComponent;
+namespace App\CommonService\SensitiveWord\Component;
 
 
 interface CheckSensitiveWord

@@ -1,4 +1,11 @@
 <script>
+    function gSplitUrl(url){
+        let urlArray = url.split('?');
+        let urlOnly = urlArray[0];
+
+        return urlOnly.split('/');
+    }
+
     function gGetParameterFromUrl(url, parameterName) {
         let urlArray = url.split('?');
         if (urlArray.length > 1) {

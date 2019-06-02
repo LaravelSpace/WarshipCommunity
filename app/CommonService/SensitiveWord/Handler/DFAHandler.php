@@ -1,15 +1,15 @@
 <?php
 
-namespace App\SystemHelper\SensitiveWord\Handler;
+namespace App\CommonService\SensitiveWord\Handler;
 
-use App\SystemHelper\SensitiveWord\BaseComponent\CheckSensitiveWord;
+use App\CommonService\SensitiveWord\Component\CheckSensitiveWord;
 
 /**
  * Class DFAHandler
  *
  * 敏感词过滤 DFA 算法
  *
- * @package App\SystemHelper\SensitiveWord\Handler
+ * @package App\CommonService\SensitiveWord\Handler
  */
 class DFAHandler implements CheckSensitiveWord
 {

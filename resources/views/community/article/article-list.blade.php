@@ -11,8 +11,8 @@
     </ul>
 </template>
 <script>
-    Vue.component('vue-article-list', {
-        template: '#template-article-list',
+    Vue.component("vue-article-list", {
+        template: "#template-article-list",
         data: function () {
             return {
                 articleList: [],
@@ -28,7 +28,8 @@
             },
             getArticleList: function () {
                 let thisVue = this;
-                axios.get(COMMUNITY_URL.article_list)
+                let url = COMMUNITY_URL.articles + '?' + COMMUNITY_URL.need_data;
+                axios.get(url)
                     .then(function (response) {
                         thisVue.articleList = response.data.data;
                         if (thisVue.articleList.length > 0) {
@@ -36,9 +37,7 @@
                         }
                     })
                     .catch(function (error) {
-                        console.error(error.response.data);
-                        console.error(error.response.status);
-                        console.error(error.response.headers);
+                        console.error(error.response);
                     });
             }
         }

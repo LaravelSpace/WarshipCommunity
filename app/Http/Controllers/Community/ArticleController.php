@@ -7,56 +7,61 @@ use App\Exceptions\ValidateException;
 use App\Http\Controllers\WebController;
 use Illuminate\Http\Request;
 
-class ArticleController extends WebController
+class ArticleController extends WebController implements ResourceInterface
 {
-    public function articlePage(Request $request, $id = 0)
+    public function index(Request $request)
     {
         $inputData = $request->all();
-        $target = (isset($inputData['target'])) ? $inputData['target'] : '';
-        switch ($target) {
-            case 'create';
-                return view('community.article.create');
-                break;
-            case 'update';
-                return view('community.article.update');
-                break;
-            default:
-                return view('community.article.index');
+        if (isset($inputData['data']) && $inputData['data'] === '1') {
+            return $this->dataHandler($inputData, 'articleList');
+        } else {
+            return view('community.article.index');
         }
     }
 
-    public function articleList(Request $request)
+    public function create(Request $request)
+    {
+        return view('community.article.create');
+    }
+
+    public function store(Request $request)
     {
         $inputData = $request->all();
 
-        return $this->articleData($inputData, 'articleList');
+        return $this->dataHandler($inputData, 'articleStore');
     }
 
-    public function article(Request $request, $id = 0)
+    public function show(Request $request, $id)
     {
         $inputData = $request->all();
         $inputData['article_id'] = $id;
-        $httpMethod = $request->getMethod();
-        $httpMethod = strtoupper($httpMethod);
-
-        if ($httpMethod === config('constant.post')) {
-            return $this->articleData($inputData, 'articleCreate');
-        } else if ($httpMethod === config('constant.get')) {
-            return $this->articleData($inputData, 'articleSelect');
-        } else if ($httpMethod === config('constant.put')) {
-            return $this->articleData($inputData, 'articleUpdate');
-        } else if ($httpMethod === config('constant.delete')) {
-            return $this->articleData($inputData, 'articleDelete');
+        if (isset($inputData['data']) && $inputData['data'] === '1') {
+            return $this->dataHandler($inputData, 'articleItem');
         } else {
-            return $this->articleData($inputData, 'articleSelect');
+            return view('community.article.show');
         }
     }
 
-    public function articleData(array $inputData, $classification = '', $id = 0)
+    public function edit(Request $request)
+    {
+        return view('community.article.edit');
+    }
+
+    public function update(Request $request)
+    {
+
+    }
+
+    public function destroy(Request $request)
+    {
+
+    }
+
+    public function dataHandler(array $inputData, string $classification)
     {
         $service = new ArticleService();
         try {
-            $resultData = $service->article($inputData, $classification);
+            $resultData = $service->dataHandler($inputData, $classification);
 
             return $this->response($resultData);
         } catch (ValidateException $exception) {

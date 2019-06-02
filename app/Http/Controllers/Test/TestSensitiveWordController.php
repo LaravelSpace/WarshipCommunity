@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Test;
 
 
-use App\SystemHelper\SensitiveWord\Service\SensitiveWordService;
+use App\CommonService\SensitiveWord\Service\SensitiveWordService;
 
 class TestSensitiveWordController
 {

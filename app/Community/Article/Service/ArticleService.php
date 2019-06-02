@@ -15,18 +15,18 @@ class ArticleService
      * @return mixed
      * @throws ValidateException
      */
-    public function article(array $inputData, string $classification)
+    public function dataHandler(array $inputData, string $classification)
     {
         $handler = new ArticleHandler();
         switch ($classification) {
             case 'articleList':
                 $resultData = $handler->articleList($inputData);
                 break;
-            case 'articleCreate':
-                $resultData = $handler->articleCreate($inputData);
+            case 'articleStore':
+                $resultData = $handler->articleStore($inputData);
                 break;
-            case 'articleSelect':
-                $resultData = $handler->articleSelect($inputData);
+            case 'articleItem':
+                $resultData = $handler->articleItem($inputData);
                 break;
             case 'articleUpdate':
                 $resultData = $handler->articleUpdate($inputData);

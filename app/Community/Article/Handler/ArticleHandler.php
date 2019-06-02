@@ -7,16 +7,14 @@ use App\Community\Article\Repository\ArticleRepository;
 
 class ArticleHandler
 {
-    /**
-     * 获取文章列表
-     *
-     * @param array $inputData
-     *
-     * @return array
-     */
     public function articleList(array $inputData)
     {
         $articleList = (new ArticleRepository())->articleList();
+        if ($articleList->count() > 0) {
+            $articleList = $articleList->toArray();
+        } else {
+            $articleList = [];
+        }
         $returnData = [
             'status' => config('constant.success'),
             'data'   => $articleList,
@@ -25,13 +23,28 @@ class ArticleHandler
         return $returnData;
     }
 
-    public function articleCreate(array $inputData)
+    public function articleStore(array $inputData)
     {
-        
+        $articleData = ['title' => $inputData['title'],
+        'main_body' => $inputData['body'],];
+
     }
 
-    public function articleSelect(array $inputData)
+    public function articleItem(array $inputData)
     {
+        $articleId = (int)$inputData['article_id'];
+        $articleItem = (new ArticleRepository())->articleItem($articleId);
+        if ($articleItem !== null) {
+            $articleItem = $articleItem->toArray();
+        } else {
+            $articleItem = [];
+        }
+        $returnData = [
+            'status' => config('constant.success'),
+            'data'   => $articleItem,
+        ];
+
+        return $returnData;
     }
 
     public function articleUpdate(array $inputData)

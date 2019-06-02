@@ -14,7 +14,7 @@
         <div class="form-group text-center">
             <div class="btn-group">
                 <button type="button" class="btn btn-lg btn-primary px-5"
-                         @click="articleSubmit()">确认发表
+                        @click="articleSubmit()">确认发表
                 </button>
             </div>
         </div>
@@ -26,6 +26,8 @@
         template: '#template-article-data',
         data: function () {
             return {
+                articleId: '',
+                urlArray: '',
                 urlTarget: '',
                 urlSubmit: '',
                 titleArticle: '',
@@ -42,25 +44,40 @@
         methods: {
             init: function () {
                 let localUrl = window.location.href;
-                this.urlTarget = gGetParameterFromUrl(localUrl, 'target');
+                this.urlArray = gSplitUrl(localUrl);
+                this.urlTarget = this.urlArray[this.urlArray.length - 1];
                 if (this.urlTarget === 'create') {
-                    this.urlSubmit = 'api/articles/article';
+                    this.urlSubmit = COMMUNITY_URL.articles;
+                } else if (this.urlTarget === 'edit') {
+                    this.articleId = this.urlArray[this.urlArray.length - 2];
+                    this.urlSubmit = COMMUNITY_URL.articles + '/' + this.articleId;
                 }
             },
             articleSubmit: function () {
                 let thisVue = this;
-                axios.post(
-                    thisVue.urlSubmit, {
-                        'title': thisVue.titleArticle,
-                        'body': thisVue.bodyArticle
-                    }
-                ).then(function (response) {
-                    console.debug(response.data);
-                }).catch(function (error) {
-                    console.error(error.response.data);
-                    console.error(error.response.status);
-                    console.error(error.response.headers);
-                });
+                if (thisVue.urlTarget === 'create') {
+                    axios.post(
+                        thisVue.urlSubmit, {
+                            'title': thisVue.titleArticle,
+                            'body': thisVue.bodyArticle
+                        }
+                    ).then(function (response) {
+                        console.debug(response.data);
+                    }).catch(function (error) {
+                        console.error(error.response);
+                    });
+                } else if (thisVue.urlTarget === 'edit') {
+                    axios.put(
+                        thisVue.urlSubmit, {
+                            'title': thisVue.titleArticle,
+                            'body': thisVue.bodyArticle
+                        }
+                    ).then(function (response) {
+                        console.debug(response.data);
+                    }).catch(function (error) {
+                        console.error(error.response);
+                    });
+                }
             }
         },
         computed: {

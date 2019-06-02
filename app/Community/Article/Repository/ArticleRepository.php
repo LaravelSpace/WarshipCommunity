@@ -7,13 +7,13 @@ use App\Community\Article\Model\Article;
 
 class ArticleRepository
 {
-    /**
-     * 获取文章列表
-     *
-     * @return array
-     */
+    public function articleItem(int $articleId)
+    {
+        return Article::find($articleId);
+    }
+
     public function articleList()
     {
-        return Article::with('user')->get()->toArray();
+        return Article::all();
     }
 }

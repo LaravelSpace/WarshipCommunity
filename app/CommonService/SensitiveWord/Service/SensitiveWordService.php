@@ -1,9 +1,9 @@
 <?php
 
-namespace App\SystemHelper\SensitiveWord\Service;
+namespace App\CommonService\SensitiveWord\Service;
 
-use App\SystemHelper\SensitiveWord\BaseComponent\CheckSensitiveWord;
-use App\SystemHelper\SensitiveWord\Handler\DFAHandler;
+use App\CommonService\SensitiveWord\Component\CheckSensitiveWord;
+use App\CommonService\SensitiveWord\Handler\DFAHandler;
 
 /**
  * Class SensitiveWordService
