@@ -10,6 +10,7 @@
 
     <template id="template-article-item">
         <div v-if="vifShow">
+            <a href="#" :href="['/articles/'+articleItem.id]+'/edit'"><h5 class="mt-0 mb-1">修改帖子</h5></a>
             <h1>@{{ articleItem.title }}</h1>
             <p>@{{ articleItem.main_body }}</p>
         </div>
@@ -20,7 +21,7 @@
             data: function () {
                 return {
                     articleId: 0,
-                    articleItem: '',
+                    articleItem: "",
                     vifShow: false
                 }
             },

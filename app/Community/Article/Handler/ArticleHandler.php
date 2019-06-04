@@ -3,13 +3,13 @@
 namespace App\Community\Article\Handler;
 
 
-use App\Community\Article\Repository\ArticleRepository;
+use App\Community\Article\Model\Article;
 
 class ArticleHandler
 {
     public function articleList(array $inputData)
     {
-        $articleList = (new ArticleRepository())->articleList();
+        $articleList = Article::with('user')->get();
         if ($articleList->count() > 0) {
             $articleList = $articleList->toArray();
         } else {
@@ -25,15 +25,24 @@ class ArticleHandler
 
     public function articleStore(array $inputData)
     {
-        $articleData = ['title' => $inputData['title'],
-        'main_body' => $inputData['body'],];
+        $articleData = [
+            'title'     => $inputData['title'],
+            'main_body' => $inputData['body'],
+            'user_id'   => 1, // todo test data
+        ];
+        $article = Article::create($articleData);
+        $returnData = [
+            'status' => config('constant.success'),
+            'data'   => $article->toArray(),
+        ];
 
+        return $returnData;
     }
 
     public function articleItem(array $inputData)
     {
         $articleId = (int)$inputData['article_id'];
-        $articleItem = (new ArticleRepository())->articleItem($articleId);
+        $articleItem = Article::find($articleId);
         if ($articleItem !== null) {
             $articleItem = $articleItem->toArray();
         } else {
@@ -49,6 +58,18 @@ class ArticleHandler
 
     public function articleUpdate(array $inputData)
     {
+        $articleId = $inputData['id'];
+        $articleData = [
+            'title'     => $inputData['title'],
+            'main_body' => $inputData['body'],
+        ];
+        Article::where('id', '=', $articleId)->update($articleData);
+        $returnData = [
+            'status' => config('constant.success'),
+            'data'   => ['id' => $articleId],
+        ];
+
+        return $returnData;
     }
 
     public function articleDelete(array $inputData)

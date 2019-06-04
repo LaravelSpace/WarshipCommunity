@@ -49,7 +49,9 @@ class ArticleController extends WebController implements ResourceInterface
 
     public function update(Request $request)
     {
+        $inputData = $request->all();
 
+        return $this->dataHandler($inputData, 'articleUpdate');
     }
 
     public function destroy(Request $request)

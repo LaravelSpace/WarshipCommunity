@@ -4,7 +4,7 @@
             <img class="rounded-circle mr-3" style="width: 50px; height: 50px"
                  src="" :src="article.user.avatar" alt="" :alt="article.user_id">
             <div class="media-body">
-                <h5 class="mt-0 mb-1">@{{ article.title }}</h5>
+                <a href="#" :href="['/articles/'+article.id]"><h5 class="mt-0 mb-1">@{{ article.title }}</h5></a>
                 <p>@{{ article.main_body }}</p>
             </div>
         </li>
