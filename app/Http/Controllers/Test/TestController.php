@@ -7,9 +7,6 @@ use App\Http\Controllers\Controller;
 
 class TestController extends Controller
 {
-    /**
-     * TestController constructor.
-     */
     public function __construct()
     {
         // 如果不是测试环境直接返回 404 页面
@@ -18,10 +15,8 @@ class TestController extends Controller
         }
     }
 
-    public function test()
+    public function test(Request $request)
     {
-        $resultData = (new TestSensitiveWordController())->test();
-
-        return response()->json($resultData);
+        return 1;
     }
 }

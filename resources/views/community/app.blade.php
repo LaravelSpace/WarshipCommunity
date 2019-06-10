@@ -22,7 +22,7 @@
 <body style="min-width: 1600px">
 <!-- head -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">冷月</a>
+    <a class="navbar-brand" href="/">冷月</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -58,6 +58,7 @@
 <div class="jumbotron text-center">
     <p class="lead">公告</p>
     <hr class="my-4">
+    <p>破站第 13 次重构进行中...</p>
 </div>
 <!-- body -->
 <div class="container" style="min-width: 1600px">

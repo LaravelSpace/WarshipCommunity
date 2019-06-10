@@ -36,13 +36,6 @@ class UserController extends WebController
         return $this->registerData($inputData, 'signCheck');
     }
 
-    public function signUp(Request $request)
-    {
-        $inputData = $request->all();
-
-        return $this->registerData($inputData, 'signUp');
-    }
-
     public function signIn(Request $request)
     {
         $inputData = $request->all();
@@ -55,6 +48,13 @@ class UserController extends WebController
         $inputData = $request->all();
 
         return $this->registerData($inputData, 'signOut');
+    }
+
+    public function signUp(Request $request)
+    {
+        $inputData = $request->all();
+
+        return $this->registerData($inputData, 'signUp');
     }
 
     /**

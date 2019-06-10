@@ -17,15 +17,6 @@
 
 Route::get('/', 'Community\IndexController@index');
 
-Route::prefix('users')->namespace('Community')->group(function () {
-    Route::get('register', 'UserController@registerPage');
-
-    Route::post('register/sign-check', 'UserController@signCheck');
-    Route::post('register/sign-up', 'UserController@signUp');
-    Route::post('register/sign-in', 'UserController@signIn');
-    Route::post('register/sign-out', 'UserController@signOut');
-});
-
 Route::prefix('articles')->namespace('Community')->group(function () {
     Route::get('/', 'ArticleController@index')->name('articles.index');
     Route::get('/create', 'ArticleController@create')->name('articles.create');
@@ -38,6 +29,20 @@ Route::prefix('articles')->namespace('Community')->group(function () {
     // Route::get('/{id?}', 'ArticleController@articlePage')->where('id','[1-9]+\d*'); // id >= 0;
 });
 
+Route::prefix('monitor')->namespace('Community')->group(function () {
+
+});
+
+Route::prefix('users/register')->namespace('Community')->group(function () {
+    Route::get('/', 'UserController@registerPage');
+    Route::post('sign-check', 'UserController@signCheck');
+    Route::post('sign-in', 'UserController@signIn');
+    Route::post('sign-out', 'UserController@signOut');
+    Route::post('sign-up', 'UserController@signUp');
+});
+
 if (env('APP_DEBUG')) {
     Route::get('/test', 'Test\TestController@test');
+    Route::get('/test/sensitive-word', 'Test\TestSensitiveWordController@test');
+    Route::get('/test/sort', 'Test\TestSortController@test');
 }

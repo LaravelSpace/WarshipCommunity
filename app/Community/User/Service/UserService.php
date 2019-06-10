@@ -22,14 +22,14 @@ class UserService
             case 'signCheck':
                 $retultData = $handler->signCheck($inputData);
                 break;
-            case 'signUp':
-                $retultData = $handler->signUp($inputData);
-                break;
             case 'signIn':
                 $retultData = $handler->signIn($inputData);
                 break;
             case 'signOut':
                 $retultData = $handler->signOut($inputData);
+                break;
+            case 'signUp':
+                $retultData = $handler->signUp($inputData);
                 break;
             default:
                 $message = ValidateException::SWITCH_NON_EXISTENT_CASE . 'CASE=' . $classification;
