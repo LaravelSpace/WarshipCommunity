@@ -2,28 +2,15 @@
 
 namespace App\CommonService\Sort\Handler;
 
+
 /**
- * Class MergeSoftHandler
- * 归并排序(Merge-Sort) 时间复杂度=O(nlogn) 空间复杂度=T(n)
+ * Class MergeSortHandler
+ * 归并排序(Merge Sort) 时间复杂度=O(nlog₂n) 空间复杂度=T(n)
  *
  * @package App\CommonService\Sort\Handler
  */
-class MergeSoftHandler
+class MergeSortHandler extends SortHandlerAbstract
 {
-    private $sortArray;
-
-    private $sortTimes;
-
-    private $sortSteps;
-
-    public function __construct(array $arrayData)
-    {
-        $this->sortArray = $arrayData;
-        $this->sortTimes = 0;
-        $this->sortSteps = [];
-        $this->sortSteps[] = json_encode($this->sortArray);
-    }
-
     public function sort()
     {
         $startIndex = 0;

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Test;
 
 
-use App\CommonService\Sort\Handler\MergeSoftHandler;
+use App\CommonService\Sort\Handler\BubbleSortHandler;
+use App\CommonService\Sort\Handler\MergeSortHandler;
+use App\CommonService\Sort\Handler\QuickSortHandler;
 use Illuminate\Http\Request;
 
 class TestSortController extends TestController
@@ -21,14 +23,18 @@ class TestSortController extends TestController
             $arrayData[] = rand(1, 20);
         }
 
-        $mergeSortData = (new MergeSoftHandler($arrayData))->sort();
+        $bubbleSortResult = (new BubbleSortHandler($arrayData))->sort();
+        $mergeSortResult = (new MergeSortHandler($arrayData))->sort();
+        $quickSortResult = (new QuickSortHandler($arrayData))->sort();
 
         $returnData = [
-            'basicData' => [
+            'basicData'  => [
                 'arrayData' => $arrayData,
                 'arrayNum'  => $arrayNum,
             ],
-            'mergeSort' => $mergeSortData
+            'bubbleSort' => $bubbleSortResult,
+            'mergeSort'  => $mergeSortResult,
+            'quickSort'  => $quickSortResult,
         ];
 
         return response()->json($returnData);
