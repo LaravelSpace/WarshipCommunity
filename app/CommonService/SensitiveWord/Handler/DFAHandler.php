@@ -2,7 +2,8 @@
 
 namespace App\CommonService\SensitiveWord\Handler;
 
-use App\CommonService\SensitiveWord\Component\CheckSensitiveWord;
+
+use App\CommonService\SensitiveWord\CheckSensitiveWord;
 
 /**
  * Class DFAHandler
