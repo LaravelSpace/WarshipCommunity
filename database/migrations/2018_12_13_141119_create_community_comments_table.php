@@ -14,7 +14,6 @@ class CreateCommunityCommentsTable extends Migration
     public function up()
     {
         if (Schema::hasTable('community_comments')) {
-            // 如果表已存在
             return;
         }
         Schema::create('community_comments', function (Blueprint $table) {

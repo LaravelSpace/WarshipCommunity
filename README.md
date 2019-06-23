@@ -1,5 +1,11 @@
 # WarshipCommunity 更新记录
 
+## 2019-06-23
+
+- 添加 simplemde-markdown-editor
+- 添加 parsedown
+- 添加 live2d
+
 ## 2019-06-22
 
 - Laravel 5.7 升级至 5.8

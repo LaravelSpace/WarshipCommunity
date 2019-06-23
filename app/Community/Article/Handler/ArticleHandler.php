@@ -4,6 +4,7 @@ namespace App\Community\Article\Handler;
 
 
 use App\Community\Article\Model\Article;
+use Parsedown;
 
 class ArticleHandler
 {
@@ -45,6 +46,10 @@ class ArticleHandler
         $articleItem = Article::find($articleId);
         if ($articleItem !== null) {
             $articleItem = $articleItem->toArray();
+            // 修改页面返回原值，展示页面使用解析器解析 markdown 文本
+            if (!isset($inputData['markdown']) || !$inputData['markdown'] === '1') {
+                $articleItem['main_body'] = (new Parsedown())->text($articleItem['main_body']);
+            }
         } else {
             $articleItem = [];
         }

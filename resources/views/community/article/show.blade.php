@@ -10,9 +10,10 @@
 
     <template id="template-article-item">
         <div v-if="vifShow">
-            <a href="#" :href="['/articles/'+articleItem.id]+'/edit'"><h5 class="mt-0 mb-1">修改帖子</h5></a>
+            <a href="#" :href="editUrl"><h5 class="mt-0 mb-1">修改帖子</h5></a>
             <h1>@{{ articleItem.title }}</h1>
-            <p>@{{ articleItem.main_body }}</p>
+            {{--<p>@{{ articleItem.main_body }}</p>--}}
+            <div v-html="articleItem.main_body"></div>
         </div>
     </template>
     <script>
@@ -22,7 +23,8 @@
                 return {
                     articleId: 0,
                     articleItem: "",
-                    vifShow: false
+                    vifShow: false,
+                    editUrl: ""
                 }
             },
             created: function () {
@@ -31,6 +33,7 @@
             methods: {
                 init: function () {
                     this.getArticleItem();
+                    this.editUrl = COMMUNITY_URL.articles + '/' + this.articleId + '/edit';
                 },
                 getArticleItem: function () {
                     let thisVue = this;
@@ -38,16 +41,14 @@
                     let localUrlArray = gSplitUrl(localUrl);
                     thisVue.articleId = localUrlArray[localUrlArray.length - 1];
                     let url = COMMUNITY_URL.articles + '/' + thisVue.articleId + '?' + COMMUNITY_URL.need_data;
-                    axios.get(url)
-                        .then(function (response) {
-                            thisVue.articleItem = response.data.data;
-                            if (thisVue.articleItem !== null) {
-                                thisVue.vifShow = true;
-                            }
-                        })
-                        .catch(function (error) {
-                            console.error(error.response);
-                        });
+                    axios.get(url).then(function (response) {
+                        thisVue.articleItem = response.data.data;
+                        if (thisVue.articleItem !== null) {
+                            thisVue.vifShow = true;
+                        }
+                    }).catch(function (error) {
+                        console.error(error.response);
+                    });
                 }
             }
         });

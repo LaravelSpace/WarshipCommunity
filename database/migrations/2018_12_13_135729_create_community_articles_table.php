@@ -14,8 +14,7 @@ class CreateCommunityArticlesTable extends Migration
     public function up()
     {
         if (Schema::hasTable('community_articles')) {
-            // 如果表已存在
-            return;
+            return; // 如果表已存在
         }
         Schema::create('community_articles', function (Blueprint $table) {
             $table->charset = 'utf8mb4';

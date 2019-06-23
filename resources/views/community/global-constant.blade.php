@@ -8,6 +8,7 @@
 
     const COMMUNITY_URL = {
         "need_data": "data=1",
+        "markdown":"markdown=1",
         "articles": "/articles",
     };
 </script>

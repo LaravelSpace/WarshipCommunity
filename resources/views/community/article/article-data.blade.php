@@ -7,8 +7,9 @@
         </div>
         <div class="form-group">
             <label for="article-body">正文</label>
-            <textarea class="form-control" id="article-body" rows="10" :class="bodyValid"
-                      placeholder="Body" v-model="bodyArticle"></textarea>
+            {{--<textarea class="form-control" id="article-body" rows="10" :class="bodyValid"--}}
+            {{--placeholder="Body" v-model="bodyArticle"></textarea>--}}
+            <textarea class="form-control" id="article-body" rows="10" placeholder="Body"></textarea>
         </div>
         <hr class="my-4">
         <div class="form-group text-center">
@@ -38,10 +39,23 @@
                 bodyArticle: "",
                 bodyValidMsg: "",
                 bodyValidTag: false,
+                simplemde: null
             }
         },
         created: function () {
             this.init();
+        },
+        mounted: function () {
+            let thisVue = this;
+            if (this.urlTarget === "edit") {
+                document.getElementById("article-title").disabled = true; // 标题不允许修改
+            }
+            // simplemde-markdown-editor 的初始化要放在这里
+            this.simplemde = new SimpleMDE({element: document.getElementById("article-body")});
+            // 绑定事件，监听输入变化，并把值同步给 Vue 的变量
+            this.simplemde.codemirror.on("change", function () {
+                thisVue.bodyArticle = thisVue.simplemde.value();
+            });
         },
         methods: {
             init: function () {
@@ -63,44 +77,40 @@
                 let localUrl = window.location.href;
                 let localUrlArray = gSplitUrl(localUrl);
                 thisVue.articleId = localUrlArray[localUrlArray.length - 2];
-                let url = COMMUNITY_URL.articles + '/' + thisVue.articleId + '?' + COMMUNITY_URL.need_data;
-                axios.get(url)
-                    .then(function (response) {
-                        thisVue.articleItem = response.data.data;
-                        thisVue.titleArticle = thisVue.articleItem.title;
-                        thisVue.bodyArticle = thisVue.articleItem.main_body;
-                        if (thisVue.articleItem !== null) {
-                            thisVue.vifShow = true;
-                        }
-                    })
-                    .catch(function (error) {
-                        console.error(error.response);
-                    });
+                let url = COMMUNITY_URL.articles + '/' + thisVue.articleId
+                    + '?' + COMMUNITY_URL.need_data + '&' + COMMUNITY_URL.markdown;
+                axios.get(url).then(function (response) {
+                    thisVue.articleItem = response.data.data;
+                    thisVue.titleArticle = thisVue.articleItem.title;
+                    thisVue.simplemde.value(thisVue.articleItem.main_body);
+                    thisVue.bodyArticle = thisVue.articleItem.main_body;
+                    if (thisVue.articleItem !== null) {
+                        thisVue.vifShow = true;
+                    }
+                }).catch(function (error) {
+                    console.error(error.response);
+                });
             },
             articleSubmit: function () {
                 let thisVue = this;
                 if (thisVue.urlTarget === "create") {
-                    axios.post(
-                        thisVue.urlSubmit, {
-                            "title": thisVue.titleArticle,
-                            "body": thisVue.bodyArticle
-                        }
-                    ).then(function (response) {
+                    axios.post(thisVue.urlSubmit, {
+                        "title": thisVue.titleArticle,
+                        "body": thisVue.bodyArticle
+                    }).then(function (response) {
                         thisVue.articleItem = response.data.data;
-                        window.location.href = "/articles/" + thisVue.articleItem.id;
+                        window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleItem.id;
                     }).catch(function (error) {
                         console.error(error.response);
                     });
                 } else if (thisVue.urlTarget === "edit") {
-                    axios.put(
-                        thisVue.urlSubmit, {
-                            "id": thisVue.articleId,
-                            "title": thisVue.titleArticle,
-                            "body": thisVue.bodyArticle
-                        }
-                    ).then(function (response) {
+                    axios.put(thisVue.urlSubmit, {
+                        "id": thisVue.articleId,
+                        "title": thisVue.titleArticle,
+                        "body": thisVue.bodyArticle
+                    }).then(function (response) {
                         thisVue.articleId = response.data.data.id;
-                        window.location.href = "/articles/" + thisVue.articleId;
+                        window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleId;
                     }).catch(function (error) {
                         console.error(error.response);
                     });
