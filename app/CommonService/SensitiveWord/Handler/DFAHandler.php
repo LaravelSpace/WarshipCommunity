@@ -62,7 +62,7 @@ class DFAHandler implements CheckSensitiveWord
      */
     private function iGetSensitiveWordSet()
     {
-        $sensitiveWordSet = ['王八羔子', '兔崽子', '王八蛋'];
+        $sensitiveWordSet = ['王八羔子', '兔崽子', '王八蛋', '傻逼', '法轮', '法轮功', '李洪志', '中国猪', '台湾猪'];
 
         return $sensitiveWordSet;
     }
@@ -93,15 +93,16 @@ class DFAHandler implements CheckSensitiveWord
         for ($i = 0; $i < $stringLength; $i++) {
             $checkKey = mb_substr($checkString, $i, 1, 'UTF-8');
             if (!isset($arrayHashMap[$checkKey])) {
+                $markedSensitiveWord = '';
                 $arrayHashMap = $this->sensitiveWordMap; // 重置 $arrayHashMap
-
-                continue;
+                if (!isset($arrayHashMap[$checkKey])) {
+                    continue;
+                }
             }
             $markedSensitiveWord .= $checkKey;
             if ($arrayHashMap[$checkKey]['end'] == 1) {
                 $markedSensitiveWordSet[] = $markedSensitiveWord;
                 $markedSensitiveWord = '';
-
                 $arrayHashMap = $this->sensitiveWordMap; // 重置 $arrayHashMap
 
                 continue;

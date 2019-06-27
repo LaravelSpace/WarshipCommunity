@@ -16,6 +16,7 @@ class TestSensitiveWordController extends TestController
     public function test(Request $request)
     {
         $checkString = '王八羔王八子啊王八羔子啊兔崽兔崽子王八蛋';
+        // $checkString = '兔崽兔崽子';
         $checkResult = (new SensitiveWordService('DFA'))->checkSensitiveWord($checkString);
         $returnData = [
             'controller'  => 'TestSensitiveWordController',

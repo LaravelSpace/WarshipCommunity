@@ -1,5 +1,9 @@
 # WarshipCommunity 更新记录
 
+## 2019-06-27
+
+- 修改 DFA 敏感词匹配算法，解决敏感词连续出现时匹配不到的问题
+
 ## 2019-06-23
 
 - 添加 simplemde-markdown-editor

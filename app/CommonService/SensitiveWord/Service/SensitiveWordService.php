@@ -2,7 +2,7 @@
 
 namespace App\CommonService\SensitiveWord\Service;
 
-use App\CommonService\SensitiveWord\Component\CheckSensitiveWord;
+
 use App\CommonService\SensitiveWord\Handler\DFAHandler;
 
 /**
@@ -12,7 +12,7 @@ use App\CommonService\SensitiveWord\Handler\DFAHandler;
  *
  * @package App\Http\Service\Index
  */
-class SensitiveWordService implements CheckSensitiveWord
+class SensitiveWordService
 {
     private $sensitiveWorldHandler;
 
@@ -30,8 +30,7 @@ class SensitiveWordService implements CheckSensitiveWord
      * 选择算法类型
      *
      * @param string $algorithm
-     *
-     * @return CheckSensitiveWord
+     * @return DFAHandler
      */
     private function iSelectHandler(string $algorithm)
     {
@@ -50,7 +49,6 @@ class SensitiveWordService implements CheckSensitiveWord
      * 校验字符串里是否有敏感词并返回匹配到的结果
      *
      * @param string $checkString
-     *
      * @return array
      */
     public function checkSensitiveWord(string $checkString)
