@@ -4,13 +4,14 @@ namespace App\Community\Article\Handler;
 
 
 use App\Community\Article\Model\Article;
+use App\Events\Community\ArticleSensitiveEvent;
 use Parsedown;
 
 class ArticleHandler
 {
     public function articleList(array $inputData)
     {
-        $articleList = Article::with('user')->get();
+        $articleList = Article::passExamine()->notInBlacklist()->with('user')->get();
         if ($articleList->count() > 0) {
             $articleList = $articleList->toArray();
         } else {
@@ -18,7 +19,7 @@ class ArticleHandler
         }
         $returnData = [
             'status' => config('constant.success'),
-            'data'   => $articleList,
+            'data'   => $articleList
         ];
 
         return $returnData;
@@ -30,11 +31,13 @@ class ArticleHandler
             'title'     => $inputData['title'],
             'main_body' => $inputData['body'],
             'user_id'   => 1, // todo test data
+            'examine'   => 1
         ];
         $article = Article::create($articleData);
+        event(new ArticleSensitiveEvent($article->id, 'article'));
         $returnData = [
             'status' => config('constant.success'),
-            'data'   => $article->toArray(),
+            'data'   => $article->toArray()
         ];
 
         return $returnData;
@@ -55,7 +58,7 @@ class ArticleHandler
         }
         $returnData = [
             'status' => config('constant.success'),
-            'data'   => $articleItem,
+            'data'   => $articleItem
         ];
 
         return $returnData;
@@ -66,12 +69,12 @@ class ArticleHandler
         $articleId = $inputData['id'];
         $articleData = [
             'title'     => $inputData['title'],
-            'main_body' => $inputData['body'],
+            'main_body' => $inputData['body']
         ];
         Article::where('id', '=', $articleId)->update($articleData);
         $returnData = [
             'status' => config('constant.success'),
-            'data'   => ['id' => $articleId],
+            'data'   => ['id' => $articleId]
         ];
 
         return $returnData;

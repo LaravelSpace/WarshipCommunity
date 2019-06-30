@@ -14,15 +14,16 @@ class CreateCommunityArticlesTable extends Migration
     public function up()
     {
         if (Schema::hasTable('community_articles')) {
-            return; // 如果表已存在
+            return;
         }
         Schema::create('community_articles', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
             $table->string('title', 64);
             $table->text('main_body');
-            $table->integer('user_id');
-            $table->boolean('blacklist')->default(false);
+            $table->unsignedInteger('user_id');
+            $table->unsignedTinyInteger('examine')->default(0); // 审核状态:0=未触发,1=待审核,2=通过,3=拒绝
+            $table->boolean('blacklist')->default(false); // 黑名单
             $table->softDeletes();
             $table->timestamps();
         });

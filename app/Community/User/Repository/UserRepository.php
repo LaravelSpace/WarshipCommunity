@@ -4,6 +4,7 @@ namespace App\Community\User\Repository;
 
 
 use App\User;
+use Illuminate\Support\Str;
 
 class UserRepository
 {
@@ -20,7 +21,7 @@ class UserRepository
             'email'          => $inputData['identity'],
             'password'       => $inputData['password'],
             'avatar'         => '/images/avatar/default_avatar.jpg',
-            'remember_token' => str_random(64),
+            'remember_token' => Str::random(64),
         ];
         $newUser = User::create($userInfo);
         if ($newUser !== null && $newUser !== '') {

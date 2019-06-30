@@ -13,6 +13,9 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('users')) {
+            return; // 如果表已存在
+        }
         Schema::create('users', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');

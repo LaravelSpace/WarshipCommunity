@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePasswordResetsTable extends Migration
+class CreateRolePermissionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreatePasswordResetsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('password_resets')) {
+        if (Schema::hasTable('role_permission')) {
             return;
         }
-        Schema::create('password_resets', function (Blueprint $table) {
+        Schema::create('role_permission', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
-            $table->string('email')->index();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->increments('id');
+            $table->unsignedInteger('permission_id');
+            $table->unsignedInteger('role_id');
+            $table->timestamps();
         });
     }
 
@@ -31,6 +32,6 @@ class CreatePasswordResetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('role_permission');
     }
 }

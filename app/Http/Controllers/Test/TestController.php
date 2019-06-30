@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Test;
 
+use App\Community\Article\Model\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

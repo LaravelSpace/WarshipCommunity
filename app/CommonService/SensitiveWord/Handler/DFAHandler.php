@@ -34,20 +34,20 @@ class DFAHandler implements CheckSensitiveWord
 
         foreach ($sensitiveWordSet as $word) {
             $arrayHashMap = &$this->sensitiveWordMap; // 传址
-            $wordLength = mb_strlen($word, 'UTF-8');
+            $wordLength = mb_strlen($word, "UTF-8");
             for ($i = 0; $i < $wordLength; $i++) {
-                $key = mb_substr($word, $i, 1, 'UTF-8');
+                $key = mb_substr($word, $i, 1, "UTF-8");
                 if (isset($arrayHashMap[$key])) {
                     if ($i == ($wordLength - 1)) {
-                        $arrayHashMap[$key]['end'] = 1;
+                        $arrayHashMap[$key]["end"] = 1;
                     }
                 } else {
                     if ($i == ($wordLength - 1)) {
                         $arrayHashMap[$key] = [];
-                        $arrayHashMap[$key]['end'] = 1;
+                        $arrayHashMap[$key]["end"] = 1;
                     } else {
                         $arrayHashMap[$key] = [];
-                        $arrayHashMap[$key]['end'] = 0;
+                        $arrayHashMap[$key]["end"] = 0;
                     }
                 }
                 $arrayHashMap = &$arrayHashMap[$key]; // 传址
@@ -62,7 +62,7 @@ class DFAHandler implements CheckSensitiveWord
      */
     private function iGetSensitiveWordSet()
     {
-        $sensitiveWordSet = ['王八羔子', '兔崽子', '王八蛋', '傻逼', '法轮', '法轮功', '李洪志', '中国猪', '台湾猪'];
+        $sensitiveWordSet = ["王八羔子", "兔崽子", "王八蛋", "傻逼", "法轮", "法轮功", "李洪志", "中国猪", "台湾猪"];
 
         return $sensitiveWordSet;
     }
@@ -86,12 +86,12 @@ class DFAHandler implements CheckSensitiveWord
      */
     public function checkSensitiveWord(string $checkString)
     {
-        $stringLength = mb_strlen($checkString, 'UTF-8');
+        $stringLength = mb_strlen($checkString, "UTF-8");
         $arrayHashMap = $this->sensitiveWordMap;
         $markedSensitiveWordSet = [];
         $markedSensitiveWord = '';
         for ($i = 0; $i < $stringLength; $i++) {
-            $checkKey = mb_substr($checkString, $i, 1, 'UTF-8');
+            $checkKey = mb_substr($checkString, $i, 1, "UTF-8");
             if (!isset($arrayHashMap[$checkKey])) {
                 $markedSensitiveWord = '';
                 $arrayHashMap = $this->sensitiveWordMap; // 重置 $arrayHashMap
@@ -100,7 +100,7 @@ class DFAHandler implements CheckSensitiveWord
                 }
             }
             $markedSensitiveWord .= $checkKey;
-            if ($arrayHashMap[$checkKey]['end'] == 1) {
+            if ($arrayHashMap[$checkKey]["end"] == 1) {
                 $markedSensitiveWordSet[] = $markedSensitiveWord;
                 $markedSensitiveWord = '';
                 $arrayHashMap = $this->sensitiveWordMap; // 重置 $arrayHashMap

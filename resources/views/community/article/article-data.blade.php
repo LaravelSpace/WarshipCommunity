@@ -99,7 +99,8 @@
                         "body": thisVue.bodyArticle
                     }).then(function (response) {
                         thisVue.articleItem = response.data.data;
-                        window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleItem.id;
+                        // window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleItem.id;
+                        window.location.href = COMMUNITY_URL.articles;
                     }).catch(function (error) {
                         console.error(error.response);
                     });
@@ -110,7 +111,8 @@
                         "body": thisVue.bodyArticle
                     }).then(function (response) {
                         thisVue.articleId = response.data.data.id;
-                        window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleId;
+                        // window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleId;
+                        window.location.href = COMMUNITY_URL.articles;
                     }).catch(function (error) {
                         console.error(error.response);
                     });

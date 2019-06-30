@@ -19,7 +19,7 @@ class CommunityArticleTableSeeder extends Seeder
 
         foreach (range(1, 20) as $index) {
             $dataList[] = [
-                'title'      => $faker->sentence(2), // nbWords 可以控制句子长度
+                'title'      => $faker->sentence(2),
                 'main_body'  => $faker->paragraph,
                 'user_id'    => $faker->randomElement($userIds),
                 'blacklist'  => $faker->boolean,

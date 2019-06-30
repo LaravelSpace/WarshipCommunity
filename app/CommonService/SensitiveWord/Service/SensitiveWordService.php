@@ -21,7 +21,7 @@ class SensitiveWordService
      *
      * @param string $algorithm [算法类型]
      */
-    public function __construct(string $algorithm)
+    public function __construct(string $algorithm = "")
     {
         $this->sensitiveWorldHandler = $this->iSelectHandler($algorithm);
     }
@@ -32,10 +32,10 @@ class SensitiveWordService
      * @param string $algorithm
      * @return DFAHandler
      */
-    private function iSelectHandler(string $algorithm)
+    private function iSelectHandler(string $algorithm = "")
     {
         switch ($algorithm) {
-            case 'DFA':
+            case "DFA":
                 $handler = new DFAHandler();
                 break;
             default:
