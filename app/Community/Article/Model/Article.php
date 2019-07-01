@@ -3,7 +3,7 @@
 namespace App\Community\Article\Model;
 
 
-use App\User;
+use App\Community\User\Model\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model

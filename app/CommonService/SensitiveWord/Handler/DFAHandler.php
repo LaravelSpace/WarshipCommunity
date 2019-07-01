@@ -7,7 +7,6 @@ use App\CommonService\SensitiveWord\CheckSensitiveWord;
 
 /**
  * Class DFAHandler
- *
  * 敏感词过滤 DFA 算法
  *
  * @package App\CommonService\SensitiveWord\Handler
@@ -16,9 +15,6 @@ class DFAHandler implements CheckSensitiveWord
 {
     private $sensitiveWordMap;
 
-    /**
-     * DFAHandler constructor.
-     */
     public function __construct()
     {
         $this->sensitiveWordMap = [];
@@ -81,7 +77,6 @@ class DFAHandler implements CheckSensitiveWord
      * 校验字符串里是否有敏感词并返回匹配到的结果
      *
      * @param string $checkString
-     *
      * @return array
      */
     public function checkSensitiveWord(string $checkString)

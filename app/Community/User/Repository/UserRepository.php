@@ -3,7 +3,7 @@
 namespace App\Community\User\Repository;
 
 
-use App\User;
+use App\Community\User\Model\User;;
 use Illuminate\Support\Str;
 
 class UserRepository

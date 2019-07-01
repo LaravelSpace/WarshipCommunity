@@ -7,7 +7,6 @@ use App\CommonService\SensitiveWord\Handler\DFAHandler;
 
 /**
  * Class SensitiveWordService
- *
  * 敏感词匹配
  *
  * @package App\Http\Service\Index

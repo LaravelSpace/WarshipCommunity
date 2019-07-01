@@ -1,5 +1,9 @@
 # WarshipCommunity 更新记录
 
+## 2019-07-01
+
+- 移动 App\User 到 App\Community\User\Model\User
+
 ## 2019-06-30
 
 - 创建文章时增加敏感词检测
