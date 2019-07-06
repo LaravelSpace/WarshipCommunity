@@ -13,6 +13,7 @@ return [
     'delete' => 'DELETE',
 
     'http_code_200' => 200,
+    'http_code_403' => 403,
     'http_code_422' => 422,
     'http_code_500' => 500,
 ];

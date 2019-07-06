@@ -14,16 +14,48 @@
             </div>
             <hr class="my-4">
             <div class="form-group">
-                <label for="register-identity">登录身份：</label>
+                <label for="register-name">昵称：</label>
+                <div class="input-group mb-3">
+                    <input type="text" id="register-name" class="form-control" :class="nameValid"
+                           placeholder="昵称" v-model="nameRegister">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
+                                data-container="body" data-toggle="popover" data-placement="right"
+                                data-content="为自己起一个名字，要求 2~16 位的中文字符，英文字符，数字以及下划线">
+                            <i class="fa fa-question-circle-o"></i>
+                        </button>
+                    </div>
+                    <div class="valid-feedback">@{{ nameValidMsg }}</div>
+                    <div class="invalid-feedback">@{{ nameValidMsg }}</div>
+                </div>
+            </div>
+            <div class="form-group" v-if="identityEmail">
+                <label for="register-identity">登录身份(邮箱)：<a href="#" @click="changeIdentityModel()">切换</a></label>
                 <div class="input-group mb-3">
                     <input type="text" id="register-identity" class="form-control" :class="identityValid"
-                           placeholder="Email" v-model="identityRegister">
+                           placeholder="邮箱地址" v-model="identityRegister">
                     <div class="input-group-append">
-                        <a tabindex="0" class="btn btn-outline-secondary" data-container="body"
-                           data-toggle="popover" data-trigger="focus" data-placement="right"
-                           data-content="第一次注册请使用邮箱作为登录身份">
+                        <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
+                                data-container="body" data-toggle="popover" data-placement="right"
+                                data-content="请填写作为登录身份的邮箱地址">
                             <i class="fa fa-question-circle-o"></i>
-                        </a>
+                        </button>
+                    </div>
+                    <div class="valid-feedback">@{{ identityValidMsg }}</div>
+                    <div class="invalid-feedback">@{{ identityValidMsg }}</div>
+                </div>
+            </div>
+            <div class="form-group" v-else="identityEmail">
+                <label for="register-identity">登录身份(手机)：<a href="#" @click="changeIdentityModel()">切换</a></label>
+                <div class="input-group mb-3">
+                    <input type="text" id="register-identity" class="form-control" :class="identityValid"
+                           placeholder="手机号码" v-model="identityRegister">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
+                                data-container="body" data-toggle="popover" data-placement="right"
+                                data-content="请填写作为登录身份的手机号码">
+                            <i class="fa fa-question-circle-o"></i>
+                        </button>
                     </div>
                     <div class="valid-feedback">@{{ identityValidMsg }}</div>
                     <div class="invalid-feedback">@{{ identityValidMsg }}</div>
@@ -33,32 +65,16 @@
                 <label for="register-password">登录密码：</label>
                 <div class="input-group mb-3">
                     <input type="password" id="register-password" class="form-control" :class="passwordValid"
-                           placeholder="Password" v-model="passwordRegister">
+                           placeholder="登录密码" v-model="passwordRegister">
                     <div class="input-group-append">
-                        <a tabindex="0" class="btn btn-outline-secondary" data-container="body"
-                           data-toggle="popover" data-trigger="focus" data-placement="right"
-                           data-content="密码最少6位，包含至少1个大写字母，1个小写字母，1个数字，1个特殊字符">
+                        <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
+                                data-container="body" data-toggle="popover" data-placement="right"
+                                data-content="要求 6~32 位，英文字符，特殊字符，数字以及下划线">
                             <i class="fa fa-question-circle-o"></i>
-                        </a>
+                        </button>
                     </div>
                     <div class="valid-feedback">@{{ passwordValidMsg }}</div>
                     <div class="invalid-feedback">@{{ passwordValidMsg }}</div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="confirm-password">确认密码：</label>
-                <div class="input-group mb-3">
-                    <input type="password" id="confirm-password" class="form-control" :class="confirmValid"
-                           placeholder="Confirm Password" v-model="confirmPassword">
-                    <div class="input-group-append">
-                        <a tabindex="0" class="btn btn-outline-secondary" data-container="body"
-                           data-toggle="popover" data-trigger="focus" data-placement="right"
-                           data-content="再次输入密码">
-                            <i class="fa fa-question-circle-o"></i>
-                        </a>
-                    </div>
-                    <div class="valid-feedback">@{{ confirmValidMsg }}</div>
-                    <div class="invalid-feedback">@{{ confirmValidMsg }}</div>
                 </div>
             </div>
             <hr class="my-4">
@@ -82,15 +98,16 @@
             template: '#template-sign-up',
             data: function () {
                 return {
+                    nameRegister: '',
+                    nameValidMsg: '',
+                    nameValidTag: false,
+                    identityEmail: true,
                     identityRegister: '',
                     identityValidMsg: '',
                     identityValidTag: false,
                     passwordRegister: '',
                     passwordValidMsg: '',
-                    passwordValidTag: false,
-                    confirmPassword: '',
-                    confirmValidMsg: '',
-                    confirmValidTag: false
+                    passwordValidTag: false
                 }
             },
             created: function () {
@@ -100,96 +117,104 @@
                 init: function () {
                     // 初始化 BootStrap 弹出框
                     $(document).ready(function () {
-                        $('[data-toggle="popover"]').popover()
+                        $('[data-toggle="popover"]').popover();
+                    })
+                },
+                changeIdentityModel: function () {
+                    this.identityEmail = !this.identityEmail;
+                    // 切换之后要重新初始化
+                    $(document).ready(function () {
+                        $('[data-toggle="popover"]').popover();
                     })
                 },
                 signUpSubmit: function () {
                     let thisVue = this;
-                    axios.post(
-                        '/user/register/sign-up', {
-                            'identity': thisVue.identityRegister,
-                            'password': thisVue.passwordRegister,
-                            'password_confirmation': thisVue.confirmPassword
-                        }
-                    ).then(function (response) {
+                    axios.post(COMMUNITY_URL.users_sign_up, {
+                        'name': thisVue.nameRegister,
+                        'identity_email': thisVue.identityEmail,
+                        'identity': thisVue.identityRegister,
+                        'password': thisVue.passwordRegister,
+                    }).then(function (response) {
                         console.debug(response.data);
-                    }).catch(function (error) {
-                        console.error(error.response.data);
-                        console.error(error.response.status);
-                        console.error(error.response.headers);
                     });
                 },
                 signUpReset: function () {
+                    this.nameRegister = '';
+                    this.nameValidMsg = '';
+                    this.nameValidTag = false;
                     this.identityRegister = '';
                     this.identityValidMsg = '';
                     this.identityValidTag = false;
                     this.passwordRegister = '';
                     this.passwordValidMsg = '';
                     this.passwordValidTag = false;
-                    this.confirmPassword = '';
-                    this.confirmValidMsg = '';
-                    this.confirmValidTag = false;
                 }
             },
             computed: {
-                identityValid: function () {
-                    if (this.identityRegister === null || this.identityRegister === '') {
-                        this.identityValidTag = false;
-                    }
-                    if (this.identityRegister !== null && this.identityRegister !== '') {
-                        if (REG_EMAIL.test(this.identityRegister)) {
-                            this.identityValidMsg = '';
-                            this.identityValidTag = true;
+                nameValid: function () {
+                    if (this.nameRegister !== null && this.nameRegister !== '') {
+                        if (REG_NAME.test(this.nameRegister)) {
+                            this.nameValidMsg = '';
+                            this.nameValidTag = true;
                             return 'is-valid';
                         } else {
-                            this.identityValidMsg = '不正确的邮箱地址';
-                            this.identityValidTag = false;
+                            this.nameValidMsg = REG_MESSAGE.REG_NAME;
+                            this.nameValidTag = false;
                             return 'is-invalid';
                         }
+                    } else {
+                        this.nameValidTag = false;
+                    }
+                },
+                identityValid: function () {
+                    if (this.identityRegister !== null && this.identityRegister !== '') {
+                        if (this.identityEmail) {
+                            if (REG_EMAIL.test(this.identityRegister)) {
+                                this.identityValidMsg = '';
+                                this.identityValidTag = true;
+                                return 'is-valid';
+                            } else {
+                                this.identityValidMsg = REG_MESSAGE.REG_EMAIL;
+                                this.identityValidTag = false;
+                                return 'is-invalid';
+                            }
+                        } else {
+                            if (REG_MOBILE_PHONE.test(this.identityRegister)) {
+                                this.identityValidMsg = '';
+                                this.identityValidTag = true;
+                                return 'is-valid';
+                            } else {
+                                this.identityValidMsg = REG_MESSAGE.REG_MOBILE_PHONE;
+                                this.identityValidTag = false;
+                                return 'is-invalid';
+                            }
+                        }
+                    } else {
+                        this.identityValidTag = false;
                     }
                 },
                 passwordValid: function () {
-                    if (this.passwordRegister === null || this.passwordRegister === '') {
-                        this.passwordValidTag = false;
-                    }
                     if (this.passwordRegister !== null && this.passwordRegister !== '') {
-                        if (REG_PASSWORD.test(this.passwordRegister)) {
+                        if (REG_PASSWORD.test(this.passwordRegister)
+                            && this.passwordRegister.length <= 16
+                        ) {
                             this.passwordValidMsg = '';
                             this.passwordValidTag = true;
                             return 'is-valid';
                         } else {
-                            this.passwordValidMsg = '最少6位，包含至少1个大写字母，1个小写字母，1个数字，1个特殊字符';
+                            this.passwordValidMsg = REG_MESSAGE.REG_PASSWORD;
                             this.passwordValidTag = false;
                             return 'is-invalid';
                         }
-                    }
-                },
-                confirmValid: function () {
-                    if (this.confirmPassword === null || this.confirmPassword === '') {
-                        this.confirmValidTag = false;
-                    }
-                    if (
-                        this.passwordRegister !== null && this.passwordRegister !== ''
-                        &&
-                        this.confirmPassword !== null && this.confirmPassword !== ''
-                    ) {
-                        if (this.passwordRegister === this.confirmPassword) {
-                            this.confirmValidMsg = '';
-                            this.confirmValidTag = true;
-                            return 'is-valid';
-                        } else {
-                            this.confirmValidMsg = '两次输入的密码不一致';
-                            this.confirmValidTag = false;
-                            return 'is-invalid';
-                        }
+                    } else {
+                        this.passwordValidTag = false;
                     }
                 },
                 signUpValid: function () {
-                    return true; // todo 测试
-                    // return this.identityValidTag && this.passwordValidTag && this.confirmValidTag;
+                    return this.nameValidTag && this.identityValidTag && this.passwordValidTag;
                 }
             },
         });
-        new Vue({el: "#sign-up"});
+        new Vue({el: '#sign-up'});
     </script>
 @endsection

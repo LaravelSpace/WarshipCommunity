@@ -19,13 +19,19 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
-            $table->string('name', 64)->unique();
-            $table->string('email', 64)->unique();
+            $table->string('name', 32);
+            $table->string('email', 64)->default('');
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone', 32)->default('');
+            $table->timestamp('phone_verified_at')->nullable();
             $table->string('password', 64);
             $table->string('avatar',128);
+            $table->string('api_token', 64);
             $table->rememberToken();
             $table->timestamps();
+            $table->unique('name');
+            $table->index('email');
+            $table->index('phone');
         });
     }
 

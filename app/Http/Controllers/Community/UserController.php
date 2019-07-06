@@ -33,28 +33,28 @@ class UserController extends WebController
     {
         $inputData = $request->all();
 
-        return $this->registerData($inputData, 'signCheck');
+        return $this->register($inputData, 'signCheck');
     }
 
     public function signIn(Request $request)
     {
         $inputData = $request->all();
 
-        return $this->registerData($inputData, 'signIn');
+        return $this->register($inputData, 'signIn');
     }
 
     public function signOut(Request $request)
     {
         $inputData = $request->all();
 
-        return $this->registerData($inputData, 'signOut');
+        return $this->register($inputData, 'signOut');
     }
 
     public function signUp(Request $request)
     {
         $inputData = $request->all();
 
-        return $this->registerData($inputData, 'signUp');
+        return $this->register($inputData, 'signUp');
     }
 
     /**
@@ -63,7 +63,7 @@ class UserController extends WebController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function registerData(array $inputData, $classification = '')
+    public function register(array $inputData, $classification = '')
     {
         $service = new UserService();
         try {

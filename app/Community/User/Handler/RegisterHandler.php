@@ -4,61 +4,67 @@ namespace App\Community\User\Handler;
 
 
 use App\Community\User\Repository\UserRepository;
-use App\Community\User\Validator\RegisterValidator;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterHandler
 {
-    /**
-     * @param $inputData
-     *
-     * @return array
-     */
-    public function signUp($inputData)
+    public function signCheck()
     {
-        $validatorResult = (new RegisterValidator())->validateRegister($inputData, 'sign-up');
-        if ($validatorResult['fails']) {
-            return $returnData = [
-                'status'      => config('constant.fail'),
-                'status_code' => config('constant.http_code_422'),
-                'data'        => ['errors' => $validatorResult['errors']]
-            ];
-        }
-
-        return $returnData = (new UserRepository())->userCreate($inputData);
-    }
-
-    public function signIn(array $inputData)
-    {
-        $validatorResult = (new RegisterValidator())->validateRegister($inputData, 'sign-in');
-        if ($validatorResult['fails']) {
-            return $returnData = [
-                'status'      => config('constant.fail'),
-                'status_code' => config('constant.http_code_422'),
-                'data'        => ['errors' => $validatorResult['errors']]
-            ];
-        }
-
-        $checkData = [
-            'email'    => $inputData['identity'],
-            'password' => $inputData['password'],
-        ];
-        if (Auth::attempt($checkData)) {
+        if (Auth::check()) {
+            $user = Auth::user();
             $returnData = [
                 'status' => config('constant.success'),
-                'data'   => ['identity_id' => Auth::user()->id],
+                'data'   => [
+                    'identity_id' => $user->id,
+                    'name'        => $user->name,
+                    'avatar'      => $user->avatar,
+                    'api_token'   => $user->api_token
+                ]
             ];
         } else {
             $returnData = [
-                'status' => config('constant.fail'),
-                'data'   => ['message' => '登录信息错误']
+                'status' => config('constant.success'),
+                'data'   => ['identity_id' => 0]
             ];
         }
         return $returnData;
     }
 
-    public function signOut(array $inputData)
+    public function signIn(array $inputData)
     {
+        $checkData = [
+            'email'    => $inputData['identity'],
+            'password' => $inputData['password']
+        ];
+        if (Auth::attempt($checkData)) {
+            $user = Auth::user();
+            $returnData = [
+                'status' => config('constant.success'),
+                'data'   => ['identity_id' => $user->id]
+            ];
+        } else {
+            $returnData = [
+                'status'      => config('constant.fail'),
+                'status_code' => config('constant.http_code_403'),
+                'data'        => ['message' => '登录信息错误']
+            ];
+        }
+        return $returnData;
+    }
 
+    public function signOut()
+    {
+        Auth::logout();
+
+        $returnData = ['status' => config('constant.success')];
+
+        return $returnData;
+    }
+
+    public function signUp($inputData)
+    {
+        $returnData = (new UserRepository())->userCreate($inputData);
+
+        return $returnData;
     }
 }

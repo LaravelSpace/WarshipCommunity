@@ -35,9 +35,9 @@ Route::prefix('monitor')->namespace('Community')->group(function () {
 
 Route::prefix('users/register')->namespace('Community')->group(function () {
     Route::get('/', 'UserController@registerPage');
-    Route::post('sign-check', 'UserController@signCheck');
+    Route::get('sign-check', 'UserController@signCheck');
     Route::post('sign-in', 'UserController@signIn');
-    Route::post('sign-out', 'UserController@signOut');
+    Route::get('sign-out', 'UserController@signOut');
     Route::post('sign-up', 'UserController@signUp');
 });
 
