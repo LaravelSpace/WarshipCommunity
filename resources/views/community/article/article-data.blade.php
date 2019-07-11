@@ -15,29 +15,27 @@
         <div class="form-group text-center">
             <div class="btn-group">
                 <button type="button" class="btn btn-lg btn-primary px-5"
-                        @click="articleSubmit()">@{{ titleSubmit }}
-                </button>
+                        @click="articleSubmit()">@{{ titleSubmit }}</button>
             </div>
         </div>
     </div>
-
 </template>
 <script>
-    Vue.component("vue-article-data", {
-        template: "#template-article-data",
+    Vue.component('vue-article-data', {
+        template: '#template-article-data',
         data: function () {
             return {
                 articleId: 0,
-                articleItem: "",
+                articleItem: '',
                 urlArray: [],
-                urlTarget: "",
-                urlSubmit: "",
-                titleSubmit: "",
-                titleArticle: "",
-                titleValidMsg: "",
+                urlTarget: '',
+                urlSubmit: '',
+                titleSubmit: '',
+                titleArticle: '',
+                titleValidMsg: '',
                 titleValidTag: false,
-                bodyArticle: "",
-                bodyValidMsg: "",
+                bodyArticle: '',
+                bodyValidMsg: '',
                 bodyValidTag: false,
                 simplemde: null
             }
@@ -47,13 +45,13 @@
         },
         mounted: function () {
             let thisVue = this;
-            if (this.urlTarget === "edit") {
-                document.getElementById("article-title").disabled = true; // 标题不允许修改
+            if (this.urlTarget === 'edit') {
+                document.getElementById('article-title').disabled = true; // 标题不允许修改
             }
             // simplemde-markdown-editor 的初始化要放在这里
-            this.simplemde = new SimpleMDE({element: document.getElementById("article-body")});
+            this.simplemde = new SimpleMDE({element: document.getElementById('article-body')});
             // 绑定事件，监听输入变化，并把值同步给 Vue 的变量
-            this.simplemde.codemirror.on("change", function () {
+            this.simplemde.codemirror.on('change', function () {
                 thisVue.bodyArticle = thisVue.simplemde.value();
             });
         },
@@ -62,13 +60,13 @@
                 let localUrl = window.location.href;
                 this.urlArray = gSplitUrl(localUrl);
                 this.urlTarget = this.urlArray[this.urlArray.length - 1];
-                if (this.urlTarget === "create") {
+                if (this.urlTarget === 'create') {
                     this.urlSubmit = COMMUNITY_URL.articles;
-                    this.titleSubmit = "确认发表";
-                } else if (this.urlTarget === "edit") {
+                    this.titleSubmit = '确认发表';
+                } else if (this.urlTarget === 'edit') {
                     this.articleId = this.urlArray[this.urlArray.length - 2];
                     this.urlSubmit = COMMUNITY_URL.articles + '/' + this.articleId;
-                    this.titleSubmit = "确认修改";
+                    this.titleSubmit = '确认修改';
                     this.getArticleItem();
                 }
             },
@@ -93,10 +91,10 @@
             },
             articleSubmit: function () {
                 let thisVue = this;
-                if (thisVue.urlTarget === "create") {
+                if (thisVue.urlTarget === 'create') {
                     axios.post(thisVue.urlSubmit, {
-                        "title": thisVue.titleArticle,
-                        "body": thisVue.bodyArticle
+                        'title': thisVue.titleArticle,
+                        'body': thisVue.bodyArticle
                     }).then(function (response) {
                         thisVue.articleItem = response.data.data;
                         // window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleItem.id;
@@ -104,11 +102,11 @@
                     }).catch(function (error) {
                         console.error(error.response);
                     });
-                } else if (thisVue.urlTarget === "edit") {
+                } else if (thisVue.urlTarget === 'edit') {
                     axios.put(thisVue.urlSubmit, {
-                        "id": thisVue.articleId,
-                        "title": thisVue.titleArticle,
-                        "body": thisVue.bodyArticle
+                        'id': thisVue.articleId,
+                        'title': thisVue.titleArticle,
+                        'body': thisVue.bodyArticle
                     }).then(function (response) {
                         thisVue.articleId = response.data.data.id;
                         // window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleId;
@@ -121,18 +119,18 @@
         },
         computed: {
             titleValid: function () {
-                if (this.titleArticle === null || this.titleArticle === "") {
+                if (this.titleArticle === null || this.titleArticle === '') {
                     this.titleValidTag = false;
                 }
-                return "";
+                return '';
             },
             bodyValid: function () {
-                if (this.bodyArticle === null || this.bodyArticle === "") {
+                if (this.bodyArticle === null || this.bodyArticle === '') {
                     this.bodyValidTag = false;
                 }
-                return "";
+                return '';
             }
         }
     });
-    new Vue({el: "#article-data"});
+    new Vue({el: '#article-data'});
 </script>

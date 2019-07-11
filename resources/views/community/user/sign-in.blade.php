@@ -71,7 +71,7 @@
                     identityValidTag: false,
                     passwordRegister: '',
                     passwordValidMsg: '',
-                    passwordValidTag: false,
+                    passwordValidTag: false
                 }
             },
             created: function () {
@@ -80,14 +80,14 @@
             methods: {
                 init: function () {
                     $(document).ready(function () {
-                        $('[data-toggle="popover"]').popover()
+                        $('[data-toggle="popover"]').popover();
                     })
                 },
                 signInSubmit: function () {
                     let thisVue = this;
                     axios.post(COMMUNITY_URL.users_sign_in, {
                         'identity': thisVue.identityRegister,
-                        'password': thisVue.passwordRegister,
+                        'password': thisVue.passwordRegister
                     }).then(function (response) {
                         if (response.data.status === STATUS_SUCCESS) {
                             window.location.href = '/';

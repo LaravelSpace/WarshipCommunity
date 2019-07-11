@@ -29,16 +29,14 @@
             getArticleList: function () {
                 let thisVue = this;
                 let url = COMMUNITY_URL.articles + '?' + COMMUNITY_URL.need_data;
-                axios.get(url)
-                    .then(function (response) {
-                        thisVue.articleList = response.data.data;
-                        if (thisVue.articleList.length > 0) {
-                            thisVue.vifShow = true;
-                        }
-                    })
-                    .catch(function (error) {
-                        console.error(error.response);
-                    });
+                axios.get(url).then(function (response) {
+                    thisVue.articleList = response.data.data;
+                    if (thisVue.articleList.length > 0) {
+                        thisVue.vifShow = true;
+                    }
+                }).catch(function (error) {
+                    console.error(error.response);
+                });
             }
         }
     });

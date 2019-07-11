@@ -133,7 +133,7 @@
                         'name': thisVue.nameRegister,
                         'identity_email': thisVue.identityEmail,
                         'identity': thisVue.identityRegister,
-                        'password': thisVue.passwordRegister,
+                        'password': thisVue.passwordRegister
                     }).then(function (response) {
                         console.debug(response.data);
                     });

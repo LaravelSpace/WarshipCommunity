@@ -58,7 +58,6 @@ class ArticleController extends WebController implements ResourceInterface
 
     public function destroy(Request $request)
     {
-
     }
 
     public function dataHandler(array $inputData, string $classification)
