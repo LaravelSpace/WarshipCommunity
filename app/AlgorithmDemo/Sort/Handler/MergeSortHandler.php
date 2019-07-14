@@ -1,13 +1,13 @@
 <?php
 
-namespace App\CommonService\Sort\Handler;
+namespace App\AlgorithmDemo\Sort\Handler;
 
 
 /**
  * Class MergeSortHandler
  * 归并排序(Merge Sort) 时间复杂度=O(nlog₂n) 空间复杂度=T(n)
  *
- * @package App\CommonService\Sort\Handler
+ * @package App\AlgorithmDemo\Sort\Handler
  */
 class MergeSortHandler extends SortHandlerAbstract
 {

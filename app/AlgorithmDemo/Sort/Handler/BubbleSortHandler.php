@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CommonService\Sort\Handler;
+namespace App\AlgorithmDemo\Sort\Handler;
 
 
 /**
@@ -8,7 +8,7 @@ namespace App\CommonService\Sort\Handler;
  * 冒泡排序(Bubble Sort) 时间复杂度=O(n²) 空间复杂度=T(1)
  * 这是稍加改进过的冒泡排序，跳过部分无意义的比较
  *
- * @package App\CommonService\Sort\Handler
+ * @package App\AlgorithmDemo\Sort\Handler
  */
 class BubbleSortHandler extends SortHandlerAbstract
 {

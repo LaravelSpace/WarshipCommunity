@@ -1,12 +1,12 @@
 <?php
 
-namespace App\CommonService\Sort\Handler;
+namespace App\AlgorithmDemo\Sort\Handler;
 
 /**
  * Class SelectionSortHandler
  * 选择排序(Selection Sort) 时间复杂度=O(n²) 空间复杂度=T(1)
  *
- * @package App\CommonService\Sort\Handler
+ * @package App\AlgorithmDemo\Sort\Handler
  */
 class SelectionSortHandler extends SortHandlerAbstract
 {

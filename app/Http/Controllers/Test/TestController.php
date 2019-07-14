@@ -10,9 +10,8 @@ class TestController extends Controller
 {
     public function __construct()
     {
-        // 如果不是测试环境直接返回 404 页面
         if (!env('APP_DEBUG')) {
-            abort(404);
+            abort(404); // 如果不是测试环境直接返回 404 页面
         }
     }
 

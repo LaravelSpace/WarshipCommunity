@@ -50,5 +50,6 @@ Route::prefix('users/register')->namespace('Community')->group(function () {
 if (env('APP_DEBUG')) {
     Route::get('/test', 'Test\TestController@test');
     Route::get('/test/sensitive-word', 'Test\TestSensitiveWordController@test');
-    Route::get('/test/sort', 'Test\TestSortController@test');
+    Route::get('/test/algorithm-demo/sort', 'Test\TestAlgorithmDemoController@sort');
+    Route::get('/test/algorithm-demo/climbing-steps', 'Test\TestAlgorithmDemoController@climbingSteps');
 }

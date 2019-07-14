@@ -1,5 +1,14 @@
 # WarshipCommunity 更新记录
 
+## 2019-07-14
+
+- 把笔记原稿从单独的项目移动到本项目 app 目录下
+- 将算法和笔记原稿从项目功能模块分离出去
+- 算法以及实验性质的代码移动到 app/AlgorithmDemo 目录下
+- 笔记原稿移动到 app/NotesManuscript 目录下，统一使用 markdown 格式
+- 笔记原稿的图片资源移动到 app/NotesManuscript/images 目录下，统一使用 jpg|jpeg|png 格式
+- 使用动态规划实现爬楼梯问题
+
 ## 2019-07-11
 
 - 添加权限管理页面

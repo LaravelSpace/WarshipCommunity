@@ -15,16 +15,16 @@
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
     {{--<script src="https://cdn.bootcss.com/lodash.js/4.17.11/lodash.min.js"></script>--}}
     @yield('js')
-    @include('community.global-constant')
-    @include('community.global-config')
-    @include('community.global-function')
+    @include('community.common.global-constant')
+    @include('community.common.global-config')
+    @include('community.common.global-function')
 </head>
 <body style="min-width: 1600px">
 <!-- head -->
 <div id="vue-navbar">
     <vue-navbar></vue-navbar>
 </div>
-@include('community.navbar')
+@include('community.common.navbar')
 <div class="jumbotron text-center">
     <p class="lead">公告</p>
     <hr class="my-4">
@@ -35,6 +35,6 @@
     @yield('body')
 </div>
 <!-- foot -->
-{{--@include('community.live2d')--}}
+{{--@include('community.common.live2d')--}}
 </body>
 </html>

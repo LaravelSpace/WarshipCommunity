@@ -1,12 +1,12 @@
 <?php
 
-namespace App\CommonService\Sort\Handler;
+namespace App\AlgorithmDemo\Sort\Handler;
 
 /**
  * Class InsertionSortHandler
  * 插入排序(Insertion Sort) 时间复杂度=O(n²) 空间复杂度=T(1)
  *
- * @package App\CommonService\Sort\Handler
+ * @package App\AlgorithmDemo\Sort\Handler
  */
 class InsertionSortHandler extends SortHandlerAbstract
 {

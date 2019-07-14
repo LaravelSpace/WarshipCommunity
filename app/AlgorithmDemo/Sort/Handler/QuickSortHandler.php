@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CommonService\Sort\Handler;
+namespace App\AlgorithmDemo\Sort\Handler;
 
 
 /**
@@ -8,7 +8,7 @@ namespace App\CommonService\Sort\Handler;
  * 快速排序(Quick Sort) 平均时间复杂度=O(nlog₂n) 空间复杂度=T(1)
  * 在最糟情况下(即待排序数组是有序数组时)，最糟时间复杂度=O(n²)
  *
- * @package App\CommonService\Sort\Handler
+ * @package App\AlgorithmDemo\Sort\Handler
  */
 class QuickSortHandler extends SortHandlerAbstract
 {

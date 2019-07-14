@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Test;
 
 
 use App\CommonService\SensitiveWord\Service\SensitiveWordService;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TestSensitiveWordController extends TestController
+class TestSensitiveWordController extends Controller
 {
     public function __construct()
     {
-        parent::__construct();
+        if (!env('APP_DEBUG')) {
+            abort(404);
+        }
     }
 
     public function test(Request $request)

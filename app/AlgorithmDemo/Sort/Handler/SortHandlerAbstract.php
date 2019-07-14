@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CommonService\Sort\Handler;
+namespace App\AlgorithmDemo\Sort\Handler;
 
 
 abstract class SortHandlerAbstract
