@@ -51,6 +51,11 @@ class ClimbingStepsHandler
         return $this->handleSteps;
     }
 
+    public function getHandleResult()
+    {
+        return $this->handleResult;
+    }
+
     /**
      * 递归暴力求解
      *
@@ -79,6 +84,7 @@ class ClimbingStepsHandler
         if (isset($this->handleStorage[$steps])) {
             return $this->handleResult[$steps]; // 如果发现已经计算过的结果则直接返回该结果
         }
+
         $this->handleSteps[] = '求解：steps=' . $steps;
         if ($steps <= 2) {
             $this->handleResult[$steps] = $steps; // 记录结果
@@ -96,9 +102,8 @@ class ClimbingStepsHandler
     | 动态规划
     |--------------------------------------------------------------------------
     |
-    | 通过观察数学规律可以得出：
     | 如果将台阶数和对应的结果保存为一个数组 dp[]，则 dp[n] 保存的数据就对应 f(n)。
-    | 这时，我们就可以去掉递归结构，顺序遍历计算即可。
+    | 结合之前的结论 f(n) = f(n-2) + f(n-1)。我们就可以去掉递归结构，顺序计算。
     |
     */
 

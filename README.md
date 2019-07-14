@@ -8,6 +8,8 @@
 - 笔记原稿移动到 app/NotesManuscript 目录下，统一使用 markdown 格式
 - 笔记原稿的图片资源移动到 app/NotesManuscript/images 目录下，统一使用 jpg|jpeg|png 格式
 - 使用动态规划实现爬楼梯问题
+- 使用动态规划实现矩阵最小路径问题
+- 使用动态规划实现找出找零钱总方法数问题
 
 ## 2019-07-11
 

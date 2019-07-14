@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Test;
 
 
 use App\AlgorithmDemo\DynamicProgramming\Handler\ClimbingStepsHandler;
+use App\AlgorithmDemo\DynamicProgramming\Handler\GiveChangeHandler;
+use App\AlgorithmDemo\DynamicProgramming\Handler\MinimumPathHandler;
 use App\AlgorithmDemo\Sort\Handler\BubbleSortHandler;
 use App\AlgorithmDemo\Sort\Handler\InsertionSortHandler;
 use App\AlgorithmDemo\Sort\Handler\MergeSortHandler;
@@ -21,30 +23,89 @@ class TestAlgorithmDemoController extends Controller
         }
     }
 
-    public function climbingSteps(Request $request)
+    public function giveChange(Request $request)
     {
-        $steps = 5;
+        $penny = [1, 2, 3];
+        $aim = 3;
 
-        $handlerRecursionOnly = new ClimbingStepsHandler();
-        $resultRecursionOnly = $handlerRecursionOnly->recursionOnly($steps);
-
-        $handlerRecursionByStorage = new ClimbingStepsHandler();
-        $resultRecursionByStorage = $handlerRecursionByStorage->recursionByStorage($steps);
-
-        $handlerDynamicProgramming = new ClimbingStepsHandler();
-        $resultDynamicProgramming = $handlerDynamicProgramming->dynamicProgramming($steps);
+        $handlerRecursionOnly = new GiveChangeHandler();
+        $handlerRecursionByStorage = new GiveChangeHandler();
+        $handlerDynamicProgramming = new GiveChangeHandler();
 
         $returnData = [
+            'penny'              => $penny,
+            'aim'                => $aim,
             'recursionOnly'      => [
-                'resultNum'   => $resultRecursionOnly,
+                'resultNum'   => $handlerRecursionOnly->recursionOnly($penny, 0, $aim),
                 'handleSteps' => $handlerRecursionOnly->getHandleSteps()
             ],
             'recursionByStorage' => [
-                'resultNum'   => $resultRecursionByStorage,
-                'handleSteps' => $handlerRecursionByStorage->getHandleSteps()
+                'resultNum'    => $handlerRecursionByStorage->recursionByStorage($penny, 0, $aim),
+                'handleSteps'  => $handlerRecursionByStorage->getHandleSteps(),
+                'handleResult' => $handlerRecursionByStorage->getHandleResult()
             ],
             'dynamicProgramming' => [
-                'resultNum' => $resultDynamicProgramming,
+                'resultNum' => $handlerDynamicProgramming->dynamicProgramming($penny, count($penny), $aim)
+            ]
+        ];
+
+        return response()->json($returnData);
+    }
+
+    public function minimumPath(Request $request)
+    {
+        $row = 3;
+        $column = 3;
+        $matrix = [];
+        for ($i = 0; $i < $row; $i++) {
+            for ($j = 0; $j < $column; $j++) {
+                $matrix[$i][$j] = rand(1, 20);
+            }
+        }
+        $handlerRecursionOnly = new MinimumPathHandler($matrix, $row, $column);
+        $handlerRecursionByStorage = new MinimumPathHandler($matrix, $row, $column);
+        $handlerDynamicProgramming = new MinimumPathHandler($matrix, $row, $column);
+
+        $m = 3;
+        $n = 3;
+        $returnData = [
+            'matrix'             => $handlerRecursionOnly->getMatrix(),
+            'recursionOnly'      => [
+                'resultNum'   => $handlerRecursionOnly->recursionOnly($m, $n),
+                'handleSteps' => $handlerRecursionOnly->getHandleSteps()
+            ],
+            'recursionByStorage' => [
+                'resultNum'    => $handlerRecursionByStorage->recursionByStorage($m, $n),
+                'handleSteps'  => $handlerRecursionByStorage->getHandleSteps(),
+                'handleResult' => $handlerRecursionByStorage->getHandleResult()
+            ],
+            'dynamicProgramming' => [
+                'resultNum' => $handlerDynamicProgramming->dynamicProgramming($m, $n)
+            ]
+        ];
+
+        return response()->json($returnData);
+    }
+
+    public function climbingSteps(Request $request)
+    {
+        $steps = 5;
+        $handlerRecursionOnly = new ClimbingStepsHandler();
+        $handlerRecursionByStorage = new ClimbingStepsHandler();
+        $handlerDynamicProgramming = new ClimbingStepsHandler();
+
+        $returnData = [
+            'recursionOnly'      => [
+                'resultNum'   => $handlerRecursionOnly->recursionOnly($steps),
+                'handleSteps' => $handlerRecursionOnly->getHandleSteps()
+            ],
+            'recursionByStorage' => [
+                'resultNum'    => $handlerRecursionByStorage->recursionByStorage($steps),
+                'handleSteps'  => $handlerRecursionByStorage->getHandleSteps(),
+                'handleResult' => $handlerRecursionByStorage->getHandleResult()
+            ],
+            'dynamicProgramming' => [
+                'resultNum' => $handlerDynamicProgramming->dynamicProgramming($steps)
             ]
         ];
 
