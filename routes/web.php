@@ -49,9 +49,10 @@ Route::prefix('users/register')->namespace('Community')->group(function () {
 
 if (env('APP_DEBUG')) {
     Route::get('/test', 'Test\TestController@test');
-    Route::get('/test/sensitive-word', 'Test\TestSensitiveWordController@test');
-    Route::get('/test/algorithm-demo/sort', 'Test\TestAlgorithmDemoController@sort');
-    Route::get('/test/algorithm-demo/climbing-steps', 'Test\TestAlgorithmDemoController@climbingSteps');
-    Route::get('/test/algorithm-demo/minimum-path', 'Test\TestAlgorithmDemoController@minimumPath');
+    Route::get('/test/algorithm-demo/longest-common-sequence', 'Test\TestAlgorithmDemoController@longestCommonSequence');
     Route::get('/test/algorithm-demo/give-change', 'Test\TestAlgorithmDemoController@giveChange');
+    Route::get('/test/algorithm-demo/minimum-path', 'Test\TestAlgorithmDemoController@minimumPath');
+    Route::get('/test/algorithm-demo/climbing-steps', 'Test\TestAlgorithmDemoController@climbingSteps');
+    Route::get('/test/algorithm-demo/sort', 'Test\TestAlgorithmDemoController@sort');
+    Route::get('/test/sensitive-word', 'Test\TestSensitiveWordController@test');
 }

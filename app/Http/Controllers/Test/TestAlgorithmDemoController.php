@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Test;
 
 use App\AlgorithmDemo\DynamicProgramming\Handler\ClimbingStepsHandler;
 use App\AlgorithmDemo\DynamicProgramming\Handler\GiveChangeHandler;
+use App\AlgorithmDemo\DynamicProgramming\Handler\LongestCommonSequenceHandler;
 use App\AlgorithmDemo\DynamicProgramming\Handler\MinimumPathHandler;
 use App\AlgorithmDemo\Sort\Handler\BubbleSortHandler;
 use App\AlgorithmDemo\Sort\Handler\InsertionSortHandler;
@@ -21,6 +22,24 @@ class TestAlgorithmDemoController extends Controller
         if (!env('APP_DEBUG')) {
             abort(404);
         }
+    }
+
+    public function longestCommonSequence(Request $request)
+    {
+        $string1 = '1A2C3';
+        $string2 = 'B1D23';
+
+        $handlerDynamicProgramming = new LongestCommonSequenceHandler();
+
+        $returnData = [
+            'string1'            => $string1,
+            'string2'            => $string2,
+            'dynamicProgramming' => [
+                'strLCS' => $handlerDynamicProgramming->dynamicProgramming($string1, $string2)
+            ]
+        ];
+
+        return response()->json($returnData);
     }
 
     public function giveChange(Request $request)
