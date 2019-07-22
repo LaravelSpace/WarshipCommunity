@@ -3,7 +3,13 @@
 namespace App\AlgorithmDemo\DynamicProgramming\Handler;
 
 
-class KingAndGoldMineHandler
+/**
+ * Class KingAndGoldMineHandler
+ * 国王的金矿问题
+ *
+ * @package App\AlgorithmDemo\DynamicProgramming\Handler
+ */
+class KingAndGoldMineHandler extends DynamicProgrammingHandlerAbstract
 {
     /*
     |--------------------------------------------------------------------------
@@ -28,6 +34,11 @@ class KingAndGoldMineHandler
     |
     */
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | 动态规划
@@ -44,8 +55,8 @@ class KingAndGoldMineHandler
     /**
      * 动态规划求解
      *
-     * @param array $goldMine
-     * @param int   $workerNumber
+     * @param array $goldMine     [金矿工人关系数组]
+     * @param int   $workerNumber [工人总数]
      * @return int
      */
     public function dynamicProgramming(array $goldMine, int $workerNumber)
@@ -60,7 +71,7 @@ class KingAndGoldMineHandler
             $workerArray[] = (int)$item[1];
             $goldMineCount++;
         }
-
+        // 初始化矩阵第一行
         for ($j = 0; $j <= $workerNumber; $j++) {
             if ($j < $workerArray[0]) {
                 $dpResult[0][$j] = 0;
@@ -68,7 +79,7 @@ class KingAndGoldMineHandler
                 $dpResult[0][$j] = $goldArray[0];
             }
         }
-
+        // 依次计算剩余部分的结果，外层循环是金矿，内层循环是工人
         for ($i = 1; $i < $goldMineCount; $i++) {
             for ($j = 0; $j <= $workerNumber; $j++) {
                 if ($j < $workerArray[$i]) {

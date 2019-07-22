@@ -9,7 +9,7 @@ namespace App\AlgorithmDemo\DynamicProgramming\Handler;
  *
  * @package App\AlgorithmDemo\DynamicProgramming\Handler
  */
-class MinimumPathHandler
+class MinimumPathHandler extends DynamicProgrammingHandlerAbstract
 {
     /*
     |--------------------------------------------------------------------------
@@ -36,23 +36,19 @@ class MinimumPathHandler
     |
     */
 
-    public $matrix; // 路径矩阵
+    private $matrix; // 路径矩阵
 
-    public $row; // 矩阵行数
+    private $row; // 矩阵行数
 
-    public $column; // 矩阵列数
-
-    public $handleSteps; // 求解步骤
-
-    public $handleResult; // 求解结果
+    private $column; // 矩阵列数
 
     public function __construct(array $matrix, int $row, int $column)
     {
+        parent::__construct();
+
         $this->matrix = $matrix;
         $this->row = $row;
         $this->column = $column;
-        $this->handleSteps = [];
-        $this->handleResult = [];
     }
 
     public function getMatrix()
@@ -77,16 +73,6 @@ class MinimumPathHandler
         return $matrixShow;
     }
 
-    public function getHandleSteps()
-    {
-        return $this->handleSteps;
-    }
-
-    public function getHandleResult()
-    {
-        return $this->handleResult;
-    }
-
     /**
      * 递归暴力求解
      *
@@ -109,6 +95,7 @@ class MinimumPathHandler
         } else {
             $result += min($this->recursionOnly($m, $n - 1), $this->recursionOnly($m - 1, $n));
         }
+
         $this->handleSteps[] = '求解：[' . $m . ',' . $n . ']=' . $result;
 
         return $result;
@@ -124,8 +111,9 @@ class MinimumPathHandler
     public function recursionByStorage(int $m, int $n)
     {
         $key = $m . '_' . $n;
+
         if (isset($this->handleResult[$key])) {
-            return $this->handleResult[$key];
+            return $this->handleResult[$key]; // 计算过的直接取值
         }
 
         if ($m === 1 && $n === 1) {
@@ -142,6 +130,7 @@ class MinimumPathHandler
         } else {
             $result += min($this->recursionByStorage($m, $n - 1), $this->recursionByStorage($m - 1, $n));
         }
+
         $this->handleSteps[] = '求解：[' . $m . ',' . $n . ']=' . $result;
         $this->handleResult[$key] = $result;
 
@@ -154,7 +143,7 @@ class MinimumPathHandler
     |--------------------------------------------------------------------------
     |
     | 如果把各个位置的最小路径和的结果，记为一个二位数组 dp[][]，
-    | 则 dp[m][n]（n,m 从 0 开始记）对应的值就是 [0,0] 到 [m,n] 位置的最小路径和。
+    | 则 dp[m][n]（m,n 从 0 开始记）对应的值就是 [0,0] 到 [m,n] 位置的最小路径和。
     | 先求出第一行和第一列的结果，在此基础之上就可以依次求出各个点的结果。
     | 这时递归结构就可以去掉了。
     |
@@ -171,17 +160,20 @@ class MinimumPathHandler
     {
         $dpResult = [];
         $dpResult[0][0] = $this->matrix[0][0];
+
         for ($i = 1; $i < $m; $i++) {
             $dpResult[$i][0] = $this->matrix[$i][0] + $dpResult[$i - 1][0];
         }
         for ($j = 1; $j < $n; $j++) {
             $dpResult[0][$j] = $this->matrix[0][$j] + $dpResult[0][$j - 1];
         }
+
         for ($i = 1; $i < $m; $i++) {
             for ($j = 1; $j < $n; $j++) {
                 $dpResult[$i][$j] = $this->matrix[$i][$j] + min($dpResult[$i - 1][$j], $dpResult[$i][$j - 1]);
             }
         }
+
         return $dpResult[$m - 1][$n - 1];
     }
 }

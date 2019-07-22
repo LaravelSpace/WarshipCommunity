@@ -64,7 +64,7 @@ class TestAlgorithmDemoController extends Controller
     public function giveChange(Request $request)
     {
         $penny = [1, 2, 3];
-        $aim = 3;
+        $aim = 6;
 
         $handlerRecursionOnly = new GiveChangeHandler();
         $handlerRecursionByStorage = new GiveChangeHandler();
@@ -83,7 +83,7 @@ class TestAlgorithmDemoController extends Controller
                 'handleResult' => $handlerRecursionByStorage->getHandleResult()
             ],
             'dynamicProgramming' => [
-                'resultNum' => $handlerDynamicProgramming->dynamicProgramming($penny, count($penny), $aim)
+                'resultNum' => $handlerDynamicProgramming->dynamicProgramming($penny, $aim)
             ]
         ];
 
@@ -100,6 +100,7 @@ class TestAlgorithmDemoController extends Controller
                 $matrix[$i][$j] = rand(1, 20);
             }
         }
+
         $handlerRecursionOnly = new MinimumPathHandler($matrix, $row, $column);
         $handlerRecursionByStorage = new MinimumPathHandler($matrix, $row, $column);
         $handlerDynamicProgramming = new MinimumPathHandler($matrix, $row, $column);

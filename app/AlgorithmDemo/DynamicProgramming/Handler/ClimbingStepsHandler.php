@@ -9,7 +9,7 @@ namespace App\AlgorithmDemo\DynamicProgramming\Handler;
  *
  * @package App\AlgorithmDemo\DynamicProgramming\Handler
  */
-class ClimbingStepsHandler
+class ClimbingStepsHandler extends DynamicProgrammingHandlerAbstract
 {
     /*
     |--------------------------------------------------------------------------
@@ -36,30 +36,15 @@ class ClimbingStepsHandler
     |
     */
 
-    public $handleSteps; // 求解步骤
-
-    public $handleResult; // 求解结果
-
     public function __construct()
     {
-        $this->handleSteps = [];
-        $this->handleResult = [];
-    }
-
-    public function getHandleSteps()
-    {
-        return $this->handleSteps;
-    }
-
-    public function getHandleResult()
-    {
-        return $this->handleResult;
+        parent::__construct();
     }
 
     /**
      * 递归暴力求解
      *
-     * @param int $steps 台阶数量
+     * @param int $steps [台阶数量]
      * @return int
      */
     public function recursionOnly(int $steps)
@@ -92,6 +77,7 @@ class ClimbingStepsHandler
             return $steps;
         }
         $result = $this->recursionByStorage($steps - 2) + $this->recursionByStorage($steps - 1);
+
         $this->handleResult[$steps] = $result; // 记录结果
 
         return $result;
@@ -119,9 +105,11 @@ class ClimbingStepsHandler
         $dpResult[0] = 0;
         $dpResult[1] = 1;
         $dpResult[2] = 2;
+
         for ($i = 3; $i < $steps + 1; $i++) {
             $dpResult[$i] = $dpResult[$i - 2] + $dpResult[$i - 1];
         }
+
         return $dpResult[$steps];
     }
 }

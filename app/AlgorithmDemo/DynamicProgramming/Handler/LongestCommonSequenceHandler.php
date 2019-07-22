@@ -9,7 +9,7 @@ namespace App\AlgorithmDemo\DynamicProgramming\Handler;
  *
  * @package App\AlgorithmDemo\DynamicProgramming\Handler
  */
-class LongestCommonSequenceHandler
+class LongestCommonSequenceHandler extends DynamicProgrammingHandlerAbstract
 {
     /*
     |--------------------------------------------------------------------------
@@ -31,6 +31,11 @@ class LongestCommonSequenceHandler
     | 第二步：比较所有的子序列，找出最长公共子序列
     |
     */
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +72,7 @@ class LongestCommonSequenceHandler
         $strArray2 = str_split($string2);
         $arrLength1 = count($strArray1);
         $arrLength2 = count($strArray2);
-
+        // 初始化矩阵第一列
         for ($i = 0; $i < $arrLength1; $i++) {
             if ($strArray1[$i] === $strArray2[0]) {
                 $dpResult[$i][0] = 1;
@@ -79,6 +84,7 @@ class LongestCommonSequenceHandler
                 $dpResult[$i][0] = $dpResult[$i - 1][0];
             }
         }
+        // 初始化矩阵第一行
         for ($j = 1; $j < $arrLength2; $j++) {
             if ($strArray2[$j] === $strArray1[0]) {
                 $dpResult[0][$j] = 1;
@@ -90,7 +96,7 @@ class LongestCommonSequenceHandler
                 $dpResult[0][$j] = $dpResult[0][$j - 1];
             }
         }
-
+        // 依次计算剩余部分的结果
         for ($i = 1; $i < $arrLength1; $i++) {
             for ($j = 1; $j < $arrLength2; $j++) {
                 if ($strArray1[$i] === $strArray2[$j]) {
@@ -101,6 +107,7 @@ class LongestCommonSequenceHandler
                 }
             }
         }
+
         $strLCS = implode($arrLCS);
 
         return $strLCS;

@@ -9,7 +9,7 @@ namespace App\AlgorithmDemo\DynamicProgramming\Handler;
  *
  * @package App\AlgorithmDemo\DynamicProgramming\Handler
  */
-class GiveChangeHandler
+class GiveChangeHandler extends DynamicProgrammingHandlerAbstract
 {
     /*
     |--------------------------------------------------------------------------
@@ -34,31 +34,16 @@ class GiveChangeHandler
     |
     */
 
-    public $handleSteps; // 求解步骤
-
-    public $handleResult; // 求解结果
-
     public function __construct()
     {
-        $this->handleSteps = [];
-        $this->handleResult = [];
-    }
-
-    public function getHandleSteps()
-    {
-        return $this->handleSteps;
-    }
-
-    public function getHandleResult()
-    {
-        return $this->handleResult;
+        parent::__construct();
     }
 
     /**
      * 递归暴力求解
      *
      * @param array $penny [从小到大排好序的零钱数组]
-     * @param int   $index [$index = 0]
+     * @param int   $index [零钱数组的数组下标]
      * @param int   $aim   [目标数值]
      * @return int
      */
@@ -72,6 +57,7 @@ class GiveChangeHandler
                 $result += $this->recursionOnly($penny, $index + 1, $aim - $i * $penny[$index]);
             }
         }
+
         $this->handleSteps[] = '求解：index=' . $index . ',aim=' . $aim . '=>' . $result;
 
         return $result;
@@ -81,15 +67,16 @@ class GiveChangeHandler
      * 递归暴力求解的优化方案：记录结果
      *
      * @param array $penny [从小到大排好序的零钱数组]
-     * @param int   $index [$index = 0]
+     * @param int   $index [零钱数组的数组下标]
      * @param int   $aim   [目标数值]
      * @return int
      */
     public function recursionByStorage(array $penny, int $index, int $aim)
     {
         $key = $index . '_' . $aim;
+
         if (isset($this->handleResult[$key])) {
-            return $this->handleResult[$key];
+            return $this->handleResult[$key]; // 计算过的直接取值
         }
 
         $result = 0;
@@ -100,6 +87,7 @@ class GiveChangeHandler
                 $result += $this->recursionByStorage($penny, $index + 1, $aim - $i * $penny[$index]);
             }
         }
+
         $this->handleSteps[] = '求解：index=' . $index . ',aim=' . $aim . '=>' . $result;
         $this->handleResult[$key] = $result;
 
@@ -133,16 +121,18 @@ class GiveChangeHandler
      * 动态规划求解
      *
      * @param array $penny [从小到大排好序的零钱数组]
-     * @param int   $index [$index = 零钱数组长度]
      * @param int   $aim   [目标数值]
      * @return int
      */
-    public function dynamicProgramming(array $penny, int $index, int $aim)
+    public function dynamicProgramming(array $penny, int $aim)
     {
         $dpResult = [];
+        $index = count($penny);
+        // 初始化矩阵第一行
         for ($j = 0; $j < $aim + 1; $j++) {
             $dpResult[0][$j] = $j % $penny[0] === 0 ? 1 : 0;
         }
+        // 依次计算剩余部分的结果，外层循环是零钱数组，内层循环是目标数值
         for ($i = 1; $i < $index; $i++) {
             for ($j = 0; $j < $aim + 1; $j++) {
                 $dpResult[$i][$j] = 0;
@@ -151,6 +141,7 @@ class GiveChangeHandler
                 }
             }
         }
+
         return $dpResult[$index - 1][$aim];
     }
 }
