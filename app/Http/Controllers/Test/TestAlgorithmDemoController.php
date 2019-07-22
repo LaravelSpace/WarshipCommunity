@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Test;
 
 use App\AlgorithmDemo\DynamicProgramming\Handler\ClimbingStepsHandler;
 use App\AlgorithmDemo\DynamicProgramming\Handler\GiveChangeHandler;
+use App\AlgorithmDemo\DynamicProgramming\Handler\KingAndGoldMineHandler;
 use App\AlgorithmDemo\DynamicProgramming\Handler\LongestCommonSequenceHandler;
 use App\AlgorithmDemo\DynamicProgramming\Handler\MinimumPathHandler;
 use App\AlgorithmDemo\Sort\Handler\BubbleSortHandler;
@@ -22,6 +23,24 @@ class TestAlgorithmDemoController extends Controller
         if (!env('APP_DEBUG')) {
             abort(404);
         }
+    }
+
+    public function kingAndGoldMine(Request $request)
+    {
+        $goldMine = ['400-5', '500-5', '200-3', '300-4', '350-3'];
+        $workerNumber = 10;
+
+        $handlerDynamicProgramming = new KingAndGoldMineHandler();
+
+        $returnData = [
+            'goldMine'           => $goldMine,
+            'workerNumber'       => $workerNumber,
+            'dynamicProgramming' => [
+                'maxGold' => $handlerDynamicProgramming->dynamicProgramming($goldMine, $workerNumber)
+            ]
+        ];
+
+        return response()->json($returnData);
     }
 
     public function longestCommonSequence(Request $request)

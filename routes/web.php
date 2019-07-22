@@ -49,6 +49,7 @@ Route::prefix('users/register')->namespace('Community')->group(function () {
 
 if (env('APP_DEBUG')) {
     Route::get('/test', 'Test\TestController@test');
+    Route::get('/test/algorithm-demo/king-and-gold-mine', 'Test\TestAlgorithmDemoController@kingAndGoldMine');
     Route::get('/test/algorithm-demo/longest-common-sequence', 'Test\TestAlgorithmDemoController@longestCommonSequence');
     Route::get('/test/algorithm-demo/give-change', 'Test\TestAlgorithmDemoController@giveChange');
     Route::get('/test/algorithm-demo/minimum-path', 'Test\TestAlgorithmDemoController@minimumPath');
