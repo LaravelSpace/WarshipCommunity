@@ -17,6 +17,7 @@ class ArticleHandler
         } else {
             $articleList = [];
         }
+
         $returnData = [
             'status' => config('constant.success'),
             'data'   => $articleList
@@ -34,7 +35,9 @@ class ArticleHandler
             'examine'   => 1
         ];
         $article = Article::create($articleData);
+
         event(new ArticleSensitiveEvent($article->id, 'article'));
+
         $returnData = [
             'status' => config('constant.success'),
             'data'   => $article->toArray()
@@ -56,6 +59,7 @@ class ArticleHandler
         } else {
             $articleItem = [];
         }
+
         $returnData = [
             'status' => config('constant.success'),
             'data'   => $articleItem
@@ -72,6 +76,7 @@ class ArticleHandler
             'main_body' => $inputData['body']
         ];
         Article::where('id', '=', $articleId)->update($articleData);
+
         $returnData = [
             'status' => config('constant.success'),
             'data'   => ['id' => $articleId]

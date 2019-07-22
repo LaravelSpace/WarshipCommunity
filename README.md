@@ -1,11 +1,18 @@
 # WarshipCommunity 更新记录
 
+## 2019-07-23
+
+- 整理测试环境的路由
+- 修改表名 community_articles ===> articles
+- 修改表名 community_comments ===> comments
+- 整理代码结构，添加注释
+
 ## 2019-07-22
 
 - 动态规划，国王的金矿问题
 - 动态规划，增加抽象类，合并递归思路和递归步骤部分的代码
 - 增加动态规划算法的注释，便于理解
-- NotesManuscript 增加动态规划的总结
+- NotesManuscript 增加动态规划的总结 `dynamic-programming.md`
 
 ## 2019-07-16
 
@@ -13,11 +20,11 @@
 
 ## 2019-07-14
 
-- 把笔记原稿从单独的项目移动到本项目 app 目录下
+- 把笔记原稿从单独的项目移动到本项目 `app` 目录下
 - 将算法和笔记原稿从项目功能模块分离出去
-- 算法以及实验性质的代码移动到 app/AlgorithmDemo 目录下
-- 笔记原稿移动到 app/NotesManuscript 目录下，统一使用 markdown 格式
-- 笔记原稿的图片资源移动到 app/NotesManuscript/images 目录下，统一使用 jpg|jpeg|png 格式
+- 算法以及实验性质的代码移动到 `app/AlgorithmDemo` 目录下
+- 笔记原稿移动到 `app/NotesManuscript` 目录下，统一使用 markdown 格式
+- 笔记原稿的图片资源移动到 `app/NotesManuscript/images` 目录下，统一使用 jpg|jpeg|png 格式
 - 动态规划，爬楼梯问题
 - 动态规划，矩阵最小路径问题
 - 动态规划，找出找零钱总方法数问题
@@ -36,7 +43,7 @@
 
 ## 2019-07-01
 
-- 移动 App\User 到 App\Community\User\Model\User
+- 移动 `App\User` 到 `App\Community\User\Model\User`
 
 ## 2019-06-30
 

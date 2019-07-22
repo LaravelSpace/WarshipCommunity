@@ -49,11 +49,16 @@ Route::prefix('users/register')->namespace('Community')->group(function () {
 
 if (env('APP_DEBUG')) {
     Route::get('/test', 'Test\TestController@test');
-    Route::get('/test/algorithm-demo/king-and-gold-mine', 'Test\TestAlgorithmDemoController@kingAndGoldMine');
-    Route::get('/test/algorithm-demo/longest-common-sequence', 'Test\TestAlgorithmDemoController@longestCommonSequence');
-    Route::get('/test/algorithm-demo/give-change', 'Test\TestAlgorithmDemoController@giveChange');
-    Route::get('/test/algorithm-demo/minimum-path', 'Test\TestAlgorithmDemoController@minimumPath');
-    Route::get('/test/algorithm-demo/climbing-steps', 'Test\TestAlgorithmDemoController@climbingSteps');
-    Route::get('/test/algorithm-demo/sort', 'Test\TestAlgorithmDemoController@sort');
+
+    Route::prefix('test/dynamic-programming')->namespace('Test')->group(function () {
+        Route::get('king-and-gold-mine', 'TestDynamicProgrammingController@kingAndGoldMine');
+        Route::get('longest-common-sequence', 'TestDynamicProgrammingController@longestCommonSequence');
+        Route::get('give-change', 'TestDynamicProgrammingController@giveChange');
+        Route::get('minimum-path', 'TestDynamicProgrammingController@minimumPath');
+        Route::get('climbing-steps', 'TestDynamicProgrammingController@climbingSteps');
+    });
+
+    Route::get('/test/sort', 'Test\TestSortController@sort');
+
     Route::get('/test/sensitive-word', 'Test\TestSensitiveWordController@test');
 }

@@ -9,11 +9,11 @@ class Comment extends Model
 {
     protected $connection = 'mysql';
 
-    protected $table = 'community_comments';
+    protected $table = 'comments';
 
     protected $fillable = [
         'main_body',
         'user_id',
-        'article_id',
+        'article_id'
     ];
 }

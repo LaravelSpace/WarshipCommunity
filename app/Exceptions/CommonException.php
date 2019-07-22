@@ -12,6 +12,7 @@ class CommonException extends \Exception
     public function __construct($message = "", $code = 0, $attachData = "", Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
+
         $this->attachData = $attachData;
     }
 

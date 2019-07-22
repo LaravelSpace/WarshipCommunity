@@ -19,7 +19,6 @@ class ValidateException extends CommonException
      */
     public function __construct($message = "", $code = 0, $attachData = "", Throwable $previous = null)
     {
-        $this->attachData = $attachData;
         parent::__construct($message, $code, $attachData, $previous);
     }
 }

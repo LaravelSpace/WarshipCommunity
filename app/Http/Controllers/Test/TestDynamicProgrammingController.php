@@ -8,15 +8,9 @@ use App\AlgorithmDemo\DynamicProgramming\Handler\GiveChangeHandler;
 use App\AlgorithmDemo\DynamicProgramming\Handler\KingAndGoldMineHandler;
 use App\AlgorithmDemo\DynamicProgramming\Handler\LongestCommonSequenceHandler;
 use App\AlgorithmDemo\DynamicProgramming\Handler\MinimumPathHandler;
-use App\AlgorithmDemo\Sort\Handler\BubbleSortHandler;
-use App\AlgorithmDemo\Sort\Handler\InsertionSortHandler;
-use App\AlgorithmDemo\Sort\Handler\MergeSortHandler;
-use App\AlgorithmDemo\Sort\Handler\QuickSortHandler;
-use App\AlgorithmDemo\Sort\Handler\SelectionSortHandler;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TestAlgorithmDemoController extends Controller
+class TestDynamicProgrammingController
 {
     public function __construct()
     {
@@ -146,35 +140,6 @@ class TestAlgorithmDemoController extends Controller
             'dynamicProgramming' => [
                 'resultNum' => $handlerDynamicProgramming->dynamicProgramming($steps)
             ]
-        ];
-
-        return response()->json($returnData);
-    }
-
-    public function sort(Request $request)
-    {
-        $arrayData = [];
-        $arrayNum = 8;
-        for ($i = 0; $i < $arrayNum; $i++) {
-            $arrayData[] = rand(1, 20);
-        }
-
-        // $bubbleSortResult = (new BubbleSortHandler($arrayData))->sort();
-        // $mergeSortResult = (new MergeSortHandler($arrayData))->sort();
-        // $quickSortResult = (new QuickSortHandler($arrayData))->sort();
-        // $selectionSortResult = (new SelectionSortHandler($arrayData))->sort();
-        $insertionSortResult = (new InsertionSortHandler($arrayData))->sort();
-
-        $returnData = [
-            'basicData'           => [
-                'arrayData' => $arrayData,
-                'arrayNum'  => $arrayNum,
-            ],
-            // 'bubbleSort' => $bubbleSortResult,
-            // 'mergeSort'  => $mergeSortResult,
-            // 'quickSort'  => $quickSortResult,
-            // 'selectionSortResult'=>$selectionSortResult,
-            'insertionSortResult' => $insertionSortResult,
         ];
 
         return response()->json($returnData);

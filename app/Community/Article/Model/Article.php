@@ -10,14 +10,14 @@ class Article extends Model
 {
     protected $connection = 'mysql';
 
-    protected $table = 'community_articles';
+    protected $table = 'articles';
 
     protected $fillable = [
         'title',
         'main_body',
         'user_id',
         'examine',
-        'blacklist',
+        'blacklist'
     ];
 
     public function user()
@@ -27,11 +27,11 @@ class Article extends Model
 
     public function scopePassExamine($query)
     {
-        $query->where('examine', '=', 2);
+        $query->where('examine', '=', 2); // 通过敏感词审核
     }
 
     public function scopeNotInBlacklist($query)
     {
-        $query->where('blacklist', '=', false);
+        $query->where('blacklist', '=', false); // 不在黑名单中
     }
 }
