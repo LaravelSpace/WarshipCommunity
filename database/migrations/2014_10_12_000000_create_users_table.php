@@ -13,7 +13,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
         if (Schema::hasTable('users')) {
+            echo "Table users Is Already Exist! \n";
             return; // 如果表已存在
         }
         Schema::create('users', function (Blueprint $table) {
