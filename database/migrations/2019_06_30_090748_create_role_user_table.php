@@ -13,16 +13,24 @@ class CreateRoleUserTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('role_user')) {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
             return;
         }
+        if (Schema::hasTable('role_user')) {
+            echo "Table role_user Is Already Exist! \n";
+            return;
+        }
+        // \DB::connection()->enableQueryLog();
         Schema::create('role_user', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('role_id');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+        // \Log::debug(\DB::getQueryLog());
     }
 
     /**

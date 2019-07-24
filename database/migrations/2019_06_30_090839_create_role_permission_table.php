@@ -13,16 +13,24 @@ class CreateRolePermissionTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('role_permission')) {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
             return;
         }
+        if (Schema::hasTable('role_permission')) {
+            echo "Table role_permission Is Already Exist! \n";
+            return;
+        }
+        // \DB::connection()->enableQueryLog();
         Schema::create('role_permission', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
             $table->unsignedInteger('permission_id');
             $table->unsignedInteger('role_id');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+        // \Log::debug(\DB::getQueryLog());
     }
 
     /**

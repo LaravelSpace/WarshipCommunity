@@ -13,16 +13,24 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('permissions')) {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
             return;
         }
+        if (Schema::hasTable('permissions')) {
+            echo "Table permissions Is Already Exist! \n";
+            return;
+        }
+        // \DB::connection()->enableQueryLog();
         Schema::create('permissions', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
             $table->string('name', 64)->unique(); // 权限名称
             $table->string('describe')->nullable(); // 描述
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+        // \Log::debug(\DB::getQueryLog());
     }
 
     /**

@@ -13,6 +13,15 @@ class CreateJobsTable extends Migration
      */
     public function up()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
+        if (Schema::hasTable('jobs')) {
+            echo "Table jobs Is Already Exist! \n";
+            return;
+        }
+        // \DB::connection()->enableQueryLog();
         Schema::create('jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('queue')->index();
@@ -22,6 +31,7 @@ class CreateJobsTable extends Migration
             $table->unsignedInteger('available_at');
             $table->unsignedInteger('created_at');
         });
+        // \Log::debug(\DB::getQueryLog());
     }
 
     /**

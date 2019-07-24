@@ -13,13 +13,24 @@ class CreateSensitiveResultsTable extends Migration
      */
     public function up()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
+        if (Schema::hasTable('sensitive_results')) {
+            echo "Table sensitive_results Is Already Exist! \n";
+            return;
+        }
+        // \DB::connection()->enableQueryLog();
         Schema::create('sensitive_results', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('target_id');
             $table->string('classification', 64);
             $table->string('result_data');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+        // \Log::debug(\DB::getQueryLog());
     }
 
     /**

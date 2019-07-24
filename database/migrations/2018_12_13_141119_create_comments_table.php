@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommunityCommentsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,15 @@ class CreateCommunityCommentsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('comments')) {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
             return;
         }
+        if (Schema::hasTable('comments')) {
+            echo "Table comments Is Already Exist! \n";
+            return;
+        }
+        // \DB::connection()->enableQueryLog();
         Schema::create('comments', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
@@ -24,9 +30,11 @@ class CreateCommunityCommentsTable extends Migration
             $table->unsignedInteger('article_id'); // table:articles->id
             $table->unsignedTinyInteger('examine')->default(0); // 审核状态:0=未触发,1=待审核,2=通过,3=拒绝
             $table->boolean('blacklist')->default(false); // 黑名单
-            $table->softDeletes(); // 软删除
-            $table->timestamps();
+            $table->softDeletes();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
+        // \Log::debug(\DB::getQueryLog());
     }
 
     /**

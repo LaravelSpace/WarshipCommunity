@@ -19,8 +19,9 @@ class CreateUsersTable extends Migration
         }
         if (Schema::hasTable('users')) {
             echo "Table users Is Already Exist! \n";
-            return; // 如果表已存在
+            return;
         }
+        // \DB::connection()->enableQueryLog();
         Schema::create('users', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
@@ -33,11 +34,13 @@ class CreateUsersTable extends Migration
             $table->string('avatar', 128); // 头像图片地址
             $table->string('api_token', 64); // Api token
             $table->rememberToken();
-            $table->timestamps();
-            $table->unique('name'); // 唯一索引
-            $table->index('email'); // 普通索引
-            $table->index('phone'); // 普通索引
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+            $table->unique('name');
+            $table->index('email');
+            $table->index('phone');
         });
+        // \Log::debug(\DB::getQueryLog());
     }
 
     /**
