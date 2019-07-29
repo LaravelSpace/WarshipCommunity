@@ -18,7 +18,7 @@ LoadModule php7_module "{path to php}\php-7.1.23\php7apache2_4.dll"
 AddType application/x-httpd-php .php .html .htm
 ```
 
-然后，执行 `httpd.exe -k install` 命令注册 `Apache` 服务，如果是 `Apache2.4`的版本，默认注册的服务名就是 `Apache2.4`，这里我们可以自定义服务名。在命令行中执行 `sc delete Apache2.4` 可以卸载服务名为 `Apache2.4` 的服务。
+然后，执行 `$ httpd.exe -k install` 命令注册 `Apache` 服务，如果是 `Apache2.4`的版本，默认注册的服务名就是 `Apache2.4`，这里我们可以自定义服务名。在命令行中执行 `$ sc delete Apache2.4` 可以卸载服务名为 `Apache2.4` 的服务。
 
 ## 注册两个不同版本 PHP 的 Apache 服务器
 
@@ -41,9 +41,9 @@ AddType application/x-httpd-php .php .html .htm
 然后在命令行分别执行下面两个命令，注册两个 `Apache2.4` 服务
 
 ```
-> httpd.exe -k install -n Apache2.4_php5.6 -D php5.6
-> 
-> httpd.exe -k install -n Apache2.4_php7.1 -D php7.1
+$ httpd.exe -k install -n Apache2.4_php5.6 -D php5.6
+
+$ httpd.exe -k install -n Apache2.4_php7.1 -D php7.1
 ```
 
 完成之后就可以使用 `ApacheMonitor` 启动不同的 `Apache` 服务，服务会对应使用各自配置的 PHP 版本。启动好服务后可以输出 `phpinfo()` 检查一下。
@@ -51,7 +51,7 @@ AddType application/x-httpd-php .php .html .htm
 ## 卸载 Apache
 
 - 首先关闭 `Apache` 服务（方式很多）。
-- 然后在命令行中运行命令：`sc delete Apache2.4_php5.6`
+- 然后在命令行中运行命令：`$ sc delete Apache2.4_php5.6`
 
 ## 参考
 

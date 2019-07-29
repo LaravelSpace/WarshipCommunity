@@ -130,7 +130,7 @@ Code Review 很重要，千万不要以时间或者其他原因放弃 Code Revie
 
 Bob大叔在其著作《代码整洁之道》的前言中引用了这样一幅漫画：
 
-![p08](.\images\technical-debt\p08.jfif)
+![p08](.\images\technical-debt\p08.jpg)
 
 使用漫画中的“每分钟爆粗数量”来衡量代码质量是个很有趣的玩笑，强调了代码的可读易懂等这样的“内在”质量属性。相对于满足需求规范这样的“外在”质量属性，“内在”的代码质量属性强调的是支持实现功能需求的代码内部结构的质量。《Sonar code quality testing essential》一书中从七个维度定义了代码的这种内在质量，Sonar开发团队上纲上线的戏称为开发人员七宗罪：
 

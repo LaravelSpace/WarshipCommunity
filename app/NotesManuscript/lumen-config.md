@@ -8,7 +8,7 @@
 
 首先配置 `database.php`，增加一个 MySQL 链接。
 
-```
+```php
 'mysql2' => [
     'driver'    => 'mysql',
     'host'      => 'host2',
@@ -25,7 +25,7 @@
 
 1、在数据库迁移时，可以指定数据表使用的链接
 
-```
+```php
 Schema::connection('mysql2')->create('some_table', function($table) {
     $table->increments('id');
 });
@@ -33,13 +33,13 @@ Schema::connection('mysql2')->create('some_table', function($table) {
 
 2、在使用查询构造器时，可以指定数据库连接
 
-```
+```php
 DB::connection('mysql2')->select(...);
 ```
 
 3、在模型中，可以指定模型数据库连接
 
-```
+```php
 class UserModel extends Eloquent
 {
     protected $connection = 'mysql2';
@@ -48,7 +48,7 @@ class UserModel extends Eloquent
 
 4、也可以实例化模型之后，再指定数据库连接
 
-```
+```php
 $userModel = new UserModel;
 $userModel->setConnection('mysql2');
 $user = $userModel->find(1);

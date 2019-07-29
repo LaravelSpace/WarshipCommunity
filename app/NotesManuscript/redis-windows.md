@@ -18,10 +18,10 @@ requirepass root
 其实这样就可以启动 `Redis` 数据库了，但是这里为了后续方便，我需要把 `Redis` 注册为 `Windows` 的服务。从命令行进入 `Redis` 文件夹根目录，常用的操作有下面 4 个。
 
 ```
-> redis-server --service-install redis.windows.conf // 安装 redis 服务
-> redis-server --service-start // 启动 redis 服务 
-> redis-server --service-stop // 停止 redis 服务
-> redis-server --service-uninstall // 卸载 redis 服务
+$ redis-server --service-install redis.windows.conf // 安装 redis 服务
+$ redis-server --service-start // 启动 redis 服务 
+$ redis-server --service-stop // 停止 redis 服务
+$ redis-server --service-uninstall // 卸载 redis 服务
 ```
 
 执行第一行命令后 `Redis` 服务就成为 `Windows` 的服务了，可以从 `右击我的电脑->管理-服务和应用程序->服务` 中找到。名字一般就是 `Redis`。

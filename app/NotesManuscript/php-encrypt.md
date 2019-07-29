@@ -23,7 +23,7 @@ $encryptTextBase64 = base64_encode($encryptText);
 
 `PHP 7.1` 版本的解密部分
 
-```
+```php
 $encryptText = base64_decode($encryptTextBase64);
 $encrypt_key = '11111111111111111111111111111132';
 $decryptText = openssl_decrypt($encryptText, 'AES-256-ECB', $key, OPENSSL_RAW_DATA);

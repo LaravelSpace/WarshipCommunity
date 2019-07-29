@@ -10,7 +10,7 @@
 
 **app/Http/Requests/BaseRequest.php**
 
-```
+```php
 <?php
 namespace App\Http\Requests;
 
@@ -32,7 +32,7 @@ class BaseRequest extends Request
 
 在 `public/index.php` 文件中，将 `\Illumiate\Http\Request` 替换为刚才的 `BaseRequest`
 
-```
+```php
 $response = $kernel->handle(
     $request = \App\Http\Requests\BaseRequest::capture()
 );
@@ -46,7 +46,7 @@ $response = $kernel->handle(
 
 **app/Http/Middleware/JsonMiddleware.php**
 
-```
+```php
 <?php 
 namespace App\Http\Middleware;
 use Closure;
@@ -66,7 +66,7 @@ class JsonMiddleware
 
 **app/Http/Kernel.php**
 
-```
+```php
 <?php
 
 namespace App\Http;

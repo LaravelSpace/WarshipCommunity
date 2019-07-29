@@ -5,8 +5,8 @@
 1、使用 `Composer` 安装扩展。
 
 ```
-> composer require predis/predis
-> composer require illuminate/redis
+$ composer require predis/predis
+$ composer require illuminate/redis
 ```
 
 **注意：安装时需要注意版本。**
@@ -14,12 +14,12 @@
 
 例如：为 `Lumen 5.6.*` 安装 `illuminate/redis` 扩展时，可以使用下面的命令指定版本。
 ```
-> composer require illuminate/redis=5.6.*
+$ composer require illuminate/redis=5.6.*
 ```
 
 2、在 `bootstrap/app.php` 中注册 `Redis` 服务。
 
-```
+```php
 $app->withFacades(); // 如果被注释了，需要打开注释
 $app->withEloquent(); // 如果被注释了，需要打开注释
     
