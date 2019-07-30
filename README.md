@@ -1,5 +1,10 @@
 # WarshipCommunity 更新记录
 
+## 2019-07-30
+
+- 添加 tymon/jwt-auth
+- 重新定义目录结构，添加多个分类目录
+
 ## 2019-07-29
 
 - 整理文档和笔记
@@ -66,9 +71,9 @@
 
 ## 2019-06-23
 
-- 添加 simplemde-markdown-editor
-- 添加 parsedown
-- 添加 live2d
+- 添加 sparksuite/simplemde-markdown-editor
+- 添加 erusev/parsedown
+- 添加 live2d 参考 eeg1412/Live2dHistoire
 
 ## 2019-06-22
 
