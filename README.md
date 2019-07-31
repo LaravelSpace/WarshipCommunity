@@ -1,5 +1,9 @@
 # WarshipCommunity 更新记录
 
+## 2019-07-31
+
+- 调整笔记草稿原稿目录
+
 ## 2019-07-30
 
 - 添加 tymon/jwt-auth
