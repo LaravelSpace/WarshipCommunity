@@ -29,17 +29,17 @@ Route::prefix('articles')->namespace('Community')->group(function () {
     // Route::get('/{id?}', 'ArticleController@articlePage')->where('id','[1-9]+\d*'); // id >= 0;
 });
 
-Route::prefix('permissions')->namespace('Community')->group(function () {
+Route::prefix('permissions')->namespace('User')->group(function () {
     Route::get('/', 'PermissionController@indexPermission')->name('permissions.index');
     Route::post('/', 'PermissionController@storePermission')->name('permissions.store');
 });
 
-Route::prefix('roles')->namespace('Community')->group(function () {
+Route::prefix('roles')->namespace('User')->group(function () {
     Route::get('/', 'PermissionController@indexRole')->name('roles.index');
     Route::post('/', 'PermissionController@storeRole')->name('roles.store');
 });
 
-Route::prefix('users/register')->namespace('Community')->group(function () {
+Route::prefix('users/register')->namespace('User')->group(function () {
     Route::get('/', 'UserController@registerPage');
     Route::get('sign-check', 'UserController@signCheck');
     Route::post('sign-in', 'UserController@signIn');

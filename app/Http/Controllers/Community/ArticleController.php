@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Community;
 
 
-use App\Community\Article\Service\ArticleService;
 use App\Exceptions\ValidateException;
 use App\Http\Controllers\ResourceInterface;
 use App\Http\Controllers\WebController;
+use App\Service\Community\Article\Service\ArticleService;
 use Illuminate\Http\Request;
 
 class ArticleController extends WebController implements ResourceInterface
