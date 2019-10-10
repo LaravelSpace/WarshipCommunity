@@ -1,4 +1,10 @@
-# WarshipCommunity 更新记录
+# 更新记录
+
+## 2019-10-10
+
+- PHP 版本升级至 7.2.23
+- 项目升级至 Laravel 6.0
+- 添加 app/helpers.php
 
 ## 2019-08-11
 
