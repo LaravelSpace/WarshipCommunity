@@ -1,4 +1,4 @@
-@extends('community.app')
+@extends('app')
 
 @section('css')
     <link href="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.css" rel="stylesheet">

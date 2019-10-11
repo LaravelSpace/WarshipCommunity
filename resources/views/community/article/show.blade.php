@@ -1,4 +1,4 @@
-@extends('community.app')
+@extends('app')
 
 @section('body')
     <div class="row">

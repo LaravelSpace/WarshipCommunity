@@ -15,7 +15,7 @@
         <div class="form-group text-center">
             <div class="btn-group">
                 <button type="button" class="btn btn-lg btn-primary px-5"
-                        @click="articleSubmit()">@{{ titleSubmit }}</button>
+                        @click="articleSubmit()">@{{ submitTitle }}</button>
             </div>
         </div>
     </div>
@@ -29,8 +29,8 @@
                 articleItem: '',
                 urlArray: [],
                 urlTarget: '',
-                urlSubmit: '',
-                titleSubmit: '',
+                submitUrl: '',
+                submitTitle: '',
                 titleArticle: '',
                 titleValidMsg: '',
                 titleValidTag: false,
@@ -61,12 +61,12 @@
                 this.urlArray = gSplitUrl(localUrl);
                 this.urlTarget = this.urlArray[this.urlArray.length - 1];
                 if (this.urlTarget === 'create') {
-                    this.urlSubmit = COMMUNITY_URL.articles;
-                    this.titleSubmit = '确认发表';
+                    this.submitUrl = COMMUNITY_URL.articles;
+                    this.submitTitle = '确认发表';
                 } else if (this.urlTarget === 'edit') {
                     this.articleId = this.urlArray[this.urlArray.length - 2];
-                    this.urlSubmit = COMMUNITY_URL.articles + '/' + this.articleId;
-                    this.titleSubmit = '确认修改';
+                    this.submitUrl = COMMUNITY_URL.articles + '/' + this.articleId;
+                    this.submitTitle = '确认修改';
                     this.getArticleItem();
                 }
             },
@@ -92,7 +92,7 @@
             articleSubmit: function () {
                 let thisVue = this;
                 if (thisVue.urlTarget === 'create') {
-                    axios.post(thisVue.urlSubmit, {
+                    axios.post(thisVue.submitUrl, {
                         'title': thisVue.titleArticle,
                         'body': thisVue.bodyArticle
                     }).then(function (response) {
@@ -103,7 +103,7 @@
                         console.error(error.response);
                     });
                 } else if (thisVue.urlTarget === 'edit') {
-                    axios.put(thisVue.urlSubmit, {
+                    axios.put(thisVue.submitUrl, {
                         'id': thisVue.articleId,
                         'title': thisVue.titleArticle,
                         'body': thisVue.bodyArticle
