@@ -17,9 +17,9 @@
 //     return $request->user();
 // });
 
-Route::group(['prefix' => 'auth','namespace'=>'User'], function ($router) {
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+Route::namespace('V1/Api')->group(function(){
+
+    Route::post('articles', 'ArticleController@store')->name('articles.store');
+    Route::post('articles/{id}', 'ArticleController@update')->where('id', '[1-9]+\d*')->name('articles.update');
+    Route::post('articles/{id}', 'ArticleController@destroy')->where('id', '[1-9]+\d*')->name('articles.destroy');
 });

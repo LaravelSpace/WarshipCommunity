@@ -17,6 +17,9 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        return 1;
+        return response()->json([
+            'error_code'    => 1,
+            'error_message' => 2
+        ], 403);
     }
 }

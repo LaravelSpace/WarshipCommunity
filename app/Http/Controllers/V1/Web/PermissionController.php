@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\V1\Web;
 
 
 use App\Exceptions\ValidateException;
-use App\Http\Controllers\WebController;
+use App\Http\Controllers\V1\WebController;
 use App\Service\User\Service\PermissionService;
 use Illuminate\Http\Request;
 

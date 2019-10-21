@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
 
 use Illuminate\Http\Request;
@@ -20,6 +20,4 @@ interface ResourceInterface
     public function update(Request $request);
 
     public function destroy(Request $request);
-
-    public function dataHandler(array $inputData, string $classification);
 }

@@ -1,19 +1,14 @@
 <?php
 
 return [
-    'pi' => 3.14159265,
+    'http_method' => ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
 
-    'success' => 'SUCCESS',
-    'fail'    => 'FAIL',
-    'error'   => 'ERROR',
+    'http_status_code' => [200, 400, 403, 404, 422, 500],
 
-    'get'    => 'GET',
-    'post'   => 'POST',
-    'put'    => 'PUT',
-    'delete' => 'DELETE',
-
-    'http_code_200' => 200,
-    'http_code_403' => 403,
-    'http_code_422' => 422,
-    'http_code_500' => 500,
+    'success' => 'success',
+    'SUCCESS' => 'success',
+    'fail'    => 'fail',
+    'FAIL'    => 'fail',
+    'error'   => 'error',
+    'ERROR'   => 'error',
 ];

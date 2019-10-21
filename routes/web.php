@@ -15,18 +15,13 @@
 //    return view('welcome');
 //});
 
-Route::get('/', 'Community\IndexController@index');
+Route::namespace('V1\Web')->group(function(){
+    Route::get('/', 'IndexController@index');
 
-Route::prefix('articles')->namespace('Community')->group(function () {
-    Route::get('/', 'ArticleController@index')->name('articles.index');
-    Route::get('/create', 'ArticleController@create')->name('articles.create');
-    Route::post('/', 'ArticleController@store')->name('articles.store');
-    Route::get('/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*')->name('articles.show');
-    Route::get('/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*')->name('articles.edit');
-    Route::put('/{id}', 'ArticleController@update')->where('id', '[1-9]+\d*')->name('articles.update');
-    Route::delete('/{id}', 'ArticleController@destroy')->where('id', '[1-9]+\d*')->name('articles.destroy');
-
-    // Route::get('/{id?}', 'ArticleController@articlePage')->where('id','[1-9]+\d*'); // id >= 0;
+    Route::get('articles', 'ArticleController@index')->name('articles.index');
+    Route::get('articles/create', 'ArticleController@create')->name('articles.create');
+    Route::get('articles/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*')->name('articles.show');
+    Route::get('articles/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*')->name('articles.edit');
 });
 
 Route::prefix('permissions')->namespace('User')->group(function () {

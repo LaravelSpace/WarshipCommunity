@@ -1,24 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Community;
+namespace App\Http\Controllers\V1\Web;
 
 
 use App\Exceptions\ValidateException;
-use App\Http\Controllers\ResourceInterface;
-use App\Http\Controllers\WebController;
+use App\Http\Controllers\V1\ApiController;
+use App\Http\Controllers\V1\ResourceInterface;
 use App\Service\Community\Article\Service\ArticleService;
 use Illuminate\Http\Request;
 
-class ArticleController extends WebController implements ResourceInterface
+class ArticleController extends ApiController implements ResourceInterface
 {
     public function index(Request $request)
     {
-        $inputData = $request->all();
-        if (isset($inputData['data']) && $inputData['data'] === '1') {
-            return $this->dataHandler($inputData, 'articleList');
-        } else {
-            return view('community.article.index');
-        }
+        return view('community.article.index');
     }
 
     public function create(Request $request)
