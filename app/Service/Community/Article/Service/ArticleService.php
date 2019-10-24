@@ -7,13 +7,13 @@ use App\Service\Community\Article\Handler\ArticleHandler;
 
 class ArticleService
 {
-    public function getArticleList()
+    public function getArticleList(int $page = 1)
     {
-        return (new ArticleHandler())->getArticleList();
+        return (new ArticleHandler())->getArticleList($page);
     }
 
-    public function createArticle(array $user,string $title,string $body)
+    public function createArticle(array $user, string $title, string $body)
     {
-        return (new ArticleHandler())->createArticle($user,$title,$body);
+        return (new ArticleHandler())->createArticle($user, $title, $body);
     }
 }

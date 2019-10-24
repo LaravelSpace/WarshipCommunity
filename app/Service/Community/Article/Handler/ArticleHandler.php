@@ -53,7 +53,7 @@ class ArticleHandler
         return $returnData;
     }
 
-    public function getArticleList()
+    public function getArticleList($page)
     {
         $articleList = Article::passExamine()->notInBlacklist()->with('user')->get();
         if ($articleList->count() > 0) {
@@ -77,6 +77,6 @@ class ArticleHandler
 
         // event(new ArticleSensitiveEvent($article->id, 'article'));
 
-        return $article;
+        return $article->id;
     }
 }

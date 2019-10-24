@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Community\ArticleSensitiveEvent' => [
             'App\Listeners\Community\ArticleSensitiveListener',
         ],
+        'App\Events\Common\RequestLogEvent' => [
+            'App\Listeners\Common\RequestLogListener',
+        ],
     ];
 
     /**

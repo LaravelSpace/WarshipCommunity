@@ -14,9 +14,9 @@ class ArticleSensitiveEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $id; // article_id
+    public $id; // DB:article->id|DB:comment->id
 
-    public $classification; // article
+    public $classification; // article|comment
 
     /**
      * Create a new event instance.

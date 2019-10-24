@@ -12,20 +12,20 @@ class ArticleController extends ApiController implements ResourceApiInterface
 {
     public function index(Request $request)
     {
-        $input = $request->all();
-        $result = (new ArticleService())->getArticleList();
+        $page = (int)$request->input('page',1);
+
+        $result = (new ArticleService())->getArticleList($page);
 
         return $this->response($result);
     }
 
     public function store(Request $request)
     {
-        $input = $request->all();
-        $title = $input['title'];
-        $body = $input['body'];
-        $user = ['id'=>4];
+        $title = $request->input('title');
+        $body = $request->input('body');
+        $user = ['id' => 4];
 
-        (new ArticleService())->createArticle($user,$title,$body);
+        (new ArticleService())->createArticle($user, $title, $body);
     }
 
     public function show(Request $request, $id)

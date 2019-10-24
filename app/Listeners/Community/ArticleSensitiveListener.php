@@ -11,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ArticleSensitiveListener implements ShouldQueue
 {
-    public $queue = 'sensitivelisteners';
+    public $queue = 'sensitive_listeners';
 
     /**
      * Create the event listener.
