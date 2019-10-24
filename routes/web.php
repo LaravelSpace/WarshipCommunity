@@ -18,10 +18,10 @@
 Route::namespace('V1\Web')->group(function(){
     Route::get('/', 'IndexController@index');
 
-    Route::get('articles', 'ArticleController@index')->name('articles.index');
-    Route::get('articles/create', 'ArticleController@create')->name('articles.create');
-    Route::get('articles/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*')->name('articles.show');
-    Route::get('articles/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*')->name('articles.edit');
+    Route::get('article', 'ArticleController@index');
+    Route::get('article/create', 'ArticleController@create');
+    Route::get('article/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
+    Route::get('article/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
 });
 
 Route::prefix('permissions')->namespace('User')->group(function () {

@@ -6,7 +6,7 @@
             <vue-article-list></vue-article-list>
         </div>
         <div class="col-md-3">
-            <a class="btn btn-outline-primary" href="/articles/create">创建帖子</a>
+            <a class="btn btn-outline-primary" href="/article/create">创建帖子</a>
         </div>
     </div>
     @include('community.article.article-list')

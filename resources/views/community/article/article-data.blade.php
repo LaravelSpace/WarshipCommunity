@@ -61,7 +61,7 @@
                 this.urlArray = gSplitUrl(localUrl);
                 this.urlTarget = this.urlArray[this.urlArray.length - 1];
                 if (this.urlTarget === 'create') {
-                    this.submitUrl = COMMUNITY_URL.articles;
+                    this.submitUrl = COMMUNITY_URL.article_store;
                     this.submitTitle = '确认发表';
                 } else if (this.urlTarget === 'edit') {
                     this.articleId = this.urlArray[this.urlArray.length - 2];

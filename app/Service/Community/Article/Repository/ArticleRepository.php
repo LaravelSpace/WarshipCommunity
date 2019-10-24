@@ -3,8 +3,9 @@
 namespace App\Service\Community\Article\Repository;
 
 
-use App\Community\Article\Model\Article;
+use App\Service\ModelRepository;
 
-class ArticleRepository
+class ArticleRepository extends ModelRepository
 {
+
 }

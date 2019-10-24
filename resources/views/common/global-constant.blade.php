@@ -25,8 +25,10 @@
         'users_sign_in': '/users/register/sign-in',
         'users_sign_out': '/users/register/sign-out',
         'users_sign_check': '/users/register/sign-check',
-        'articles': '/articles',
         'roles': '/roles',
-        'permissions': '/permissions'
+        'permissions': '/permissions',
+
+        'article': '/api/article',
+        'article_store': '/api/article/store',
     };
 </script>

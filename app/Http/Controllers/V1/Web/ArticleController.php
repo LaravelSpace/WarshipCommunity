@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\V1\Web;
 
 
-use App\Exceptions\ValidateException;
-use App\Http\Controllers\V1\ApiController;
-use App\Http\Controllers\V1\ResourceInterface;
-use App\Service\Community\Article\Service\ArticleService;
+use App\Http\Controllers\V1\ResourceWebInterface;
+use App\Http\Controllers\V1\WebController;
 use Illuminate\Http\Request;
 
-class ArticleController extends ApiController implements ResourceInterface
+class ArticleController extends WebController implements ResourceWebInterface
 {
     public function index(Request $request)
     {
@@ -21,50 +19,13 @@ class ArticleController extends ApiController implements ResourceInterface
         return view('community.article.create');
     }
 
-    public function store(Request $request)
+    public function show(Request $request)
     {
-        $inputData = $request->all();
-
-        return $this->dataHandler($inputData, 'articleStore');
-    }
-
-    public function show(Request $request, $id)
-    {
-        $inputData = $request->all();
-        $inputData['article_id'] = $id;
-        if (isset($inputData['data']) && $inputData['data'] === '1') {
-            return $this->dataHandler($inputData, 'articleItem');
-        } else {
-            return view('community.article.show');
-        }
+        return view('community.article.show');
     }
 
     public function edit(Request $request)
     {
         return view('community.article.edit');
-    }
-
-    public function update(Request $request)
-    {
-        $inputData = $request->all();
-
-        return $this->dataHandler($inputData, 'articleUpdate');
-    }
-
-    public function destroy(Request $request)
-    {
-    }
-
-    public function dataHandler(array $inputData, string $classification)
-    {
-        $service = new ArticleService();
-        try {
-            $resultData = $service->dataHandler($inputData, $classification);
-
-            return $this->response($resultData);
-        } catch (ValidateException $exception) {
-            return $this->setStatusCode($exception->getCode())
-                ->responseError($exception->getCode(), $exception->getMessage());
-        }
     }
 }

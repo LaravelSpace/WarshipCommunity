@@ -17,9 +17,10 @@
 //     return $request->user();
 // });
 
-Route::namespace('V1/Api')->group(function(){
-
-    Route::post('articles', 'ArticleController@store')->name('articles.store');
-    Route::post('articles/{id}', 'ArticleController@update')->where('id', '[1-9]+\d*')->name('articles.update');
-    Route::post('articles/{id}', 'ArticleController@destroy')->where('id', '[1-9]+\d*')->name('articles.destroy');
+Route::namespace('V1\Api')->group(function(){
+    Route::get('article', 'ArticleController@index');
+    Route::post('article/store', 'ArticleController@store');
+    Route::get('article/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
+    Route::post('article/{id}/update', 'ArticleController@update')->where('id', '[1-9]+\d*');
+    Route::post('article/{id}/destroy', 'ArticleController@destroy')->where('id', '[1-9]+\d*');
 });

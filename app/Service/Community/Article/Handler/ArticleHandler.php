@@ -3,47 +3,15 @@
 namespace App\Service\Community\Article\Handler;
 
 
-use App\Community\Article\Model\Article;
 use App\Events\Community\ArticleSensitiveEvent;
+use App\Service\Community\Article\Model\Article;
 use Parsedown;
 
 class ArticleHandler
 {
-    public function articleList(array $inputData)
-    {
-        $articleList = Article::passExamine()->notInBlacklist()->with('user')->get();
-        if ($articleList->count() > 0) {
-            $articleList = $articleList->toArray();
-        } else {
-            $articleList = [];
-        }
-
-        $returnData = [
-            'status' => config('constant.success'),
-            'data'   => $articleList
-        ];
-
-        return $returnData;
-    }
-
     public function articleStore(array $inputData)
     {
-        $articleData = [
-            'title'     => $inputData['title'],
-            'main_body' => $inputData['body'],
-            'user_id'   => 1, // todo test data
-            'examine'   => 1
-        ];
-        $article = Article::create($articleData);
 
-        event(new ArticleSensitiveEvent($article->id, 'article'));
-
-        $returnData = [
-            'status' => config('constant.success'),
-            'data'   => $article->toArray()
-        ];
-
-        return $returnData;
     }
 
     public function articleItem(array $inputData)
@@ -85,7 +53,30 @@ class ArticleHandler
         return $returnData;
     }
 
-    public function articleDelete(array $inputData)
+    public function getArticleList()
     {
+        $articleList = Article::passExamine()->notInBlacklist()->with('user')->get();
+        if ($articleList->count() > 0) {
+            $articleList = $articleList->toArray();
+        } else {
+            $articleList = [];
+        }
+
+        return $articleList;
+    }
+
+    public function createArticle(array $user, string $title, string $body)
+    {
+        $articleData = [
+            'title'     => $title,
+            'main_body' => $body,
+            'user_id'   => $user['id'],
+            'examine'   => 1
+        ];
+        $article = Article::create($articleData);
+
+        // event(new ArticleSensitiveEvent($article->id, 'article'));
+
+        return $article;
     }
 }

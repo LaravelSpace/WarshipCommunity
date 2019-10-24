@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav col-md-6 mr-5">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/articles">帖子</a>
+                    <a class="nav-link" href="/article">帖子</a>
                 </li>
             </ul>
             <ul class="navbar-nav col-md-3 mr-5">
