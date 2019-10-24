@@ -4,44 +4,29 @@ namespace App\Service\Common\SensitiveWord\Service;
 
 
 use App\Service\Common\SensitiveWord\Handler\DFAHandler;
+use App\Service\Common\SensitiveWord\SensitiveWord\CheckSensitiveWord;
 
 /**
  * Class SensitiveWordService
- * 敏感词匹配
  *
- * @package App\Http\Service\Index
+ * @package App\Service\Common\SensitiveWord\Service
  */
 class SensitiveWordService
 {
-    private $sensitiveWorldHandler;
+    private $handler;
 
     /**
      * SensitiveWordService constructor.
      *
-     * @param string $algorithm [算法类型]
+     * @param CheckSensitiveWord|null $handler
      */
-    public function __construct(string $algorithm = "")
+    public function __construct(CheckSensitiveWord $handler = null)
     {
-        $this->sensitiveWorldHandler = $this->iSelectHandler($algorithm);
-    }
-
-    /**
-     * 选择算法类型
-     *
-     * @param string $algorithm
-     * @return DFAHandler
-     */
-    private function iSelectHandler(string $algorithm = "")
-    {
-        switch ($algorithm) {
-            case "DFA":
-                $handler = new DFAHandler();
-                break;
-            default:
-                $handler = new DFAHandler();
+        if ($handler === null) {
+            $this->handler = new DFAHandler();
+        } else {
+            $this->handler = $handler;
         }
-
-        return $handler;
     }
 
     /**
@@ -52,6 +37,6 @@ class SensitiveWordService
      */
     public function checkSensitiveWord(string $checkString)
     {
-        return $this->sensitiveWorldHandler->checkSensitiveWord($checkString);
+        return $this->handler->checkSensitiveWord($checkString);
     }
 }

@@ -9,9 +9,10 @@ use App\Service\Community\Article\Model\Article;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ArticleSensitiveListener implements ShouldQueue
+class ArticleSensitiveListener
 {
-    public $queue = 'sensitive_listeners';
+    // class ArticleSensitiveListener implements ShouldQueue
+    // public $queue = 'sensitive_listeners';
 
     /**
      * Create the event listener.
@@ -34,7 +35,7 @@ class ArticleSensitiveListener implements ShouldQueue
         $id = $event->id;
         $classification = $event->classification;
         $text = $this->iGetModelText($id, $classification);
-        if ($text !== null && $text !== "") {
+        if ($text !== null && $text !== '') {
             $resultData = (new SensitiveWordService())->checkSensitiveWord($text);
             $this->iHandleResult($id, $classification, $resultData);
         }
@@ -42,9 +43,9 @@ class ArticleSensitiveListener implements ShouldQueue
 
     private function iGetModelText(int $id, string $classification)
     {
-        $text = "";
+        $text = '';
         switch ($classification) {
-            case "article":
+            case 'article':
                 $modelData = Article::find($id);
                 if ($modelData !== null) {
                     $text = $modelData->main_body;
@@ -60,15 +61,15 @@ class ArticleSensitiveListener implements ShouldQueue
             $examineResult = 2;
         } else {
             SensitiveResult::create([
-                "target_id"      => $id,
-                "classification" => $classification,
-                "result_data"    => json_encode($resultData)
+                'target_id'      => $id,
+                'classification' => $classification,
+                'result_data'    => json_encode($resultData)
             ]);
             $examineResult = 3;
         }
         switch ($classification) {
-            case "article":
-                Article::where("id", '=', $id)->update(["examine" => $examineResult]);
+            case 'article':
+                Article::where('id', '=', $id)->update(['examine' => $examineResult]);
                 break;
         }
     }

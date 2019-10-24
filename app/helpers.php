@@ -1,10 +1,5 @@
 <?php
 
-/**
- * 生成 32 位唯一标识
- *
- * @return string
- */
 function makeUniqueKey32()
 {
     return md5(uniqid(microtime(), true));
