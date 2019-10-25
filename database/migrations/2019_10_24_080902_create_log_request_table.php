@@ -21,7 +21,8 @@ class CreateLogRequestTable extends Migration
         Schema::create('log_request', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
-            $table->string('ip',64);
+            $table->string('ip',32);
+            $table->string('client_id',64);
             $table->string('url',64);
             $table->string('request',64);
             $table->string('response',64)->nullable();
@@ -32,12 +33,13 @@ class CreateLogRequestTable extends Migration
 
         // create table `log_request` (
         // `id` int unsigned not null auto_increment primary key,
-        // `ip` varchar(64) not null,
+        // `ip` varchar(32) not null,
+        // `client_id` varchar(64) not null
         // `url` varchar(64) not null,
         // `request` varchar(64) not null,
-        // `response` varchar(64) not null,
+        // `response` varchar(64) null,
         // `created_at` timestamp default CURRENT_TIMESTAMP null,
-        // `updated_at` timestamp null ON UPDATE CURRENT_TIMESTAMP
+        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
         // alter table `log_request` add index `log_request_url_index`(`url`)

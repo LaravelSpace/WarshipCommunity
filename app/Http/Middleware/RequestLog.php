@@ -11,11 +11,19 @@ class RequestLog
     {
         $logKey = makeUniqueKey32();
 
+        $clientId = 'web_user';
+        $authorization = $request->header('Authorization', null);
+        if (is_string($authorization)) {
+            list($clientStr, $authStr) = explode(':', $authorization);
+            list($classfication, $clientId) = explode(' ', $clientStr);
+        }
+
         $logData = [
-            'ip'      => $request->ip(),
-            'url'     => $request->path(),
-            'request' => $request->all(),
-            'time'    => timeNow()
+            'ip'        => $request->ip(),
+            'client_id' => $clientId,
+            'url'       => $request->path(),
+            'request'   => $request->all(),
+            'time'      => timeNow()
         ];
         event(new RequestLogEvent($logKey, $logData));
 

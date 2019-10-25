@@ -11,6 +11,6 @@ abstract class ApiController extends Controller
 
     public function __construct()
     {
-        $this->httpStatusCode = config('constant.http_status_code');
+        $this->httpStatusCode = config('constant.HTTP_STATUS_CODE');
     }
 }

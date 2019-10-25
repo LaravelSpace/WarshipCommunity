@@ -37,6 +37,7 @@ class RequestLogListener
         if (isset($logData['request'])) {
             $createField = [
                 'ip'         => $logData['ip'],
+                'client_id'  => $logData['client_id'],
                 'url'        => $logData['url'],
                 'request'    => $logKey,
                 'created_at' => $logData['time']
@@ -59,8 +60,7 @@ class RequestLogListener
         $dateToday = dateToday();
         $dirPath = "/tmp/OH_LOG/{$dateToday}/";
         $fileName = str_replace('.log', '', $fileName);
-        $fileName = $fileName . '.log';
-        $logPath = $dirPath . $fileName;
+        $logPath = $dirPath . $fileName . '.log';
         try {
             if (!is_dir($dirPath)) {
                 mkdir($dirPath, 0777, true);
@@ -73,10 +73,8 @@ class RequestLogListener
                 mkdir($dirPath, 0777, true);
             }
 
-            $exceptionText = 'Code=' . $e->getCode() . ',Message=' . $e->getMessage();
-            $trace = $e->getTrace();
-            $traceText = var_export($trace[0], true);
-            $text = "\nTIME IS:" . timeNow() . "\n{$exceptionText}\n{$traceText}\n";
+            $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
+            $text = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
             file_put_contents($logPath, $text, FILE_APPEND);
         }
     }

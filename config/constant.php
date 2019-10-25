@@ -1,14 +1,34 @@
 <?php
 
 return [
-    'http_method' => ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    'HTTP_METHOD'      => ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    'HTTP_STATUS_CODE' => [200, 400, 403, 404, 418, 422, 500],
 
-    'http_status_code' => [200, 400, 403, 404, 422, 500],
+    'API_LIMIT' => [
+        'ip'     => [
+            'second' => 5,
+            'minute' => 60,
+            'hour'   => 12,
+            'day'    => 5000,
+        ],
+        'client' => [
+            'second' => 10,
+            'minute' => 120,
+            'hour'   => 5000,
+            'day'    => 60000
+        ],
+        'time'   => [
+            'second' => 1,
+            'minute' => 60,
+            'hour'   => 3600,
+            'day'    => 86400
+        ]
+    ],
 
-    'success' => 'success',
     'SUCCESS' => 'success',
-    'fail'    => 'fail',
+    'success' => 'success',
     'FAIL'    => 'fail',
-    'error'   => 'error',
+    'fail'    => 'fail',
     'ERROR'   => 'error',
+    'error'   => 'error',
 ];

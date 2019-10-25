@@ -35,6 +35,7 @@ class LogRequest extends Model
 
     protected $fillable = [
         'ip',
+        'client_id',
         'url',
         'request',
         'response'

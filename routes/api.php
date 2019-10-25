@@ -17,7 +17,7 @@
 //     return $request->user();
 // });
 
-Route::namespace('V1\Api')->middleware('request_log')->group(function(){
+Route::namespace('V1\Api')->middleware(['request_log','request_throttle'])->group(function(){
     Route::get('article', 'ArticleController@index');
     Route::post('article/store', 'ArticleController@store');
     Route::get('article/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
