@@ -19,8 +19,13 @@
 
     // 路由以及路由参数配置
     const COMMUNITY_URL = {
-        'need_data': 'data=1',
-        'markdown': 'markdown=1',
+        'store': '/store',
+        'edit': '/edit',
+        'update': '/update',
+        'destroy': '/destroy',
+    };
+
+    const COMMUNITY_WEB_URL = {
         'users_sign_up': '/users/register/sign-up',
         'users_sign_in': '/users/register/sign-in',
         'users_sign_out': '/users/register/sign-out',
@@ -28,7 +33,11 @@
         'roles': '/roles',
         'permissions': '/permissions',
 
+        'article': '/article',
+    };
+
+    const COMMUNITY_API_URL = {
+
         'article': '/api/article',
-        'article_store': '/api/article/store',
     };
 </script>

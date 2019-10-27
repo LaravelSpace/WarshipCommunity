@@ -8,14 +8,14 @@ return [
         'ip'     => [
             'second' => 5,
             'minute' => 60,
-            'hour'   => 12,
-            'day'    => 5000,
+            'hour'   => 1200,
+            'day'    => 28800,
         ],
         'client' => [
             'second' => 10,
             'minute' => 120,
-            'hour'   => 5000,
-            'day'    => 60000
+            'hour'   => 7200,
+            'day'    => 172800
         ],
         'time'   => [
             'second' => 1,

@@ -2,20 +2,21 @@
     <div>
         <div class="form-group">
             <label for="article-title">标题</label>
-            <input type="text" class="form-control" id="article-title" :class="titleValid"
-                   placeholder="Title" v-model="titleArticle">
+            <input type="text" id="article-title" class="form-control" :class="titleValid" placeholder="Title"
+                   v-model="titleArticle">
         </div>
         <div class="form-group">
             <label for="article-body">正文</label>
             {{--<textarea class="form-control" id="article-body" rows="10" :class="bodyValid"--}}
             {{--placeholder="Body" v-model="bodyArticle"></textarea>--}}
-            <textarea class="form-control" id="article-body" rows="10" placeholder="Body"></textarea>
+            <textarea id="article-body" class="form-control" rows="10" placeholder="Body"></textarea>
         </div>
         <hr class="my-4">
         <div class="form-group text-center">
             <div class="btn-group">
-                <button type="button" class="btn btn-lg btn-primary px-5"
-                        @click="articleSubmit()">@{{ submitTitle }}</button>
+                <button type="button" class="btn btn-lg btn-primary px-5" @click="articleSubmit()">
+                    @{{ submitTitle }}
+                </button>
             </div>
         </div>
     </div>
@@ -26,17 +27,9 @@
         data: function () {
             return {
                 articleId: 0,
-                articleItem: '',
-                urlArray: [],
-                urlTarget: '',
-                submitUrl: '',
-                submitTitle: '',
-                titleArticle: '',
-                titleValidMsg: '',
-                titleValidTag: false,
-                bodyArticle: '',
-                bodyValidMsg: '',
-                bodyValidTag: false,
+                urlTarget: '', submitUrl: '', submitTitle: '',
+                titleArticle: '', titleValidMsg: '', titleValidTag: false,
+                bodyArticle: '', bodyValidMsg: '', bodyValidTag: false,
                 simplemde: null
             }
         },
@@ -45,9 +38,6 @@
         },
         mounted: function () {
             let thisVue = this;
-            if (this.urlTarget === 'edit') {
-                document.getElementById('article-title').disabled = true; // 标题不允许修改
-            }
             // simplemde-markdown-editor 的初始化要放在这里
             this.simplemde = new SimpleMDE({element: document.getElementById('article-body')});
             // 绑定事件，监听输入变化，并把值同步给 Vue 的变量
@@ -58,31 +48,27 @@
         methods: {
             init: function () {
                 let localUrl = window.location.href;
-                this.urlArray = gSplitUrl(localUrl);
-                this.urlTarget = this.urlArray[this.urlArray.length - 1];
+                let localUrlArray = gSplitUrl(localUrl);
+                this.urlTarget = localUrlArray[localUrlArray.length - 1];
                 if (this.urlTarget === 'create') {
-                    this.submitUrl = COMMUNITY_URL.article_store;
+                    this.submitUrl = COMMUNITY_API_URL.article+COMMUNITY_URL.store;
                     this.submitTitle = '确认发表';
                 } else if (this.urlTarget === 'edit') {
-                    this.articleId = this.urlArray[this.urlArray.length - 2];
-                    this.submitUrl = COMMUNITY_URL.articles + '/' + this.articleId;
+                    this.articleId = localUrlArray[localUrlArray.length - 2];
+                    this.submitUrl = COMMUNITY_API_URL.article + '/' + this.articleId+ COMMUNITY_URL.update;
                     this.submitTitle = '确认修改';
                     this.getArticleItem();
                 }
             },
             getArticleItem: function () {
                 let thisVue = this;
-                let localUrl = window.location.href;
-                let localUrlArray = gSplitUrl(localUrl);
-                thisVue.articleId = localUrlArray[localUrlArray.length - 2];
-                let url = COMMUNITY_URL.articles + '/' + thisVue.articleId
-                    + '?' + COMMUNITY_URL.need_data + '&' + COMMUNITY_URL.markdown;
+                let url = COMMUNITY_API_URL.article + '/' + thisVue.articleId + COMMUNITY_URL.edit;
                 axios.get(url).then(function (response) {
-                    thisVue.articleItem = response.data.data;
-                    thisVue.titleArticle = thisVue.articleItem.title;
-                    thisVue.simplemde.value(thisVue.articleItem.main_body);
-                    thisVue.bodyArticle = thisVue.articleItem.main_body;
-                    if (thisVue.articleItem !== null) {
+                    let articleItem = response.data.data;
+                    thisVue.titleArticle = articleItem.title;
+                    thisVue.simplemde.value(articleItem.body);
+                    thisVue.bodyArticle = articleItem.body;
+                    if (articleItem !== null) {
                         thisVue.vifShow = true;
                     }
                 }).catch(function (error) {
@@ -96,9 +82,8 @@
                         'title': thisVue.titleArticle,
                         'body': thisVue.bodyArticle
                     }).then(function (response) {
-                        thisVue.articleItem = response.data.data;
-                        // window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleItem.id;
-                        window.location.href = COMMUNITY_URL.articles;
+                        let articleId = response.data.data.article_id;
+                        window.location.href = COMMUNITY_WEB_URL.article + '/' + articleId;
                     }).catch(function (error) {
                         console.error(error.response);
                     });
@@ -108,9 +93,8 @@
                         'title': thisVue.titleArticle,
                         'body': thisVue.bodyArticle
                     }).then(function (response) {
-                        thisVue.articleId = response.data.data.id;
-                        // window.location.href = COMMUNITY_URL.articles + '/' + thisVue.articleId;
-                        window.location.href = COMMUNITY_URL.articles;
+                        let articleId = response.data.data.article_id;
+                        window.location.href = COMMUNITY_WEB_URL.article + '/' + articleId;
                     }).catch(function (error) {
                         console.error(error.response);
                     });

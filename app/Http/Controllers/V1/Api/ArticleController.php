@@ -10,41 +10,54 @@ use Illuminate\Http\Request;
 
 class ArticleController extends ApiController implements ResourceApiInterface
 {
-    public function index(Request $request)
-    {
-        $page = (int)$request->input('page',1);
-
-        $result = (new ArticleService())->getArticleList($page);
-
-        return $this->response($result);
-    }
-
     public function store(Request $request)
     {
         $title = $request->input('title');
         $body = $request->input('body');
         $user = ['id' => 4];
 
-        (new ArticleService())->createArticle($user, $title, $body);
+        $result = (new ArticleService())->createArticle($user, $title, $body);
+
+        return $this->response(['article_id' => $result]);
+    }
+
+    public function index(Request $request)
+    {
+        $page = (int)$request->input('page', 1);
+
+        $result = (new ArticleService())->getArticleList($page);
+
+        return $this->response($result);
     }
 
     public function show(Request $request, $id)
     {
-        (new ArticleService())->getArticle();
+        $result = (new ArticleService())->getArticle($id, true);
+
+        return $this->response($result);
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request, $id)
     {
-        (new ArticleService())->getArticle();
+        $result = (new ArticleService())->getArticle($id);
+
+        return $this->response($result);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        (new ArticleService())->updateArticle();
+        $title = $request->input('title');
+        $body = $request->input('body');
+
+        $result = (new ArticleService())->updateArticle($id, $title, $body);
+
+        return $this->response(['article_id' => $result]);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        (new ArticleService())->deleteArticle();
+        $result = (new ArticleService())->deleteArticle($id);
+
+        return $this->response(['article_id' => $result]);
     }
 }

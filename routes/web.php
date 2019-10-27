@@ -19,7 +19,7 @@ Route::namespace('V1\Web')->group(function(){
     Route::get('/', 'IndexController@index');
 
     Route::get('article', 'ArticleController@index');
-    Route::get('article/create', 'ArticleController@create');
+    Route::get('article/store', 'ArticleController@store');
     Route::get('article/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
     Route::get('article/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
 });

@@ -31,8 +31,7 @@ class CreateCommentsTable extends Migration
             $table->unsignedTinyInteger('examine')->default(0); // 审核状态:0=未触发,1=待审核,2=通过,3=拒绝
             $table->boolean('blacklist')->default(false); // 黑名单
             $table->softDeletes();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
         // \Log::debug(\DB::getQueryLog());
     }

@@ -15,8 +15,7 @@
         template: "#template-article-list",
         data: function () {
             return {
-                articleList: [],
-                vifShow: false
+                articleList: [], vifShow: false
             }
         },
         created: function () {
@@ -28,7 +27,7 @@
             },
             getArticleList: function () {
                 let thisVue = this;
-                let url = COMMUNITY_URL.article;
+                let url = COMMUNITY_API_URL.article;
                 axios.get(url).then(function (response) {
                     thisVue.articleList = response.data.data;
                     if (thisVue.articleList.length > 0) {

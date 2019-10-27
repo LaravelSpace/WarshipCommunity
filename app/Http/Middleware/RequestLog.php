@@ -22,6 +22,7 @@ class RequestLog
             'ip'        => $request->ip(),
             'client_id' => $clientId,
             'url'       => $request->path(),
+            'header'    => $request->header(),
             'request'   => $request->all(),
             'time'      => timeNow()
         ];

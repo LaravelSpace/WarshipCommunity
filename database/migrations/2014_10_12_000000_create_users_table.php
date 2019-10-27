@@ -34,8 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar', 128); // 头像图片地址
             $table->string('api_token', 64); // Api token
             $table->rememberToken();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
             $table->unique('name');
             $table->index('email');
             $table->index('phone');

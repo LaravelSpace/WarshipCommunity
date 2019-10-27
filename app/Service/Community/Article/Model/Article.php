@@ -5,19 +5,20 @@ namespace App\Service\Community\Article\Model;
 
 use App\Service\User\Model\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Service\Community\Article\Model\Article
  *
- * @property int $id
- * @property string $title
- * @property string $main_body
- * @property int $user_id
- * @property int $examine
- * @property int $blacklist
- * @property string|null $deleted_at
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property int                               $id
+ * @property string                            $title
+ * @property string                            $main_body
+ * @property int                               $user_id
+ * @property int                               $examine
+ * @property int                               $blacklist
+ * @property string|null                       $deleted_at
+ * @property \Illuminate\Support\Carbon        $created_at
+ * @property \Illuminate\Support\Carbon        $updated_at
  * @property-read \App\Service\User\Model\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Article newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Article newQuery()
@@ -34,18 +35,20 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Article whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Article whereUserId($value)
  * @mixin \Eloquent
- * @property string $body
+ * @property string                            $body
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Article whereBody($value)
  */
 class Article extends Model
 {
+    use SoftDeletes;
+
     protected $connection = 'mysql';
 
     protected $table = 'articles';
 
     protected $fillable = [
         'title',
-        'main_body',
+        'body',
         'user_id',
         'examine',
         'blacklist'

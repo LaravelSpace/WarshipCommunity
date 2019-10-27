@@ -13,23 +13,23 @@ use App\Service\Common\SensitiveWord\SensitiveWord\CheckSensitiveWord;
  */
 class DFAHandler implements CheckSensitiveWord
 {
-    private $iSensitiveWordMap;
+    private $iWordMap;
 
     public function __construct()
     {
-        $this->iSensitiveWordMap = [];
-        $this->iInitiSensitiveWordMap();
+        $this->iWordMap = [];
+        $this->iInitWordMap();
     }
 
     /**
      * 初始化敏感词数据结构
      */
-    private function iInitiSensitiveWordMap()
+    private function iInitWordMap()
     {
-        $sensitiveWordSet = $this->iGetSensitiveWordSet();
+        $wordSet = $this->iGetWordSet();
 
-        foreach ($sensitiveWordSet as $word) {
-            $arrayHashMap = &$this->iSensitiveWordMap; // 传址
+        foreach ($wordSet as $word) {
+            $arrayHashMap = &$this->iWordMap; // 传址
             $wordLength = mb_strlen($word, 'UTF-8');
             for ($i = 0; $i < $wordLength; $i++) {
                 $key = mb_substr($word, $i, 1, 'UTF-8');
@@ -56,11 +56,11 @@ class DFAHandler implements CheckSensitiveWord
      *
      * @return array
      */
-    private function iGetSensitiveWordSet()
+    private function iGetWordSet()
     {
-        $sensitiveWordSet = ['王八羔子', '兔崽子', '王八蛋', '傻逼', '法轮', '法轮功', '李洪志', '中国猪', '台湾猪'];
+        $wordSet = ['王八羔子', '兔崽子', '王八蛋', '傻逼', '法轮', '法轮功', '李洪志', '中国猪', '台湾猪'];
 
-        return $sensitiveWordSet;
+        return $wordSet;
     }
 
     /**
@@ -68,9 +68,9 @@ class DFAHandler implements CheckSensitiveWord
      *
      * @return array
      */
-    public function getiSensitiveWordMap()
+    public function getWordMap()
     {
-        return $this->iSensitiveWordMap;
+        return $this->iWordMap;
     }
 
     /**
@@ -82,29 +82,29 @@ class DFAHandler implements CheckSensitiveWord
     public function checkSensitiveWord(string $checkString)
     {
         $stringLength = mb_strlen($checkString, 'UTF-8');
-        $arrayHashMap = $this->iSensitiveWordMap;
-        $markedSensitiveWordSet = [];
-        $markedSensitiveWord = '';
+        $arrayHashMap = $this->iWordMap;
+        $markedWordSet = [];
+        $markedWord = '';
         for ($i = 0; $i < $stringLength; $i++) {
             $checkKey = mb_substr($checkString, $i, 1, 'UTF-8');
             if (!isset($arrayHashMap[$checkKey])) {
-                $markedSensitiveWord = '';
-                $arrayHashMap = $this->iSensitiveWordMap; // 重置 $arrayHashMap
+                $markedWord = '';
+                $arrayHashMap = $this->iWordMap; // 重置 $arrayHashMap
                 if (!isset($arrayHashMap[$checkKey])) {
                     continue;
                 }
             }
-            $markedSensitiveWord .= $checkKey;
+            $markedWord .= $checkKey;
             if ($arrayHashMap[$checkKey]['end'] == 1) {
-                $markedSensitiveWordSet[] = $markedSensitiveWord;
-                $markedSensitiveWord = '';
-                $arrayHashMap = $this->iSensitiveWordMap; // 重置 $arrayHashMap
+                $markedWordSet[] = $markedWord;
+                $markedWord = '';
+                $arrayHashMap = $this->iWordMap; // 重置 $arrayHashMap
 
                 continue;
             }
             $arrayHashMap = $arrayHashMap[$checkKey];
         }
 
-        return $markedSensitiveWordSet;
+        return $markedWordSet;
     }
 }

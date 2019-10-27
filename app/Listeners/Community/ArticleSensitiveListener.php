@@ -48,14 +48,14 @@ class ArticleSensitiveListener
             case 'article':
                 $modelData = Article::find($id);
                 if ($modelData !== null) {
-                    $text = $modelData->main_body;
+                    $text = $modelData->body;
                 }
                 break;
         }
         return $text;
     }
 
-    private function iHandleResult($id, $classification, $resultData)
+    private function iHandleResult(int $id,string $classification,array $resultData)
     {
         if (count($resultData) <= 0) {
             $examineResult = 2;

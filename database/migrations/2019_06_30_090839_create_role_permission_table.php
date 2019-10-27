@@ -27,8 +27,7 @@ class CreateRolePermissionTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('permission_id');
             $table->unsignedInteger('role_id');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
         // \Log::debug(\DB::getQueryLog());
     }

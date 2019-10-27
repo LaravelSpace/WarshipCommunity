@@ -27,8 +27,7 @@ class CreatePermissionsTable extends Migration
             $table->increments('id');
             $table->string('name', 64)->unique(); // 权限名称
             $table->string('describe')->nullable(); // 描述
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
         // \Log::debug(\DB::getQueryLog());
     }

@@ -27,8 +27,7 @@ class CreateSensitiveResultsTable extends Migration
             $table->unsignedInteger('target_id');
             $table->string('classification', 64);
             $table->string('result_data');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamps();
         });
         // \Log::debug(\DB::getQueryLog());
     }
