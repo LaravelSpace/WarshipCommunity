@@ -13,10 +13,6 @@ class CreatePasswordResetsTable extends Migration
      */
     public function up()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
-            return;
-        }
         if (Schema::hasTable('password_resets')) {
             echo "Table password_resets Is Already Exist! \n";
             return;
@@ -30,6 +26,14 @@ class CreatePasswordResetsTable extends Migration
             $table->index('email');
         });
         // \Log::debug(\DB::getQueryLog());
+
+        // create table `password_resets` (
+        // `email` varchar(255) not null,
+        // `token` varchar(255) not null,
+        // `created_at` timestamp default CURRENT_TIMESTAMP not null
+        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
+
+        // alter table `password_resets` add index `password_resets_email_index`(`email`)
     }
 
     /**
@@ -39,6 +43,10 @@ class CreatePasswordResetsTable extends Migration
      */
     public function down()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
         Schema::dropIfExists('password_resets');
     }
 }

@@ -27,7 +27,7 @@ class RequestThrottle
         }
         $limitTime = $limitConfirm['time'];
 
-        $checkField = ['second', 'minute', 'hour', 'day'];
+        $checkField = config('constant.ROUTE_THROTTLE');
         $checkResult = true;
         foreach ($checkField as $item) {
             $cacheKey = $limitKey . '_' . $item;

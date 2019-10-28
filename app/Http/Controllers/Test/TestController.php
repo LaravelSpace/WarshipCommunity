@@ -17,6 +17,8 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        dd(rand(0,3));
+
         return response()->json([
             'error_code'    => 1,
             'error_message' => 2

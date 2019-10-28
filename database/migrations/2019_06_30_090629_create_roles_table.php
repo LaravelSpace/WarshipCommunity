@@ -13,10 +13,6 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
-            return;
-        }
         if (Schema::hasTable('roles')) {
             echo "Table roles Is Already Exist! \n";
             return;
@@ -29,7 +25,17 @@ class CreateRolesTable extends Migration
             $table->string('describe')->nullable(); // 描述
             $table->timestamps();
         });
-        // \Log::debug(\DB::getQueryLog());
+        // \Log::debug(\DB::getQueryLog());.
+
+        // create table `roles` (
+        // `id` int unsigned not null auto_increment primary key,
+        // `name` varchar(64) not null,
+        // `describe` varchar(255) null,
+        // `created_at` timestamp default CURRENT_TIMESTAMP null,
+        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
+
+        // alter table `roles` add unique `roles_name_unique`(`name`)
     }
 
     /**
@@ -39,6 +45,10 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
         Schema::dropIfExists('roles');
     }
 }

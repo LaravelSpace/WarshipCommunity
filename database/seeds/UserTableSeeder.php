@@ -14,21 +14,25 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
-        $dataList = [];
+        $userList = [];
 
-        foreach (range(1, 10) as $index) {
-            $dataList[] = [
+        $length = rand(1, 20);
+        for ($i = 0; $i < $length; $i++) {
+            $userList[] = [
                 'name'              => $faker->name,
                 'email'             => $faker->email,
                 'email_verified_at' => $faker->dateTimeBetween('-1 years', 'now'),
+                'phone'             => $faker->phoneNumber,
+                'phone_verified_at' => $faker->dateTimeBetween('-1 years', 'now'),
                 'password'          => $faker->password,
-                'remember_token'    => Str::random(64),
                 'avatar'            => $faker->imageUrl(),
+                'api_token'         => Str::random(32),
+                'remember_token'    => Str::random(32),
                 'created_at'        => $faker->dateTimeBetween('-1 years', 'now'),
                 'updated_at'        => $faker->dateTimeBetween('-1 years', 'now'),
             ];
         }
 
-        DB::table('users')->insert($dataList);
+        DB::table('users')->insert($userList);
     }
 }

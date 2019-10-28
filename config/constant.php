@@ -4,6 +4,7 @@ return [
     'HTTP_METHOD'      => ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     'HTTP_STATUS_CODE' => [200, 400, 403, 404, 418, 422, 500],
 
+    'ROUTE_THROTTLE'=>['second', 'minute', 'hour', 'day'],
     'API_LIMIT' => [
         'ip'     => [
             'second' => 5,

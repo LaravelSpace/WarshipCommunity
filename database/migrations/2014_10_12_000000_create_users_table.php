@@ -13,10 +13,6 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
-            return;
-        }
         if (Schema::hasTable('users')) {
             echo "Table users Is Already Exist! \n";
             return;
@@ -40,6 +36,25 @@ class CreateUsersTable extends Migration
             $table->index('phone');
         });
         // \Log::debug(\DB::getQueryLog());
+
+        // create table `users` (
+        // `id` int unsigned not null auto_increment primary key,
+        // `name` varchar(32) not null,
+        // `email` varchar(64) not null default '',
+        // `email_verified_at` timestamp null,
+        // `phone` varchar(32) not null default '',
+        // `phone_verified_at` timestamp null,
+        // `password` varchar(64) not null,
+        // `avatar` varchar(128) not null,
+        // `api_token` varchar(64) not null,
+        // `remember_token` varchar(100) null,
+        // `created_at` timestamp default CURRENT_TIMESTAMP null,
+        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
+
+        // alter table `users` add unique `users_name_unique`(`name`)
+        // alter table `users` add index `users_email_index`(`email`)
+        // alter table `users` add index `users_phone_index`(`phone`)
     }
 
     /**
@@ -49,6 +64,10 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
         Schema::dropIfExists('users');
     }
 }

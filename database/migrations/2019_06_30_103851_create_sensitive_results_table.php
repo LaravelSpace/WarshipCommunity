@@ -13,10 +13,7 @@ class CreateSensitiveResultsTable extends Migration
      */
     public function up()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
-            return;
-        }
+
         if (Schema::hasTable('sensitive_results')) {
             echo "Table sensitive_results Is Already Exist! \n";
             return;
@@ -30,6 +27,15 @@ class CreateSensitiveResultsTable extends Migration
             $table->timestamps();
         });
         // \Log::debug(\DB::getQueryLog());
+
+        // create table `sensitive_results` (
+        // `id` int unsigned not null auto_increment primary key,
+        // `target_id` int unsigned not null,
+        // `classification` varchar(64) not null,
+        // `result_data` varchar(255) not null,
+        // `created_at` timestamp null,
+        // `updated_at` timestamp null
+        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
     }
 
     /**
@@ -39,6 +45,10 @@ class CreateSensitiveResultsTable extends Migration
      */
     public function down()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
         Schema::dropIfExists('sensitive_results');
     }
 }

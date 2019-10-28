@@ -1,10 +1,14 @@
 <?php
 
-use App\Service\User\Model\User;;
+use App\Service\User\Model\User;
+
+;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
-class CommunityArticleTableSeeder extends Seeder
+class ArticleTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,20 +18,22 @@ class CommunityArticleTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
-        $dataList = [];
-        $userIds = User::pluck('id');
+        $articleList = [];
+        $userIdList = User::pluck('id');
 
-        foreach (range(1, 20) as $index) {
-            $dataList[] = [
+        $length = rand(1, 50);
+        for ($i = 0; $i < $length; $i++) {
+            $articleList[] = [
                 'title'      => $faker->sentence(2),
-                'main_body'  => $faker->paragraph,
-                'user_id'    => $faker->randomElement($userIds),
+                'body'       => Str::random(32),
+                'user_id'    => $faker->randomElement($userIdList),
+                'examine'    => rand(0, 3),
                 'blacklist'  => $faker->boolean,
                 'created_at' => $faker->dateTimeBetween('-1 years', 'now'),
                 'updated_at' => $faker->dateTimeBetween('-1 years', 'now'),
             ];
         }
 
-        DB::table('community_articles')->insert($dataList);
+        DB::table('articles')->insert($articleList);
     }
 }

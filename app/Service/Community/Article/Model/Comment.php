@@ -38,7 +38,7 @@ class Comment extends Model
     protected $table = 'comments';
 
     protected $fillable = [
-        'main_body',
+        'body',
         'user_id',
         'article_id'
     ];

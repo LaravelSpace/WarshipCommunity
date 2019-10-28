@@ -13,10 +13,6 @@ class CreateFailedJobsTable extends Migration
      */
     public function up()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
-            return;
-        }
         if (Schema::hasTable('failed_jobs')) {
             echo "Table failed_jobs Is Already Exist! \n";
             return;
@@ -31,6 +27,15 @@ class CreateFailedJobsTable extends Migration
             $table->timestamp('failed_at')->useCurrent();
         });
         // \Log::debug(\DB::getQueryLog());
+
+        // create table `failed_jobs` (
+        // `id` bigint unsigned not null auto_increment primary key,
+        // `connection` text not null,
+        // `queue` text not null,
+        // `payload` longtext not null,
+        // `exception` longtext not null,
+        // `failed_at` timestamp default CURRENT_TIMESTAMP not null
+        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
     }
 
     /**
@@ -40,6 +45,10 @@ class CreateFailedJobsTable extends Migration
      */
     public function down()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
         Schema::dropIfExists('failed_jobs');
     }
 }

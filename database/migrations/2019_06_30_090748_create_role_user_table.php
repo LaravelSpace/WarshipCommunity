@@ -13,10 +13,6 @@ class CreateRoleUserTable extends Migration
      */
     public function up()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
-            return;
-        }
         if (Schema::hasTable('role_user')) {
             echo "Table role_user Is Already Exist! \n";
             return;
@@ -30,6 +26,14 @@ class CreateRoleUserTable extends Migration
             $table->timestamps();
         });
         // \Log::debug(\DB::getQueryLog());
+
+        // create table `role_user` (
+        // `id` int unsigned not null auto_increment primary key,
+        // `user_id` int unsigned not null,
+        // `role_id` int unsigned not null,
+        // `created_at` timestamp default CURRENT_TIMESTAMP null,
+        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        //) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
     }
 
     /**
@@ -39,6 +43,10 @@ class CreateRoleUserTable extends Migration
      */
     public function down()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
         Schema::dropIfExists('role_user');
     }
 }

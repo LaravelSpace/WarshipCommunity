@@ -13,10 +13,6 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
-            return;
-        }
         if (Schema::hasTable('permissions')) {
             echo "Table permissions Is Already Exist! \n";
             return;
@@ -30,6 +26,16 @@ class CreatePermissionsTable extends Migration
             $table->timestamps();
         });
         // \Log::debug(\DB::getQueryLog());
+
+        // create table `permissions` (
+        // `id` int unsigned not null auto_increment primary key,
+        // `name` varchar(64) not null,
+        // `describe` varchar(255) null,
+        // `created_at` timestamp default CURRENT_TIMESTAMP null,
+        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
+
+        // alter table `permissions` add unique `permissions_name_unique`(`name`)
     }
 
     /**
@@ -39,6 +45,10 @@ class CreatePermissionsTable extends Migration
      */
     public function down()
     {
+        if (!env('APP_DEBUG')) {
+            echo "Not In Test Environment! \n";
+            return;
+        }
         Schema::dropIfExists('permissions');
     }
 }
