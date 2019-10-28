@@ -30,6 +30,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Comment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Comment whereUserId($value)
  * @mixin \Eloquent
+ * @property string $body
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Comment notInBlacklist()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Comment passExamine()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Comment whereBody($value)
  */
 class Comment extends Model
 {
@@ -42,4 +46,14 @@ class Comment extends Model
         'user_id',
         'article_id'
     ];
+
+    public function scopePassExamine($query)
+    {
+        $query->where('examine', '=', 2); // 通过敏感词审核
+    }
+
+    public function scopeNotInBlacklist($query)
+    {
+        $query->where('blacklist', '=', false); // 不在黑名单中
+    }
 }

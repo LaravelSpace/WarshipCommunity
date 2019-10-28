@@ -23,6 +23,7 @@
         'edit': '/edit',
         'update': '/update',
         'destroy': '/destroy',
+        'comment': '/comment',
     };
 
     const COMMUNITY_WEB_URL = {
@@ -39,5 +40,6 @@
     const COMMUNITY_API_URL = {
 
         'article': '/api/article',
+        'comment': '/api/comment',
     };
 </script>

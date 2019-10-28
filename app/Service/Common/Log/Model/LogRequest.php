@@ -26,6 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Common\Log\Model\LogRequest whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Common\Log\Model\LogRequest whereUrl($value)
  * @mixin \Eloquent
+ * @property string $client_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Common\Log\Model\LogRequest whereClientId($value)
  */
 class LogRequest extends Model
 {

@@ -21,9 +21,6 @@
 </head>
 <body style="min-width: 1600px">
 <!-- head -->
-<div id="vue-navbar">
-    <vue-navbar></vue-navbar>
-</div>
 @include('common.navbar')
 <div class="jumbotron text-center">
     <p class="lead">公告</p>
@@ -31,9 +28,7 @@
     <p>破站第 13 次重构进行中...</p>
 </div>
 <!-- body -->
-<div class="container" style="min-width: 1600px">
-    @yield('body')
-</div>
+@yield('body')
 <!-- foot -->
 {{--@include('community.common.live2d')--}}
 </body>

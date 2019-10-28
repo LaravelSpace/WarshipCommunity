@@ -1,3 +1,6 @@
+<div id="vue-navbar">
+    <vue-navbar></vue-navbar>
+</div>
 <template id="template-vue-navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">冷月</a>

@@ -5,6 +5,7 @@ namespace App\Service\Community\Article\Handler;
 
 use App\Events\Community\ArticleSensitiveEvent;
 use App\Service\Community\Article\Model\Article;
+use App\Service\Community\Article\Model\Comment;
 use Parsedown;
 
 class ArticleHandler
@@ -12,37 +13,37 @@ class ArticleHandler
     public function createArticle(array $user, string $title, string $body)
     {
         $createField = ['title' => $title, 'body' => $body, 'user_id' => $user['id'], 'examine' => 1];
-        $article = Article::create($createField);
+        $dbArticle = Article::create($createField);
 
-        event(new ArticleSensitiveEvent($article->id, 'article'));
+        event(new ArticleSensitiveEvent($dbArticle->id, 'article'));
 
-        return $article->id;
+        return $dbArticle->id;
     }
 
     public function getArticleList(int $page)
     {
-        $articleList = Article::passExamine()->notInBlacklist()->with('user')->get();
-        if ($articleList->count() > 0) {
-            $articleList = $articleList->toArray();
+        $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->get();
+        if ($dbArticleList->count() > 0) {
+            $dbArticleList = $dbArticleList->toArray();
         } else {
-            $articleList = [];
+            $dbArticleList = [];
         }
 
-        return $articleList;
+        return $dbArticleList;
     }
 
     public function getArticle(int $id, bool $markdown)
     {
         try {
-            $article = Article::findOrFail($id)->toArray();
+            $dbArticle = Article::findOrFail($id)->toArray();
             if ($markdown) {
-                $article['body'] = (new Parsedown())->text($article['body']);
+                $dbArticle['body'] = (new Parsedown())->text($dbArticle['body']);
             }
         } catch (\Exception $e) {
-            $article = [];
+            $dbArticle = [];
         }
 
-        return $article;
+        return $dbArticle;
     }
 
     public function updateArticle(int $id, string $title, string $body)
@@ -63,5 +64,18 @@ class ArticleHandler
         $rows = Article::where($whereField)->delete();
 
         return $id;
+    }
+
+    public function getCommentList(int $id)
+    {
+        $whereField = ['article_id'=>$id];
+        $dbCommentList = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->get();
+        if ($dbCommentList->count() > 0) {
+            $dbCommentList = $dbCommentList->toArray();
+        } else {
+            $dbCommentList = [];
+        }
+
+        return $dbCommentList;
     }
 }

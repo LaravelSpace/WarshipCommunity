@@ -25,4 +25,12 @@ Route::namespace('V1\Api')->middleware(['request_log','request_throttle'])->grou
     Route::get('article/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
     Route::put('article/{id}/update', 'ArticleController@update')->where('id', '[1-9]+\d*');
     Route::delete('article/{id}/destroy', 'ArticleController@destroy')->where('id', '[1-9]+\d*');
+    Route::get('article/{id}/comment', 'ArticleController@comment')->where('id', '[1-9]+\d*');
+
+    Route::post('comment/store', 'CommentController@store');
+    Route::get('comment', 'CommentController@index');
+    Route::get('comment/{id}', 'CommentController@show')->where('id', '[1-9]+\d*');
+    Route::get('comment/{id}/edit', 'CommentController@edit')->where('id', '[1-9]+\d*');
+    Route::put('comment/{id}/update', 'CommentController@update')->where('id', '[1-9]+\d*');
+    Route::delete('comment/{id}/destroy', 'CommentController@destroy')->where('id', '[1-9]+\d*');
 });

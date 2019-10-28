@@ -60,4 +60,13 @@ class ArticleController extends ApiController implements ResourceApiInterface
 
         return $this->response(['article_id' => $result]);
     }
+
+    public function comment(Request $request, $id)
+    {
+        $page = (int)$request->input('page', 1);
+
+        $result = (new ArticleService())->getCommentList($id);
+
+        return $this->response($result);
+    }
 }

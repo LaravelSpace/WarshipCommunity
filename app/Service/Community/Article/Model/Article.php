@@ -37,6 +37,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property string                            $body
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Community\Article\Model\Article whereBody($value)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\App\Service\Community\Article\Model\Article onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Query\Builder|\App\Service\Community\Article\Model\Article withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Service\Community\Article\Model\Article withoutTrashed()
  */
 class Article extends Model
 {
