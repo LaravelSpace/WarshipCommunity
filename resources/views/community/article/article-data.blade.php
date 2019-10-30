@@ -2,8 +2,8 @@
     <div>
         <div class="form-group">
             <label for="article-title">标题</label>
-            <input type="text" id="article-title" class="form-control" :class="titleValid" placeholder="Title"
-                   v-model="titleArticle">
+            <input id="article-title" type="text" class="form-control" :class="titleValid"
+                   placeholder="Title" v-model="titleArticle">
         </div>
         <div class="form-group">
             <label for="article-body">正文</label>
@@ -34,7 +34,18 @@
             }
         },
         created: function () {
-            this.init();
+            let localUrl = window.location.href;
+            let localUrlArray = gSplitUrl(localUrl);
+            this.urlTarget = localUrlArray[localUrlArray.length - 1];
+            if (this.urlTarget === 'create') {
+                this.submitUrl = COMMUNITY_API_URL.article+COMMUNITY_URL.store;
+                this.submitTitle = '确认发表';
+            } else if (this.urlTarget === 'edit') {
+                this.articleId = localUrlArray[localUrlArray.length - 2];
+                this.submitUrl = COMMUNITY_API_URL.article + '/' + this.articleId+ COMMUNITY_URL.update;
+                this.submitTitle = '确认修改';
+                this.getArticleItem();
+            }
         },
         mounted: function () {
             let thisVue = this;
@@ -46,20 +57,6 @@
             });
         },
         methods: {
-            init: function () {
-                let localUrl = window.location.href;
-                let localUrlArray = gSplitUrl(localUrl);
-                this.urlTarget = localUrlArray[localUrlArray.length - 1];
-                if (this.urlTarget === 'create') {
-                    this.submitUrl = COMMUNITY_API_URL.article+COMMUNITY_URL.store;
-                    this.submitTitle = '确认发表';
-                } else if (this.urlTarget === 'edit') {
-                    this.articleId = localUrlArray[localUrlArray.length - 2];
-                    this.submitUrl = COMMUNITY_API_URL.article + '/' + this.articleId+ COMMUNITY_URL.update;
-                    this.submitTitle = '确认修改';
-                    this.getArticleItem();
-                }
-            },
             getArticleItem: function () {
                 let thisVue = this;
                 let url = COMMUNITY_API_URL.article + '/' + thisVue.articleId + COMMUNITY_URL.edit;

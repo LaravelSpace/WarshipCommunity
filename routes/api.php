@@ -18,19 +18,30 @@
 // });
 
 // Route::namespace('V1\Api')->middleware(['request_log','request_throttle'])->group(function(){}
-Route::namespace('V1\Api')->middleware(['request_log','request_throttle'])->group(function(){
-    Route::post('article/store', 'ArticleController@store');
-    Route::get('article', 'ArticleController@index');
-    Route::get('article/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
-    Route::get('article/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
-    Route::put('article/{id}/update', 'ArticleController@update')->where('id', '[1-9]+\d*');
-    Route::delete('article/{id}/destroy', 'ArticleController@destroy')->where('id', '[1-9]+\d*');
-    Route::get('article/{id}/comment', 'ArticleController@comment')->where('id', '[1-9]+\d*');
+Route::namespace('V1\Api')->middleware(['request_log', 'request_throttle'])->group(function () {
+    Route::prefix('user')->group(function () {
+        Route::post('sign-up', 'UserController@signUp');
+        Route::post('sign-in', 'UserController@signIn');
+        Route::post('sign-out', 'UserController@signOut');
+        Route::post('sign-check', 'UserController@signCheck');
+    });
 
-    Route::post('comment/store', 'CommentController@store');
-    Route::get('comment', 'CommentController@index');
-    Route::get('comment/{id}', 'CommentController@show')->where('id', '[1-9]+\d*');
-    Route::get('comment/{id}/edit', 'CommentController@edit')->where('id', '[1-9]+\d*');
-    Route::put('comment/{id}/update', 'CommentController@update')->where('id', '[1-9]+\d*');
-    Route::delete('comment/{id}/destroy', 'CommentController@destroy')->where('id', '[1-9]+\d*');
+    Route::prefix('article')->group(function () {
+        Route::post('store', 'ArticleController@store');
+        Route::get('', 'ArticleController@index');
+        Route::get('{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
+        Route::get('{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
+        Route::put('{id}/update', 'ArticleController@update')->where('id', '[1-9]+\d*');
+        Route::delete('{id}/destroy', 'ArticleController@destroy')->where('id', '[1-9]+\d*');
+        Route::get('{id}/comment', 'ArticleController@comment')->where('id', '[1-9]+\d*');
+    });
+
+    Route::prefix('comment')->group(function () {
+        Route::post('store', 'CommentController@store');
+        Route::get('', 'CommentController@index');
+        Route::get('{id}', 'CommentController@show')->where('id', '[1-9]+\d*');
+        Route::get('{id}/edit', 'CommentController@edit')->where('id', '[1-9]+\d*');
+        Route::put('{id}/update', 'CommentController@update')->where('id', '[1-9]+\d*');
+        Route::delete('{id}/destroy', 'CommentController@destroy')->where('id', '[1-9]+\d*');
+    });
 });

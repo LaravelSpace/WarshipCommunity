@@ -9,11 +9,15 @@
 @endsection
 
 @section('body')
-    <div class="row">
-        <div id="article-data" class="col-md-9">
-            <vue-article-data></vue-article-data>
+    <div id="main-body" class="container" style="min-width: 1600px">
+        <div class="row">
+            <div class="col-md-9">
+                <div id="article-data">
+                    <vue-article-data></vue-article-data>
+                </div>
+            </div>
+            <div class="col-md-3">create</div>
         </div>
-        <div class="col-md-3">create</div>
     </div>
     @include('community.article.article-data')
 @endsection

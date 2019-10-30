@@ -27,11 +27,11 @@
             <ul class="navbar-nav col-md-2" v-if="notSignIn">
                 <li class="nav-item mr-md-2">
                     <a type="button" class="btn btn-outline-primary"
-                       href="/users/register?target=sign-in">登录</a>
+                       href="/user/sign-in">登录</a>
                 </li>
                 <li class="nav-item mr-md-2">
                     <a type="button" class="btn btn-outline-primary"
-                       href="/users/register?target=sign-up">注册</a>
+                       href="/user/sign-up">注册</a>
                 </li>
             </ul>
             <ul class="navbar-nav col-md-2" v-else="notSignIn">

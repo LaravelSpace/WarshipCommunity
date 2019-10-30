@@ -4,7 +4,9 @@
             <img class="rounded-circle mr-3" style="width: 50px; height: 50px"
                  src="" :src="article.user.avatar" alt="" :alt="article.user_id">
             <div class="media-body">
-                <a href="#" :href="['/article/'+article.id]"><h5 class="mt-0 mb-1">@{{ article.title }}</h5></a>
+                <a href="#" :href="['/article/'+article.id]">
+                    <h5 class="mt-0 mb-1">@{{ article.title }}</h5>
+                </a>
                 <p>@{{ article.main_body }}</p>
             </div>
         </li>
@@ -19,12 +21,9 @@
             }
         },
         created: function () {
-            this.init();
+            this.getArticleList();
         },
         methods: {
-            init: function () {
-                this.getArticleList();
-            },
             getArticleList: function () {
                 let thisVue = this;
                 let url = COMMUNITY_API_URL.article;

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Test;
 
 
-use App\CommonService\SensitiveWord\Service\SensitiveWordService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

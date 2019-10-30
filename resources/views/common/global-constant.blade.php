@@ -41,5 +41,9 @@
 
         'article': '/api/article',
         'comment': '/api/comment',
+        'user_sign_up':'api/user/sign-up',
+        'user_sign_in':'api/user/sign-in',
+        'user_sign_out':'api/user/sign-out',
+        'user_sign_check':'api/user/sign-check',
     };
 </script>
