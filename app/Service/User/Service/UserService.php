@@ -9,9 +9,14 @@ use App\Service\User\Validator\RegisterValidator;
 
 class UserService
 {
-    public function signUp(string $name,string $identity,bool $isEmail,string $password)
+    public function signUp(string $name, string $identity, bool $isEmail, string $password)
     {
         return (new RegisterHandler())->signUp($name, $identity, $isEmail, $password);
+    }
+
+    public function signIn(string $identity, bool $isEmail, string $password)
+    {
+        return (new RegisterHandler())->signIn($identity, $isEmail, $password);
     }
 
     public function signCheck()
@@ -21,26 +26,10 @@ class UserService
         return $handler->signCheck();
     }
 
-    public function signIn(array $inputData)
-    {
-        $handler = new RegisterHandler();
-        $validatorResult = (new RegisterValidator())->validateRegister($inputData, 'sign-in');
-        if ($validatorResult['fails']) {
-            return $returnData = [
-                'status'      => config('constant.fail'),
-                'status_code' => config('constant.http_code_422'),
-                'data'        => $validatorResult['errors']
-            ];
-        }
-        return $handler->signIn($inputData);
-    }
-
     public function signOut()
     {
         $handler = new RegisterHandler();
 
         return $handler->signOut();
     }
-
-
 }

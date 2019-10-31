@@ -9,12 +9,13 @@ use Illuminate\Support\Str;
 
 class RegisterHandler
 {
-    public function signUp(string $name,string $identity,bool $isEmail,string $password)
+    public function signUp(string $name, string $identity, bool $isEmail, string $password)
     {
-        $resultData = $this->checkExistUser($name, $identity, $isEmail, $password);
-        if ($resultData['status'] !== config('constant.success')) {
-            return $resultData;
+        $checkResult = $this->checkExistUser($name, $identity, $isEmail);
+        if ($checkResult['status'] !== config('constant.success')) {
+            return $checkResult;
         }
+
         $userInfo = [
             'name'      => $name,
             'password'  => $password,
@@ -28,60 +29,78 @@ class RegisterHandler
         }
         $dbUser = User::create($userInfo);
         if ($dbUser !== null && $dbUser !== '') {
-            $returnData = ['status' => config('constant.success')];
-        } else {
-            $returnData = [
-                'status'      => config('constant.fail'),
-                'status_code' => config('constant.http_code_500'),
+            $result = [
+                'status' => config('constant.success'),
+                'data'   => ['user_id' => $dbUser->id]
             ];
-        }
-        return $returnData;
-    }
-
-    public function userCreate($inputData)
-    {
-
-    }
-
-    public function checkExistUser($inputData)
-    {
-        $returnData = ['status' => config('constant.success')];
-        $existUserInfo = ['name' => $inputData['name']];
-        $existUser = User::where($existUserInfo)->get();
-        if (count($existUser) > 0) {
-            $returnData = [
-                'status'      => config('constant.fail'),
-                'status_code' => config('constant.http_code_422'),
-                'data'        => ['message' => '昵称已存在']
+        } else {
+            $result = [
+                'status'  => config('constant.fail'),
+                'message' => '用户创建失败'
             ];
         }
 
-        $identityEmail = $inputData['identity_email'];
-        $identity = $inputData['identity'];
-        if ($identityEmail) {
-            $existUserInfo = ['email' => $identity];
-            $existUser = User::where($existUserInfo)->get();
-            if (count($existUser) > 0) {
-                $returnData = [
-                    'status'      => config('constant.fail'),
-                    'status_code' => config('constant.http_code_422'),
-                    'data'        => ['message' => '该邮箱已被使用']
-                ];
-            }
+        return $result;
+    }
+
+    public function checkExistUser(string $name, string $identity, bool $isEmail)
+    {
+        $result = ['status' => config('constant.success')];
+
+        if ($isEmail) {
+            $orWhereField = ['email' => $identity];
         } else {
-            $existUserInfo = ['phone' => $identity];
-            $existUser = User::where($existUserInfo)->get();
-            if (count($existUser) > 0) {
-                $returnData = [
-                    'status'      => config('constant.fail'),
-                    'status_code' => config('constant.http_code_422'),
-                    'data'        => ['message' => '该手机号码已被使用']
-                ];
+            $orWhereField = ['phone' => $identity];
+        }
+        $dbUserList = User::where(['name' => $name])->orWhere($orWhereField)->get();
+        if (count($dbUserList) > 0) {
+            $message = '';
+            foreach ($dbUserList as $itemUser) {
+                if ($itemUser->name == $name) {
+                    $message .= "昵称\"{$name}\"，已被使用;";
+                }
+                if ($itemUser->email == $identity) {
+                    $message .= "邮箱地址\"{$name}\"，已被使用;";
+                }
+                if ($itemUser->phone == $identity) {
+                    $message .= "手机号码\"{$name}\"，已被使用;";
+                }
             }
+            $result = [
+                'status'  => config('constant.fail'),
+                'message' => $message
+            ];
         }
 
+        return $result;
+    }
 
-        return $returnData;
+    public function signIn(string $identity, bool $isEmail, string $password)
+    {
+        $checkField = ['password' => $password];
+        if ($isEmail) {
+            $checkField['email'] = $identity;
+        } else {
+            $checkField['phone'] = $identity;
+        }
+        if (Auth::attempt($checkField)) {
+            $user = Auth::user();
+            $result = [
+                'status' => config('constant.success'),
+                'data'   => [
+                    'user_id'   => $user->id,
+                    'api_token' => $user->api_token
+                ]
+            ];
+        } else {
+            $result = [
+                'status'      => config('constant.fail'),
+                'status_code' => 403,
+                'message'     => '登录信息错误'
+            ];
+        }
+
+        return $result;
     }
 
     public function signCheck()
@@ -106,30 +125,6 @@ class RegisterHandler
         return $returnData;
     }
 
-    public function signIn(array $inputData)
-    {
-        $checkData = [
-            'name'      => 'xxx',
-            'email'    => $inputData['identity'],
-            'password' => $inputData['password'],
-            'api_token'=>'111',
-            'avatar'=>'111'
-        ];
-        if (Auth::attempt($checkData)) {
-            $user = Auth::user();
-            $returnData = [
-                'status' => config('constant.success'),
-                'data'   => ['identity_id' => $user->id]
-            ];
-        } else {
-            $returnData = [
-                'status'      => config('constant.fail'),
-                'status_code' => config('constant.http_code_403'),
-                'data'        => ['message' => '登录信息错误']
-            ];
-        }
-        return $returnData;
-    }
 
     public function signOut()
     {

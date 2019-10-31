@@ -47,6 +47,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // 访问不存在的路由方法，将返回 404
         if ($exception instanceof MethodNotAllowedHttpException) {
             return response('',404);
         }

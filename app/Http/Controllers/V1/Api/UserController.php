@@ -12,23 +12,38 @@ class UserController extends ApiController
     public function signUp(Request $request)
     {
         $input = $request->input();
-        dd($input);
         $name = $input['name'];
         $identity = $input['identity'];
         $isEmail = (bool)$input['is_email'];
         $password = $input['password'];
 
         $result = (new UserService())->signUp($name, $identity, $isEmail, $password);
+
+        return $this->responseTrans($result);
     }
 
     public function signIn(Request $request)
     {
+        $input = $request->input();
+        $identity = $input['identity'];
+        $isEmail = (bool)$input['is_email'];
+        $password = $input['password'];
 
+        $result = (new UserService())->signIn($identity, $isEmail, $password);
+
+        return $this->responseTrans($result);
     }
 
     public function signOut(Request $request)
     {
+        $input = $request->input();
+        $identity = $input['identity'];
+        $isEmail = (bool)$input['is_email'];
+        $token = $input['token'];
 
+        $result = (new UserService())->signOut($identity, $isEmail, $password);
+
+        return $this->responseTrans($result);
     }
 
     public function signCheck(Request $request)

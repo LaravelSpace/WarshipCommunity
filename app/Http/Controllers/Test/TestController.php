@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Test;
 
+use App\Jobs\Common\SensitiveWordJob;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use ReflectionClass;
@@ -17,11 +18,8 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(rand(0,3));
+        SensitiveWordJob::dispatch()->onQueue('sensitive');
 
-        return response()->json([
-            'error_code'    => 1,
-            'error_message' => 2
-        ], 403);
+        return response()->json([1]);
     }
 }
