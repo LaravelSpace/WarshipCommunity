@@ -4,6 +4,7 @@ use App\Service\Community\Article\Model\Article;
 use App\Service\User\Model\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CommentTableSeeder extends Seeder
 {
@@ -21,7 +22,7 @@ class CommentTableSeeder extends Seeder
         $length = rand(1, 200);
         for ($i = 0; $i < $length; $i++) {
             $commentList[] = [
-                'body'       => $faker->paragraph,
+                'body'       => Str::random(32),
                 'user_id'    => $faker->randomElement($userIdList),
                 'article_id' => $faker->randomElement($articleIdList),
                 'examine'    => rand(0, 3),

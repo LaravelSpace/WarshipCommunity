@@ -65,14 +65,9 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    /**
-     * 密码字段预处理
-     *
-     * @param $password
-     */
     public function setPasswordAttribute($password)
     {
-        $this->attributes['password'] = Hash::make($password); // 密码加密
+        $this->attributes['password'] = Hash::make($password); // hash 加密
     }
 
     /**

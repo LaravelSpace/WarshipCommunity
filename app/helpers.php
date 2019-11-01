@@ -24,12 +24,13 @@ if (!function_exists('timeNow')) {
     }
 }
 
-if (!function_exists('timeNow')) {
+if (!function_exists('renderServiceException')) {
     /**
+     * @param string $message
      * @throws \App\Exceptions\ServiceException
      */
-    function renderServiceException()
+    function renderServiceException($message = '')
     {
-        throw new \App\Exceptions\ServiceException();
+        throw new \App\Exceptions\ServiceException($message);
     }
 }

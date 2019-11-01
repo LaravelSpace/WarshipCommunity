@@ -12,7 +12,7 @@ trait ControllerHelper
             'message' => $message,
             'data'    => isset($data) ? $data : []
         ];
-        $httpStatusCode = config('constant.HTTP_STATUS_CODE');
+        $httpStatusCode = config('constant.http.status_code');
         if (in_array($status, $httpStatusCode) && $status !== 200) {
             return response()->json($result, $status);
         }

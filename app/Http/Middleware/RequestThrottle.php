@@ -16,7 +16,7 @@ class RequestThrottle
             list($classfication, $clientId) = explode(' ', $clientStr);
         }
 
-        $limitConfirm = config('constant.API_LIMIT');
+        $limitConfirm = config('constant.route_throttle');
         if (isset($clientId) && is_string($clientId)) {
             $limitKey = $clientId;
             $limitGroup = $limitConfirm['client'];
@@ -27,7 +27,7 @@ class RequestThrottle
         }
         $limitTime = $limitConfirm['time'];
 
-        $checkField = config('constant.ROUTE_THROTTLE');
+        $checkField = $limitConfirm['field'];
         $checkResult = true;
         foreach ($checkField as $item) {
             $cacheKey = $limitKey . '_' . $item;

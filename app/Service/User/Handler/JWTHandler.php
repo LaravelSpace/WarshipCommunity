@@ -3,30 +3,45 @@
 namespace App\Service\User\Handler;
 
 
-use App\Service\User\Model\User;
-
 class JWTHandler
 {
-    public function JWTEncrypt(User $user, string $alg = 'HS256')
+    /**
+     * @param int $userId
+     * @return string
+     */
+    public function makeJWT(int $userId)
     {
-        $JWTHeader = config('constant.JWT_HEADER');
-        if ($alg === 'HS256') {
-            $header = $JWTHeader['HS256'];
-        } else if ($alg === 'RS256') {
-            $header = $JWTHeader['RS256'];
-        } else {
-            // todo 报错
-        }
+        $header = config('constant.jwt.header');
+        $payload = config('constant.jwt.payload');
+        $payload['iat'] = time();
+        $payload['exp'] = time() + 3600 * 24;
+        $payload['jti'] = md5($userId);
+        $payload['user_id'] = $userId;
 
-        $payload = config('constant.JWT_PAYLOAD');
-        $payload['user_id'] = $user->id;
+        $load = base64_encode(json_encode($header)) . '.' . base64_encode(json_encode($payload));
+        $JWTPublicKey = config('jwt.keys.public');
+        $sign = base64_encode(hash_hmac('sha256', $load, $JWTPublicKey));
+        $JWTToken = 'Bearer ' . $load . '.' . $sign;
 
-        $load = base64_encode(json_encode($header)).'.'.base64_encode(json_encode($payload));
-        $sign = hash_hmac($load,);
+        return $JWTToken;
     }
 
-    public function JWTDecrypt(String $JWTToken, string $alg = 'HS256')
+    /**
+     * @param String $JWTToken
+     * @return bool
+     */
+    public function checkJWT(String $JWTToken)
     {
+        $JWTToken = str_replace('Bearer ', '', $JWTToken);
+        list($header, $payload, $sign) = explode('.', $JWTToken);
 
+        $load = $header . '.' . $payload;
+        $JWTPublicKey = config('jwt.keys.public');
+        $checkSign = base64_encode(hash_hmac('sha256', $load, $JWTPublicKey));
+
+        if ($sign === $checkSign) {
+            return true;
+        }
+        return false;
     }
 }

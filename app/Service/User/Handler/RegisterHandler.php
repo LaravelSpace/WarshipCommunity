@@ -4,7 +4,7 @@ namespace App\Service\User\Handler;
 
 
 use App\Service\User\Model\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class RegisterHandler
@@ -17,15 +17,18 @@ class RegisterHandler
         }
 
         $userInfo = [
-            'name'      => $name,
-            'password'  => $password,
-            'avatar'    => '/images/avatar/default_avatar.jpg',
-            'api_token' => Str::random(64)
+            'name'           => $name,
+            'password'       => $password,
+            'avatar'         => '/images/avatar/default_avatar.jpg',
+            'api_token'      => Str::random(64),
+            'remember_token' => Str::random(64)
         ];
         if ($isEmail) {
             $userInfo['email'] = $identity;
+            $userInfo['phone'] = $name;
         } else {
             $userInfo['phone'] = $identity;
+            $userInfo['email'] = $name;
         }
         $dbUser = User::create($userInfo);
         if ($dbUser !== null && $dbUser !== '') {
@@ -77,20 +80,18 @@ class RegisterHandler
 
     public function signIn(string $identity, bool $isEmail, string $password)
     {
-        $checkField = ['password' => $password];
         if ($isEmail) {
             $checkField['email'] = $identity;
         } else {
             $checkField['phone'] = $identity;
         }
-        if (Auth::attempt($checkField)) {
-            $user = Auth::user();
+
+        $user = User::where($checkField)->first();
+        $checkResult = Hash::check($password, $user->password);
+        if ($checkResult) {
             $result = [
                 'status' => config('constant.success'),
-                'data'   => [
-                    'user_id'   => $user->id,
-                    'api_token' => $user->api_token
-                ]
+                'data'   => ['jwt_token' => (new JWTHandler())->makeJWT($user->id)]
             ];
         } else {
             $result = [
@@ -102,38 +103,4 @@ class RegisterHandler
 
         return $result;
     }
-
-    public function signCheck()
-    {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $returnData = [
-                'status' => config('constant.success'),
-                'data'   => [
-                    'identity_id' => $user->id,
-                    'name'        => $user->name,
-                    'avatar'      => $user->avatar,
-                    'api_token'   => $user->api_token
-                ]
-            ];
-        } else {
-            $returnData = [
-                'status' => config('constant.success'),
-                'data'   => ['identity_id' => 0]
-            ];
-        }
-        return $returnData;
-    }
-
-
-    public function signOut()
-    {
-        Auth::logout();
-
-        $returnData = ['status' => config('constant.success')];
-
-        return $returnData;
-    }
-
-
 }

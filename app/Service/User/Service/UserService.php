@@ -3,9 +3,7 @@
 namespace App\Service\User\Service;
 
 
-use App\Exceptions\ValidateException;
 use App\Service\User\Handler\RegisterHandler;
-use App\Service\User\Validator\RegisterValidator;
 
 class UserService
 {
@@ -19,17 +17,13 @@ class UserService
         return (new RegisterHandler())->signIn($identity, $isEmail, $password);
     }
 
-    public function signCheck()
+    public function signRefresh()
     {
-        $handler = new RegisterHandler();
-
-        return $handler->signCheck();
+        return (new RegisterHandler())->signCheck();
     }
 
     public function signOut()
     {
-        $handler = new RegisterHandler();
-
-        return $handler->signOut();
+        return (new RegisterHandler())->signOut();
     }
 }
