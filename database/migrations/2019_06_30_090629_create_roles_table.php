@@ -22,8 +22,8 @@ class CreateRolesTable extends Migration
             $table->charset = 'utf8mb4';
             $table->increments('id');
             $table->string('name', 64)->unique(); // 角色名称
-            $table->string('describe')->nullable(); // 描述
-            $table->timestamps();
+            $table->string('describe', 255)->nullable(); // 描述
+            $table->dateTime('created_at')->useCurrent();
         });
         // \Log::debug(\DB::getQueryLog());.
 
@@ -31,8 +31,7 @@ class CreateRolesTable extends Migration
         // `id` int unsigned not null auto_increment primary key,
         // `name` varchar(64) not null,
         // `describe` varchar(255) null,
-        // `created_at` timestamp default CURRENT_TIMESTAMP null,
-        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        // `created_at` datetime not null default CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
         // alter table `roles` add unique `roles_name_unique`(`name`)

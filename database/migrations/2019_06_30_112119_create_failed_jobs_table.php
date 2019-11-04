@@ -24,7 +24,7 @@ class CreateFailedJobsTable extends Migration
             $table->text('queue');
             $table->longText('payload');
             $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
+            $table->dateTime('failed_at')->useCurrent();
         });
         // \Log::debug(\DB::getQueryLog());
 
@@ -34,7 +34,7 @@ class CreateFailedJobsTable extends Migration
         // `queue` text not null,
         // `payload` longtext not null,
         // `exception` longtext not null,
-        // `failed_at` timestamp default CURRENT_TIMESTAMP not null
+        // `failed_at` datetime not null default CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
     }
 

@@ -21,16 +21,15 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
-            $table->string('title', 64); // 标题
+            $table->string('title', 64)->index(); // 标题
             $table->string('body', 64); // 内容
-            $table->unsignedInteger('user_id'); // DB:users->id
+            $table->unsignedInteger('user_id')->index(); // DB:users->id
             $table->unsignedTinyInteger('examine')->default(0);
             // DB:articles->examine(审核状态):0=未触发,1=待审核,2=通过,3=拒绝
             $table->boolean('blacklist')->default(false); // 黑名单
-            $table->softDeletes();
-            $table->timestamps();
-            $table->index('title');
-            $table->index('user_id');
+            $table->dateTime('deleted_at')->nullable(); // 软删除的时间
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->nullable();
         });
         // \Log::debug(\DB::getQueryLog());
 
@@ -41,9 +40,9 @@ class CreateArticlesTable extends Migration
         // `user_id` int unsigned not null,
         // `examine` tinyint unsigned not null default '0',
         // `blacklist` tinyint(1) not null default '0',
-        // `deleted_at` timestamp null,
-        // `created_at` timestamp default CURRENT_TIMESTAMP null,
-        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        // `deleted_at` datetime null,
+        // `created_at` datetime not null default CURRENT_TIMESTAMP,
+        // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
         // alter table `articles` add index `articles_title_index`(`title`)

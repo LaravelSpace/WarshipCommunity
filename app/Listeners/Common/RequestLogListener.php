@@ -37,8 +37,8 @@ class RequestLogListener
         if (isset($logData['request'])) {
             $createField = [
                 'ip'         => $logData['ip'],
-                'client_id'  => $logData['client_id'],
-                'url'        => $logData['url'],
+                'client'  => $logData['client'],
+                'uri'        => $logData['uri'],
                 'request'    => $logKey,
                 'created_at' => $logData['time']
             ];

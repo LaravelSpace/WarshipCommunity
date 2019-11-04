@@ -23,7 +23,7 @@ class CreateRolePermissionTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('permission_id');
             $table->unsignedInteger('role_id');
-            $table->timestamps();
+            $table->dateTime('created_at')->useCurrent();
         });
         // \Log::debug(\DB::getQueryLog());
 
@@ -31,8 +31,7 @@ class CreateRolePermissionTable extends Migration
         // `id` int unsigned not null auto_increment primary key,
         // `permission_id` int unsigned not null,
         // `role_id` int unsigned not null,
-        // `created_at` timestamp default CURRENT_TIMESTAMP null,
-        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        // `created_at` datetime not null default CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
     }
 

@@ -13,7 +13,6 @@ class CreateSensitiveResultsTable extends Migration
      */
     public function up()
     {
-
         if (Schema::hasTable('sensitive_results')) {
             echo "Table sensitive_results Is Already Exist! \n";
             return;
@@ -21,10 +20,11 @@ class CreateSensitiveResultsTable extends Migration
         // \DB::connection()->enableQueryLog();
         Schema::create('sensitive_results', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('target_id');
-            $table->string('classification', 64);
-            $table->string('result_data');
-            $table->timestamps();
+            $table->string('target', 64); // 目标类型
+            $table->unsignedInteger('target_id'); // 目标 id
+            $table->string('result_data', 255);
+            $table->dateTime('created_at')->useCurrent();
+            $table->index(['target', 'target_id']);
         });
         // \Log::debug(\DB::getQueryLog());
 
@@ -33,9 +33,10 @@ class CreateSensitiveResultsTable extends Migration
         // `target_id` int unsigned not null,
         // `classification` varchar(64) not null,
         // `result_data` varchar(255) not null,
-        // `created_at` timestamp null,
-        // `updated_at` timestamp null
+        // `created_at` datetime not null default CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
+
+        // alter table `sensitive_results` add index `sensitive_results_target_target_id_index`(`target`, `target_id`)
     }
 
     /**

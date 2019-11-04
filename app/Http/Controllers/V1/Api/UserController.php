@@ -34,6 +34,11 @@ class UserController extends ApiController
         return $this->responseTrans($result);
     }
 
+    public function signCheck(Request $request)
+    {
+
+    }
+
     public function signOut(Request $request)
     {
         $input = $request->input();
@@ -44,10 +49,5 @@ class UserController extends ApiController
         $result = (new UserService())->signOut($identity, $isEmail, $password);
 
         return $this->responseTrans($result);
-    }
-
-    public function signCheck(Request $request)
-    {
-
     }
 }

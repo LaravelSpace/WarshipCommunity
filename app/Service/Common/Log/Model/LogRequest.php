@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $ip
- * @property string $url
+ * @property string $client_id
+ * @property string $uri
  * @property string $request
  * @property string $response
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -25,9 +26,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Common\Log\Model\LogRequest whereResponse($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Common\Log\Model\LogRequest whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Common\Log\Model\LogRequest whereUrl($value)
- * @mixin \Eloquent
- * @property string $client_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Service\Common\Log\Model\LogRequest whereClientId($value)
+ * @mixin \Eloquent
  */
 class LogRequest extends Model
 {
@@ -37,8 +37,8 @@ class LogRequest extends Model
 
     protected $fillable = [
         'ip',
-        'client_id',
-        'url',
+        'client',
+        'uri',
         'request',
         'response'
     ];

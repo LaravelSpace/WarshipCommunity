@@ -21,28 +21,32 @@ class CreateLogRequestTable extends Migration
         Schema::create('log_request', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
-            $table->string('ip',32);
-            $table->string('client_id',64);
-            $table->string('url',64);
-            $table->string('request',64);
-            $table->string('response',64)->nullable();
-            $table->timestamps();
-            $table->index('url');
+            $table->string('ip', 32);
+            $table->string('client', 32);
+            $table->unsignedInteger('client_id');
+            $table->string('uri', 64)->index();
+            $table->string('request', 64);
+            $table->string('response', 64)->nullable();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->nullable();
+            $table->index(['client', 'client_id']);
         });
         // \Log::debug(\DB::getQueryLog());
 
         // create table `log_request` (
         // `id` int unsigned not null auto_increment primary key,
         // `ip` varchar(32) not null,
-        // `client_id` varchar(64) not null
-        // `url` varchar(64) not null,
+        // `client` varchar(32) not null
+        // `client_id` int unsigned not null,
+        // `uri` varchar(64) not null,
         // `request` varchar(64) not null,
         // `response` varchar(64) null,
-        // `created_at` timestamp default CURRENT_TIMESTAMP null,
-        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        // `created_at` datetime not null default CURRENT_TIMESTAMP,
+        // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
-        // alter table `log_request` add index `log_request_url_index`(`url`)
+        // alter table `log_request` add index `log_request_client_client_id_index`(`client`, `client_id`)
+        // alter table `log_request` add index `log_request_uri_index`(`uri`)
     }
 
     /**

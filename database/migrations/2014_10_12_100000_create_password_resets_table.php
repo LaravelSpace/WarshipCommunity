@@ -20,17 +20,16 @@ class CreatePasswordResetsTable extends Migration
         // \DB::connection()->enableQueryLog();
         Schema::create('password_resets', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
-            $table->string('email');
-            $table->string('token');
-            $table->timestamp('created_at')->useCurrent();
-            $table->index('email');
+            $table->string('email', 64)->index();
+            $table->string('token', 64);
+            $table->dateTime('created_at')->useCurrent();
         });
         // \Log::debug(\DB::getQueryLog());
 
         // create table `password_resets` (
         // `email` varchar(255) not null,
         // `token` varchar(255) not null,
-        // `created_at` timestamp default CURRENT_TIMESTAMP not null
+        // `created_at` datetime not null default CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
         // alter table `password_resets` add index `password_resets_email_index`(`email`)

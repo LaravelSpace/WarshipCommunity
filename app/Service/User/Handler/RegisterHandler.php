@@ -3,6 +3,7 @@
 namespace App\Service\User\Handler;
 
 
+use App\Service\User\Model\Token;
 use App\Service\User\Model\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -20,8 +21,8 @@ class RegisterHandler
             'name'           => $name,
             'password'       => $password,
             'avatar'         => '/images/avatar/default_avatar.jpg',
-            'api_token'      => Str::random(64),
-            'remember_token' => Str::random(64)
+            'api_token'      => Str::random(32),
+            'remember_token' => Str::random(32)
         ];
         if ($isEmail) {
             $userInfo['email'] = $identity;
@@ -91,7 +92,7 @@ class RegisterHandler
         if ($checkResult) {
             $result = [
                 'status' => config('constant.success'),
-                'data'   => ['jwt_token' => (new JWTHandler())->makeJWT($user->id)]
+                'data'   => (new OAuthHandler())->exchangeLocal($user->id)
             ];
         } else {
             $result = [

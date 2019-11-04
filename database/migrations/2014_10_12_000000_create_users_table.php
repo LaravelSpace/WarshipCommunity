@@ -21,40 +21,38 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
-            $table->string('name', 32); // 昵称
-            $table->string('email', 64)->unique(); // 邮箱地址
-            $table->timestamp('email_verified_at')->nullable(); // 邮箱地址验证时间
+            $table->string('name', 32)->unique(); // 昵称
+            $table->string('email', 32)->unique(); // 邮箱地址
+            $table->dateTime('email_verified_at')->nullable(); // 邮箱地址验证时间
             $table->string('phone', 32)->unique(); // 手机号码
-            $table->timestamp('phone_verified_at')->nullable(); // 手机号码验证时间
-            $table->string('password', 64); // 密码 hash 处理
-            $table->string('avatar', 128); // 头像图片地址
-            $table->string('api_token', 64); // api token
-            $table->rememberToken();
-            $table->timestamps();
-            $table->unique('name');
-            $table->index('email');
-            $table->index('phone');
+            $table->dateTime('phone_verified_at')->nullable(); // 手机号码验证时间
+            $table->string('password', 64); // 密码，默认使用框架的 Hash::make() 处理
+            $table->string('avatar', 128); // 头像图片 uri
+            $table->string('api_token', 64); // 用于授权
+            $table->string('remember_token', 64); // 用于记住我
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->nullable();
         });
         // \Log::debug(\DB::getQueryLog());
 
         // create table `users` (
         // `id` int unsigned not null auto_increment primary key,
-        // `name` varchar(32) not null,
+        // `name` varchar(16) not null,
         // `email` varchar(64) not null,
-        // `email_verified_at` timestamp null,
-        // `phone` varchar(32) not null,
-        // `phone_verified_at` timestamp null,
+        // `email_verified_at` datetime null,
+        // `phone` varchar(16) not null,
+        // `phone_verified_at` datetime null,
         // `password` varchar(64) not null,
         // `avatar` varchar(128) not null,
         // `api_token` varchar(64) not null,
-        // `remember_token` varchar(100) null,
-        // `created_at` timestamp default CURRENT_TIMESTAMP null,
-        // `updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP null
+        // `remember_token` varchar(64) null,
+        // `created_at` datetime not null default CURRENT_TIMESTAMP,
+        // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
         // alter table `users` add unique `users_name_unique`(`name`)
-        // alter table `users` add unique `users_email_index`(`email`)
-        // alter table `users` add unique `users_phone_index`(`phone`)
+        // alter table `users` add unique `users_email_unique`(`email`)
+        // alter table `users` add unique `users_phone_unique`(`phone`)
     }
 
     /**

@@ -13,12 +13,12 @@ class RequestThrottle
         $authorization = $request->header('Authorization', null);
         if (is_string($authorization)) {
             list($clientStr, $authStr) = explode(':', $authorization);
-            list($classfication, $clientId) = explode(' ', $clientStr);
+            list($classfication, $client) = explode(' ', $clientStr);
         }
 
         $limitConfirm = config('constant.route_throttle');
-        if (isset($clientId) && is_string($clientId)) {
-            $limitKey = $clientId;
+        if (isset($client) && is_string($client)) {
+            $limitKey = $client;
             $limitGroup = $limitConfirm['client'];
         } else {
             $ip = $request->ip();
