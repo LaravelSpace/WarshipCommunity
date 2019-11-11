@@ -12,6 +12,12 @@ return [
 
     'route_throttle' => [
         'field'  => ['second', 'minute', 'hour', 'day'],
+        'time'   => [
+            'second' => 1,
+            'minute' => 60,
+            'hour'   => 3600,
+            'day'    => 86400
+        ],
         'ip'     => [
             'second' => 5,
             'minute' => 60,
@@ -23,12 +29,6 @@ return [
             'minute' => 120,
             'hour'   => 7200,
             'day'    => 172800
-        ],
-        'time'   => [
-            'second' => 1,
-            'minute' => 60,
-            'hour'   => 3600,
-            'day'    => 86400
         ]
     ],
 ];

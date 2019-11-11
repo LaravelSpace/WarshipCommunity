@@ -18,12 +18,11 @@
 // });
 
 // Route::namespace('V1\Api')->middleware(['request_throttle','request_log'])->group(function(){}
-Route::namespace('V1\Api')->group(function () {
+Route::namespace('V1\Api')->middleware(['request_throttle','request_log'])->group(function () {
     Route::prefix('user')->group(function () {
-        Route::post('sign-up', 'UserController@signUp');
-        Route::post('sign-in', 'UserController@signIn');
-        Route::post('sign-out', 'UserController@signOut');
-        Route::post('sign-check', 'UserController@signCheck');
+        Route::post('register', 'UserController@register');
+        Route::post('login', 'UserController@login');
+        Route::post('logout', 'UserController@logout');
     });
 
     Route::prefix('article')->group(function () {

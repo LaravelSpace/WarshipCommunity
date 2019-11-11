@@ -7,23 +7,18 @@ use App\Service\User\Handler\RegisterHandler;
 
 class UserService
 {
-    public function signUp(string $name, string $identity, bool $isEmail, string $password)
+    public function register(string $name, string $identity, bool $isEmail, string $password)
     {
-        return (new RegisterHandler())->signUp($name, $identity, $isEmail, $password);
+        return (new RegisterHandler())->register($name, $identity, $isEmail, $password);
     }
 
-    public function signIn(string $identity, bool $isEmail, string $password)
+    public function login(string $identity, bool $isEmail, string $password)
     {
-        return (new RegisterHandler())->signIn($identity, $isEmail, $password);
+        return (new RegisterHandler())->login($identity, $isEmail, $password);
     }
 
-    public function signRefresh()
+    public function logout()
     {
-        return (new RegisterHandler())->signCheck();
-    }
-
-    public function signOut()
-    {
-        return (new RegisterHandler())->signOut();
+        return (new RegisterHandler())->logout();
     }
 }

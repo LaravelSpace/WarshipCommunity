@@ -9,45 +9,33 @@ use Illuminate\Http\Request;
 
 class UserController extends ApiController
 {
-    public function signUp(Request $request)
+    public function register(Request $request)
     {
         $input = $request->input();
         $name = $input['name'];
         $identity = $input['identity'];
         $isEmail = (bool)$input['is_email'];
         $password = $input['password'];
-
-        $result = (new UserService())->signUp($name, $identity, $isEmail, $password);
+dd($input);
+        $result = (new UserService())->register($name, $identity, $isEmail, $password);
 
         return $this->responseTrans($result);
     }
 
-    public function signIn(Request $request)
+    public function login(Request $request)
     {
         $input = $request->input();
         $identity = $input['identity'];
         $isEmail = (bool)$input['is_email'];
         $password = $input['password'];
 
-        $result = (new UserService())->signIn($identity, $isEmail, $password);
+        $result = (new UserService())->login($identity, $isEmail, $password);
 
         return $this->responseTrans($result);
     }
 
-    public function signCheck(Request $request)
+    public function logout(Request $request)
     {
 
-    }
-
-    public function signOut(Request $request)
-    {
-        $input = $request->input();
-        $identity = $input['identity'];
-        $isEmail = (bool)$input['is_email'];
-        $token = $input['token'];
-
-        $result = (new UserService())->signOut($identity, $isEmail, $password);
-
-        return $this->responseTrans($result);
     }
 }

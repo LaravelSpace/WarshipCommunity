@@ -11,6 +11,7 @@ use Mockery\Exception;
 class RequestLogListener
 {
     // class RequestLogListener implements ShouldQueue
+
     // public $queue = 'request_log_listener';
 
     /**
@@ -34,10 +35,11 @@ class RequestLogListener
         $logKey = $event->logKey;
         $logData = $event->logData;
 
+        // 通过 $logData 数组的元素判断是请求日志还是响应日志
         if (isset($logData['request'])) {
             $createField = [
                 'ip'         => $logData['ip'],
-                'client'  => $logData['client'],
+                'client'     => $logData['client'],
                 'uri'        => $logData['uri'],
                 'request'    => $logKey,
                 'created_at' => $logData['time']
@@ -58,7 +60,7 @@ class RequestLogListener
     public function saveToFile(string $fileName, array $logData)
     {
         $dateToday = dateToday();
-        $dirPath = "/tmp/OH_LOG/{$dateToday}/";
+        $dirPath = "/temp/log/request/{$dateToday}/";
         $fileName = str_replace('.log', '', $fileName);
         $logPath = $dirPath . $fileName . '.log';
         try {

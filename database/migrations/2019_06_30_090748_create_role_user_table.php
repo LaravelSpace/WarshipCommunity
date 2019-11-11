@@ -32,7 +32,7 @@ class CreateRoleUserTable extends Migration
         // `user_id` int unsigned not null,
         // `role_id` int unsigned not null,
         // `created_at` datetime not null default CURRENT_TIMESTAMP
-        //) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
+        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
     }
 
     /**

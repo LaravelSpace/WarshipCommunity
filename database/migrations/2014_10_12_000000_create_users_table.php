@@ -48,7 +48,7 @@ class CreateUsersTable extends Migration
         // `remember_token` varchar(64) null,
         // `created_at` datetime not null default CURRENT_TIMESTAMP,
         // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
-        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
+        // ) AUTO_INCREMENT=1000 default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
         // alter table `users` add unique `users_name_unique`(`name`)
         // alter table `users` add unique `users_email_unique`(`email`)

@@ -8,6 +8,14 @@ use Illuminate\Support\Str;
 
 class OAuthHandler
 {
+    public function apply()
+    {
+    }
+
+    public function exchange()
+    {
+    }
+
     public function exchangeLocal(int $userId)
     {
         $createField = [
@@ -17,16 +25,11 @@ class OAuthHandler
             'expires_at'    => time() + 3600 * 12,
             'refresh_token' => Str::random(32)
         ];
+        $dbToken = Token::create($createField);
 
-        return Token::create($createField);
-    }
+        $token = ['access_token'=>$dbToken->access_token];
 
-    public function apply()
-    {
-    }
-
-    public function exchange()
-    {
+        return ;
     }
 
     public function validate(string $token)

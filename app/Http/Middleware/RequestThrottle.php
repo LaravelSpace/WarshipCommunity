@@ -4,32 +4,35 @@ namespace App\Http\Middleware;
 
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class RequestThrottle
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
+        // 从 header 获取认证信息
         $authorization = $request->header('Authorization', null);
-        if (is_string($authorization)) {
+        if ($authorization !== null && is_string($authorization)) {
             list($clientStr, $authStr) = explode(':', $authorization);
-            list($classfication, $client) = explode(' ', $clientStr);
+            list($classfication, $clientId) = explode(' ', $clientStr);
         }
 
-        $limitConfirm = config('constant.route_throttle');
-        if (isset($client) && is_string($client)) {
-            $limitKey = $client;
-            $limitGroup = $limitConfirm['client'];
+        $routeThrottle = config('constant.route_throttle');
+        $limitField = $routeThrottle['field'];
+        $limitTime = $routeThrottle['time'];
+        if (isset($clientId) && is_string($clientId)) {
+            $limitKey = $clientId;
+            $limitGroup = $routeThrottle['client'];
         } else {
             $ip = $request->ip();
             $limitKey = md5($ip);
-            $limitGroup = $limitConfirm['ip'];
+            $limitGroup = $routeThrottle['ip'];
         }
-        $limitTime = $limitConfirm['time'];
 
-        $checkField = $limitConfirm['field'];
+        // 检查 client 或者 ip 有没有达到频率限制
         $checkResult = true;
-        foreach ($checkField as $item) {
+        foreach ($limitField as $item) {
             $cacheKey = $limitKey . '_' . $item;
             if (!Cache::has($cacheKey)) {
                 Cache::put($cacheKey, 1, $limitTime[$item]);

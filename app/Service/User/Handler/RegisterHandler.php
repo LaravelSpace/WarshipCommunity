@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class RegisterHandler
 {
-    public function signUp(string $name, string $identity, bool $isEmail, string $password)
+    public function register(string $name, string $identity, bool $isEmail, string $password)
     {
         $checkResult = $this->checkExistUser($name, $identity, $isEmail);
         if ($checkResult['status'] !== config('constant.success')) {
@@ -79,7 +79,7 @@ class RegisterHandler
         return $result;
     }
 
-    public function signIn(string $identity, bool $isEmail, string $password)
+    public function login(string $identity, bool $isEmail, string $password)
     {
         if ($isEmail) {
             $checkField['email'] = $identity;
@@ -103,5 +103,10 @@ class RegisterHandler
         }
 
         return $result;
+    }
+
+    public function logout()
+    {
+        return [];
     }
 }

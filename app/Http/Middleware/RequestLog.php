@@ -4,27 +4,30 @@ namespace App\Http\Middleware;
 
 use App\Events\Common\RequestLogEvent;
 use Closure;
+use Illuminate\Http\Request;
 
 class RequestLog
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $logKey = makeUniqueKey32();
 
         $client = 'web_user';
+        $clientId = 'web_user';
         $authorization = $request->header('Authorization', null);
-        if (is_string($authorization)) {
+        if ($authorization !== null && is_string($authorization)) {
             list($clientStr, $authStr) = explode(':', $authorization);
-            list($classfication, $client) = explode(' ', $clientStr);
+            list($classfication, $clientId) = explode(' ', $clientStr);
         }
 
         $logData = [
-            'ip'      => $request->ip(),
-            'client'  => $client,
-            'uri'     => $request->path(),
-            'header'  => $request->header(),
-            'request' => $request->all(),
-            'time'    => timeNow()
+            'ip'        => $request->ip(),
+            'client'    => $client,
+            'client_id' => $clientId,
+            'uri'       => $request->path(),
+            'header'    => $request->header(),
+            'request'   => $request->all(),
+            'time'      => timeNow()
         ];
         event(new RequestLogEvent($logKey, $logData));
 

@@ -22,7 +22,7 @@ trait ControllerHelper
     public function responseTrans(array $response)
     {
         $data = isset($response['data']) ? $response['data'] : [];
-        if ($response['status'] === config('constant.fail')) {
+        if (isset($response['status']) && $response['status'] === config('constant.fail')) {
             $statusCode = isset($response['status_code']) ? $response['status_code'] : 400;
             $message = isset($response['message']) ? $response['message'] : '';
 
