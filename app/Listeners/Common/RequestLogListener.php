@@ -3,6 +3,7 @@
 namespace App\Listeners\Common;
 
 use App\Events\Common\RequestLogEvent;
+use App\Service\Common\Log\LogService;
 use App\Service\Common\Log\Model\LogRequest;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -40,6 +41,7 @@ class RequestLogListener
             $createField = [
                 'ip'         => $logData['ip'],
                 'client'     => $logData['client'],
+                'client_id'  => $logData['client_id'],
                 'uri'        => $logData['uri'],
                 'request'    => $logKey,
                 'created_at' => $logData['time']
@@ -57,27 +59,18 @@ class RequestLogListener
         }
     }
 
-    public function saveToFile(string $fileName, array $logData)
+    /**
+     * 将日志写入文件
+     *
+     * @param string $logKey
+     * @param array  $logData
+     */
+    public function saveToFile(string $logKey, array $logData)
     {
         $dateToday = dateToday();
         $dirPath = "/temp/log/request/{$dateToday}/";
-        $fileName = str_replace('.log', '', $fileName);
-        $logPath = $dirPath . $fileName . '.log';
-        try {
-            if (!is_dir($dirPath)) {
-                mkdir($dirPath, 0777, true);
-            }
-
-            $text = "\nTIME IS:" . timeNow() . "\n" . json_encode($logData) . "\n";
-            file_put_contents($logPath, $text, FILE_APPEND);
-        } catch (\Exception $e) {
-            if (!is_dir($dirPath)) {
-                mkdir($dirPath, 0777, true);
-            }
-
-            $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
-            $text = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
-            file_put_contents($logPath, $text, FILE_APPEND);
-        }
+        $fileName = str_replace('.log', '', $logKey);
+        $filePath = $dirPath . $fileName . '.log';
+        (new LogService())->saveToFile($dirPath, $filePath, $logData);
     }
 }

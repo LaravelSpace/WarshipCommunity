@@ -30,4 +30,8 @@
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
     </php>
+    <logging>
+        <log type="junit" target="/temp/log/phpunit.xml"/>
+        <log type="testdox-text" target="/temp/log/phpunit.txt"/>
+    </logging>
 </phpunit>

@@ -16,7 +16,7 @@ class UserController extends ApiController
         $identity = $input['identity'];
         $isEmail = (bool)$input['is_email'];
         $password = $input['password'];
-dd($input);
+
         $result = (new UserService())->register($name, $identity, $isEmail, $password);
 
         return $this->responseTrans($result);

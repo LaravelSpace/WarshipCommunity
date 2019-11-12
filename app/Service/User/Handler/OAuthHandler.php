@@ -18,18 +18,19 @@ class OAuthHandler
 
     public function exchangeLocal(int $userId)
     {
-        $createField = [
-            'client'        => 'web_user',
-            'client_id'     => $userId,
-            'access_token'  => Str::random(32),
-            'expires_at'    => time() + 3600 * 12,
-            'refresh_token' => Str::random(32)
-        ];
-        $dbToken = Token::create($createField);
+        $dbToken = Token::where(['client' => 'web_user', 'client_id' => $userId])->first();
+        if (empty($dbToken)) {
+            $createField = [
+                'client'        => 'web_user',
+                'client_id'     => $userId,
+                'access_token'  => Str::random(32),
+                'expires_at'    => time() + 3600 * 12,
+                'refresh_token' => Str::random(32)
+            ];
+            $dbToken = Token::create($createField);
+        }
 
-        $token = ['access_token'=>$dbToken->access_token];
-
-        return ;
+        return ['token' => 'WSC ' . $dbToken->client_id . ':' . $dbToken->access_token];
     }
 
     public function validate(string $token)
