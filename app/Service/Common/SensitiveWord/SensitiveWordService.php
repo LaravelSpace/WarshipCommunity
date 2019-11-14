@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Common\SensitiveWord\Service;
+namespace App\Service\Common\SensitiveWord;
 
 
 use App\Service\Common\SensitiveWord\Handler\DFAHandler;

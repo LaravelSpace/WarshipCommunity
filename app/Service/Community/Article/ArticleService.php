@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Community\Article\Service;
+namespace App\Service\Community\Article;
 
 
 use App\Service\Community\Article\Handler\ArticleHandler;

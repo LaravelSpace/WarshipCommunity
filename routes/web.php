@@ -18,13 +18,13 @@
 Route::namespace('V1\Web')->group(function(){
     Route::get('/', 'IndexController@index');
 
+    Route::get('user/register', 'UserController@register');
+    Route::get('user/login', 'UserController@login');
+
     Route::get('article', 'ArticleController@index');
     Route::get('article/store', 'ArticleController@store');
     Route::get('article/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
     Route::get('article/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
-
-    Route::get('user/sign-up', 'UserController@signUp');
-    Route::get('user/sign-in', 'UserController@signIn');
 });
 
 Route::prefix('permissions')->namespace('User')->group(function () {

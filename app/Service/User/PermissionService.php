@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\User\Service;
+namespace App\Service\User;
 
 
 use App\Exceptions\ValidateException;

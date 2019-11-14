@@ -3,13 +3,13 @@
 @section('body')
     <div id="main-body" class="container" style="min-width: 1600px">
         <div class="row">
-            <div id="sign-up" class="col-md-4 offset-md-4">
-                <vue-sign-up></vue-sign-up>
+            <div id="vue-register" class="col-md-4 offset-md-4">
+                <vue-register></vue-register>
             </div>
         </div>
     </div>
 
-    <template id="template-sign-up">
+    <template id="template-register">
         <div class="px-3 py-3 border border-primary rounded">
             <div class="form-group text-center">
                 <h3>用户注册</h3>
@@ -32,10 +32,12 @@
                 </div>
             </div>
             <div class="form-group" v-if="isEmail">
-                <label for="register-identity">登录身份(邮箱)：<a href="#" @click="changeIdentityModel()">切换</a></label>
+                <label for="register-identity">登录身份(邮箱)：
+                    <a href="#" @click="changeIdentity()">切换</a>
+                </label>
                 <div class="input-group mb-3">
-                    <input type="text" id="register-identity" class="form-control" :class="identityValid"
-                           placeholder="邮箱地址" v-model="identity">
+                    <input type="text" id="register-identity" class="form-control" placeholder="邮箱地址"
+                           :class="identityValid" v-model="identity">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
                                 data-container="body" data-toggle="popover" data-placement="right"
@@ -48,10 +50,12 @@
                 </div>
             </div>
             <div class="form-group" v-else="isEmail">
-                <label for="register-identity">登录身份(手机)：<a href="#" @click="changeIdentityModel()">切换</a></label>
+                <label for="register-identity">登录身份(手机)：
+                    <a href="#" @click="changeIdentity()">切换</a>
+                </label>
                 <div class="input-group mb-3">
-                    <input type="text" id="register-identity" class="form-control" :class="identityValid"
-                           placeholder="手机号码" v-model="identity">
+                    <input type="text" id="register-identity" class="form-control" placeholder="手机号码"
+                           :class="identityValid" v-model="identity">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
                                 data-container="body" data-toggle="popover" data-placement="right"
@@ -66,8 +70,8 @@
             <div class="form-group">
                 <label for="register-password">登录密码：</label>
                 <div class="input-group mb-3">
-                    <input type="password" id="register-password" class="form-control" :class="passwordValid"
-                           placeholder="登录密码" v-model="password">
+                    <input type="password" id="register-password" class="form-control" placeholder="登录密码"
+                           :class="passwordValid" v-model="password">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
                                 data-container="body" data-toggle="popover" data-placement="right"
@@ -82,30 +86,28 @@
             <hr class="my-4">
             <div class="form-group text-center">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-lg btn-primary px-5" v-if="signUpValid"
-                            @click="signUpSubmit()">确认注册
+                    <button type="button" class="btn btn-lg btn-primary px-5"
+                            v-if="registerValid" @click="register()">确认注册
                     </button>
-                    <button type="button" class="btn btn-lg btn-primary px-5" v-else disabled>确认注册</button>
-                    <button type="button" class="btn btn-lg btn-warning px-5" @click="signUpReset()">重置表单</button>
+                    <button type="button" class="btn btn-lg btn-primary px-5"
+                            v-else disabled>确认注册
+                    </button>
+                    <button type="button" class="btn btn-lg btn-warning px-5"
+                            @click="reset()">重置表单
+                    </button>
                 </div>
             </div>
         </div>
     </template>
     <script>
-        Vue.component('vue-sign-up', {
-            template: '#template-sign-up',
+        Vue.component('vue-register', {
+            template: '#template-register',
             data: function () {
                 return {
-                    name: '',
-                    nameMsg: '',
-                    nameTag: false,
-                    identity: '',
-                    identityMsg: '',
-                    identityTag: false,
+                    name: '', nameMsg: '', nameTag: false,
+                    identity: '', identityMsg: '', identityTag: false,
                     isEmail: true,
-                    password: '',
-                    passwordMsg: '',
-                    passwordTag: false
+                    password: '', passwordMsg: '', passwordTag: false
                 }
             },
             created: function () {
@@ -115,16 +117,16 @@
                 })
             },
             methods: {
-                changeIdentityModel: function () {
+                changeIdentity: function () {
                     this.isEmail = !this.isEmail;
                     // 切换之后要重新初始化
                     $(document).ready(function () {
                         $('[data-toggle="popover"]').popover();
                     });
                 },
-                signUpSubmit: function () {
+                register: function () {
                     let thisVue = this;
-                    axios.post(COMMUNITY_API_URL.user_sign_up, {
+                    axios.post(URI_API.user.register, {
                         'name': thisVue.name,
                         'identity': thisVue.identity,
                         'is_email': thisVue.isEmail,
@@ -133,7 +135,7 @@
                         console.debug(response.data);
                     });
                 },
-                signUpReset: function () {
+                reset: function () {
                     this.name = '';
                     this.nameMsg = '';
                     this.nameTag = false;
@@ -148,12 +150,12 @@
             computed: {
                 nameValid: function () {
                     if (this.name !== null && this.name !== '') {
-                        if (REG_NAME.test(this.name)) {
+                        if (REG.name.test(this.name)) {
                             this.nameMsg = '';
                             this.nameTag = true;
                             return 'is-valid';
                         } else {
-                            this.nameMsg = REG_MESSAGE.REG_NAME;
+                            this.nameMsg = REG_MESSAGE.name;
                             this.nameTag = false;
                             return 'is-invalid';
                         }
@@ -164,22 +166,22 @@
                 identityValid: function () {
                     if (this.identity !== null && this.identity !== '') {
                         if (this.isEmail) {
-                            if (REG_EMAIL.test(this.identity)) {
+                            if (REG.email.test(this.identity)) {
                                 this.identityMsg = '';
                                 this.identityTag = true;
                                 return 'is-valid';
                             } else {
-                                this.identityMsg = REG_MESSAGE.REG_EMAIL;
+                                this.identityMsg = REG_MESSAGE.email;
                                 this.identityTag = false;
                                 return 'is-invalid';
                             }
                         } else {
-                            if (REG_MOBILE_PHONE.test(this.identity)) {
+                            if (REG.phone.test(this.identity)) {
                                 this.identityMsg = '';
                                 this.identityTag = true;
                                 return 'is-valid';
                             } else {
-                                this.identityMsg = REG_MESSAGE.REG_MOBILE_PHONE;
+                                this.identityMsg = REG_MESSAGE.phone;
                                 this.identityTag = false;
                                 return 'is-invalid';
                             }
@@ -190,12 +192,12 @@
                 },
                 passwordValid: function () {
                     if (this.password !== null && this.password !== '') {
-                        if (REG_PASSWORD.test(this.password) && this.password.length <= 16) {
+                        if (REG.password.test(this.password) && this.password.length <= 16) {
                             this.passwordMsg = '';
                             this.passwordTag = true;
                             return 'is-valid';
                         } else {
-                            this.passwordMsg = REG_MESSAGE.REG_PASSWORD;
+                            this.passwordMsg = REG_MESSAGE.password;
                             this.passwordTag = false;
                             return 'is-invalid';
                         }
@@ -203,11 +205,11 @@
                         this.passwordTag = false;
                     }
                 },
-                signUpValid: function () {
+                registerValid: function () {
                     return this.nameTag && this.identityTag && this.passwordTag;
                 }
             },
         });
-        new Vue({el: '#sign-up'});
+        new Vue({el: '#vue-register'});
     </script>
 @endsection

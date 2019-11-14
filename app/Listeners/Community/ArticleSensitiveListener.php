@@ -4,7 +4,7 @@ namespace App\Listeners\Community;
 
 use App\Events\Community\ArticleSensitiveEvent;
 use App\Service\Common\SensitiveWord\Model\SensitiveResult;
-use App\Service\Common\SensitiveWord\Service\SensitiveWordService;
+use App\Service\Common\SensitiveWord\SensitiveWordService;
 use App\Service\Community\Article\Model\Article;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;

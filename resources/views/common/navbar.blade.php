@@ -24,17 +24,17 @@
                     </div>
                 </li>
             </ul>
-            <ul class="navbar-nav col-md-2" v-if="notSignIn">
+            <ul class="navbar-nav col-md-2" v-if="notLogin">
                 <li class="nav-item mr-md-2">
                     <a type="button" class="btn btn-outline-primary"
-                       href="/user/sign-in">登录</a>
+                       href="/user/login">登录</a>
                 </li>
                 <li class="nav-item mr-md-2">
                     <a type="button" class="btn btn-outline-primary"
-                       href="/user/sign-up">注册</a>
+                       href="/user/register">注册</a>
                 </li>
             </ul>
-            <ul class="navbar-nav col-md-2" v-else="notSignIn">
+            <ul class="navbar-nav col-md-2" v-else="notLogin">
                 <li class="nav-item mr-md-2">
                     <img src="" :src="avatar" class="rounded" style="width: 40px;height: 40px" alt="40x40">
                 </li>
@@ -46,7 +46,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Action</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" @click="signOut()">退出登录</a>
+                        <a class="dropdown-item" href="#" @click="logout()">退出登录</a>
                     </div>
                 </li>
             </ul>
@@ -58,17 +58,17 @@
         template: '#template-vue-navbar',
         data: function () {
             return {
-                notSignIn: true,
+                notLogin: true,
                 userId: '',
                 name: '',
                 avatar: '',
             }
         },
         created: function () {
-            this.signCheck();
+            // this.login();
         },
         methods: {
-            signCheck: function () {
+            login: function () {
                 let thisVue = this;
                 axios.get(COMMUNITY_URL.users_sign_check).then(function (response) {
                     if (response.data.status === STATUS_SUCCESS) {
@@ -87,7 +87,7 @@
                     console.error(error.response);
                 });
             },
-            signOut: function () {
+            logout: function () {
                 axios.get(COMMUNITY_URL.users_sign_out).then(function (response) {
                     if (response.data.status === STATUS_SUCCESS) {
                         window.location.reload();

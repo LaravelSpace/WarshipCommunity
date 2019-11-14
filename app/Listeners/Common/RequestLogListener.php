@@ -67,7 +67,7 @@ class RequestLogListener
      */
     public function saveToFile(string $logKey, array $logData)
     {
-        $dateToday = dateToday();
+        $dateToday = dateNow();
         $dirPath = "/temp/log/request/{$dateToday}/";
         $fileName = str_replace('.log', '', $logKey);
         $filePath = $dirPath . $fileName . '.log';

@@ -8,7 +8,7 @@ class LogService
     /**
      * @param string $dirPath
      * @param string $filePath
-     * @param        $data
+     * @param mixed  $data
      */
     public function saveToFile(string $dirPath, string $filePath, $data)
     {

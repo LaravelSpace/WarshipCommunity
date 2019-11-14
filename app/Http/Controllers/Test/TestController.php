@@ -21,7 +21,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd([microtime(),date('Y-m-d H:i:s',microtime())]);
+        dd(microtime());
         // return response((new JWTHandler())->makeJWT(User::find(25)));
         return response((string)(new JWTHandler())->checkJWT('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTU3MjU5NDg5NSwiZXhwIjoxNTczMTk5Njk1LCJqdGkiOiI4ZTI5NmEwNjdhMzc1NjMzNzBkZWQwNWY1YTNiZjNlYyIsInVzZXJfaWQiOjI1fQ==.OGM2ZjM0ZDRlNGNjZDc0MThlNTFiMGE2ZjljN2IyMmY4NjU4YmJhODVkNmY1NTQxMDBlYmQzNWMxZDdmYWM2MA=='));
     }

@@ -7,17 +7,17 @@ use Throwable;
 
 class CommonException extends \Exception
 {
-    protected $attachData;
+    protected $attachment;
 
-    public function __construct($message = "", $code = 0, $attachData = "", Throwable $previous = null)
+    public function __construct($message = "", $code = 0, $attachment = "", Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
 
-        $this->attachData = $attachData;
+        $this->attachment = $attachment;
     }
 
-    public function getAttachData()
+    public function getAttachment()
     {
-        return $this->attachData;
+        return $this->attachment;
     }
 }

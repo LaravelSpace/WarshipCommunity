@@ -4,7 +4,7 @@ namespace App\Http\Controllers\V1\Api;
 
 
 use App\Http\Controllers\V1\ApiController;
-use App\Service\User\Service\UserService;
+use App\Service\User\UserService;
 use Illuminate\Http\Request;
 
 class UserController extends ApiController

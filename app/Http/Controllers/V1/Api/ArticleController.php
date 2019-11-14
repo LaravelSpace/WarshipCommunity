@@ -5,7 +5,7 @@ namespace App\Http\Controllers\V1\Api;
 
 use App\Http\Controllers\V1\ApiController;
 use App\Http\Controllers\V1\ResourceApiInterface;
-use App\Service\Community\Article\Service\ArticleService;
+use App\Service\Community\Article\ArticleService;
 use Illuminate\Http\Request;
 
 class ArticleController extends ApiController implements ResourceApiInterface

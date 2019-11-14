@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 
 class UserController extends WebController
 {
-    public function signUp(Request $request)
+    public function register(Request $request)
     {
-        return view('user.sign-up');
+        return view('user.register');
     }
 
-    public function signIn(Request $request)
+    public function login(Request $request)
     {
-        return view('user.sign-in');
+        return view('user.login');
     }
 }
