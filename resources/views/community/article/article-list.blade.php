@@ -13,7 +13,7 @@
     </ul>
 </template>
 <script>
-    Vue.component("vue-article-list", {
+    Vue.component("article-list", {
         template: "#template-article-list",
         data: function () {
             return {
@@ -26,8 +26,7 @@
         methods: {
             getArticleList: function () {
                 let thisVue = this;
-                let url = COMMUNITY_API_URL.article;
-                axios.get(url).then(function (response) {
+                axios.get(URI_API.article).then(function (response) {
                     thisVue.articleList = response.data.data;
                     if (thisVue.articleList.length > 0) {
                         thisVue.vifShow = true;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Test;
 
 
 use App\Http\Controllers\Controller;
+use App\Service\Common\SensitiveWord\SensitiveWordService;
 use Illuminate\Http\Request;
 
 class TestSensitiveWordController extends Controller

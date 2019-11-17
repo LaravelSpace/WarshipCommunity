@@ -17,18 +17,30 @@ class CommentTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
         $commentList = [];
+        $bodyList = [];
         $userIdList = User::pluck('id');
         $articleIdList = Article::pluck('id');
-        $length = rand(1, 200);
+
+        $length = rand(50, 200);
         for ($i = 0; $i < $length; $i++) {
+            $key = Str::random(32);
+            $userId = $faker->randomElement($userIdList);
+            $articleId = $faker->randomElement($articleIdList);
             $commentList[] = [
-                'body'       => Str::random(32),
-                'user_id'    => $faker->randomElement($userIdList),
-                'article_id' => $faker->randomElement($articleIdList),
+                'body'       => $key,
+                'user_id'    => $userId,
+                'article_id' => $articleId,
                 'examine'    => rand(0, 3),
                 'blacklist'  => $faker->boolean,
                 'created_at' => $faker->dateTimeBetween('-1 years', 'now'),
-                'updated_at' => $faker->dateTimeBetween('-1 years', 'now'),
+                'updated_at' => $faker->dateTimeBetween('-1 years', 'now')
+            ];
+
+            $bodyList[] = [
+                'body'       => $faker->text,
+                'key'        => $key,
+                'user_id'    => $userId,
+                'article_id' => $articleId
             ];
         }
 

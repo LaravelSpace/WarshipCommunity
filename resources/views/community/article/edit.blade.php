@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div id="article-data">
-                    <vue-article-data></vue-article-data>
+                    <article-data></article-data>
                 </div>
             </div>
             <div class="col-md-3">edit</div>

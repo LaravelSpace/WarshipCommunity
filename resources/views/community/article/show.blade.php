@@ -8,11 +8,11 @@
     <template id="template-vue-article">
         <div class="row">
             <div class="col-md-9">
-                <div id="vue-article-item">
-                    <vue-article-item v-bind:article_id="articleId"></vue-article-item>
+                <div id="article-item">
+                    <article-item v-bind:article_id="articleId"></article-item>
                 </div>
-                <div id="vue-comment-list">
-                    <vue-comment-list v-bind:article_id="articleId"></vue-comment-list>
+                <div id="comment-list">
+                    <comment-list v-bind:article_id="articleId"></comment-list>
                 </div>
             </div>
             <div class="col-md-3">show</div>
@@ -26,9 +26,8 @@
             },
             created: function () {
                 let thisVue = this;
-                let localUrl = window.location.href;
-                let localUrlArray = gSplitUrl(localUrl);
-                thisVue.articleId = localUrlArray[localUrlArray.length - 1];
+                let uriArr = gGetUrI(window.location.href);
+                thisVue.articleId = uriArr[uriArr.length - 1];
             }
         });
         new Vue({el: "#main-body"});
@@ -43,7 +42,7 @@
         </div>
     </template>
     <script>
-        Vue.component("vue-article-item", {
+        Vue.component("article-item", {
             props: ['article_id'],
             template: "#template-article-item",
             data: function () {
@@ -53,19 +52,18 @@
             },
             created: function () {
                 this.getArticleItem();
-                this.editUrl = COMMUNITY_WEB_URL.article + '/' + this.articleId + COMMUNITY_URL.edit;
-                this.deleteUrl = COMMUNITY_API_URL.article + '/' + this.articleId + COMMUNITY_URL.destroy;
+                this.editUrl = URI_WEB.article + '/' + this.articleId + URI_CONFIG.edit;
+                this.deleteUrl = URI_API.article + '/' + this.articleId + URI_CONFIG.destroy;
             },
             methods: {
                 getArticleItem: function () {
                     let thisVue = this;
-                    let localUrl = window.location.href;
-                    let localUrlArray = gSplitUrl(localUrl);
-                    thisVue.articleId = localUrlArray[localUrlArray.length - 1];
-                    let url = COMMUNITY_API_URL.article + '/' + thisVue.articleId;
-                    axios.get(url).then(function (response) {
+                    let uriArr = gGetUrI(window.location.href);
+                    thisVue.articleId = uriArr[uriArr.length - 1];
+                    let uri = URI_API.article + '/' + thisVue.articleId;
+                    axios.get(uri).then(function (response) {
                         thisVue.article = response.data.data;
-                        if (thisVue.article !== null) {
+                        if (thisVue.article !== null && thisVue.article !== '') {
                             thisVue.vifArticleShow = true;
                         }
                     }).catch(function (error) {
@@ -74,7 +72,7 @@
                 }
             }
         });
-        new Vue({el: "#vue-article-item"});
+        new Vue({el: "#article-item"});
     </script>
 
     <template id="template-comment-list">
@@ -85,7 +83,7 @@
         </div>
     </template>
     <script>
-        Vue.component("vue-comment-list", {
+        Vue.component("comment-list", {
             props: ['article_id'],
             template: "#template-comment-list",
             data: function () {
@@ -99,7 +97,7 @@
             methods: {
                 getCommentList: function () {
                     let thisVue = this;
-                    let url = COMMUNITY_API_URL.article + '/' + thisVue.articleId + COMMUNITY_URL.comment;
+                    let url = URI_API.article + '/' + thisVue.articleId + URI_CONFIG.comment;
                     axios.get(url).then(function (response) {
                         thisVue.commentList = response.data.data;
                         if (thisVue.commentList.length > 0) {
@@ -111,6 +109,6 @@
                 }
             }
         });
-        new Vue({el: "#vue-comment-list"});
+        new Vue({el: "#comment-list"});
     </script>
 @endsection

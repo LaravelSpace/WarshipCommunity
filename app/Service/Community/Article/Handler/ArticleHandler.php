@@ -12,7 +12,9 @@ class ArticleHandler
 {
     public function createArticle(array $user, string $title, string $body)
     {
-        $createField = ['title' => $title, 'body' => $body, 'user_id' => $user['id'], 'examine' => 1];
+        $key = makeUniqueKey32();
+        $this->saveToFile($user['id'], $key, $body);
+        $createField = ['title' => $title, 'body' => $key, 'user_id' => $user['id'], 'examine' => 1];
         $dbArticle = Article::create($createField);
 
         event(new ArticleSensitiveEvent($dbArticle->id, 'article'));
@@ -36,8 +38,11 @@ class ArticleHandler
     {
         try {
             $dbArticle = Article::findOrFail($id)->toArray();
+            $body = $this->getFromFile($dbArticle['user_id'], $dbArticle['body']);
             if ($markdown) {
-                $dbArticle['body'] = (new Parsedown())->text($dbArticle['body']);
+                $dbArticle['body'] = (new Parsedown())->text($body);
+            } else {
+                $dbArticle['body'] = $body;
             }
         } catch (\Exception $e) {
             $dbArticle = [];
@@ -60,15 +65,15 @@ class ArticleHandler
 
     public function deleteArticle(int $id)
     {
-        $whereField = ['id' => $id];
-        $rows = Article::where($whereField)->delete();
+        // $whereField = ['id' => $id];
+        // $rows = Article::where($whereField)->delete();
 
         return $id;
     }
 
     public function getCommentList(int $id)
     {
-        $whereField = ['article_id'=>$id];
+        $whereField = ['article_id' => $id];
         $dbCommentList = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->get();
         if ($dbCommentList->count() > 0) {
             $dbCommentList = $dbCommentList->toArray();
@@ -77,5 +82,49 @@ class ArticleHandler
         }
 
         return $dbCommentList;
+    }
+
+    /**
+     * @param int    $userId
+     * @param string $key
+     * @param string $body
+     */
+    public function saveToFile(int $userId, string $key, string $body)
+    {
+        $fileName = $key . '.txt';
+        // 创建目录
+        try {
+            $dirPath = '/wsc/article/' . $userId . '/';
+            if (!is_dir($dirPath)) {
+                mkdir($dirPath, 0755, true);
+            }
+            // 记录文本
+            $filePath = $dirPath . $fileName;
+            try {
+                file_put_contents($filePath, $body);
+            } catch (\Exception $e) {
+                $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
+                $text = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
+                file_put_contents($filePath, $text);
+            }
+        } catch (\Exception $e) {
+            $filePath = '/temp/log/exception/' . $fileName . '.log';
+            $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
+            $text = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
+            file_put_contents($filePath, $text);
+        }
+    }
+
+    public function getFromFile(int $userId, string $key)
+    {
+        $filePath = '/wsc/article/' . $userId . '/' . $key . '.txt';
+        try {
+            $body = file_get_contents($filePath);
+        } catch (\Exception $e) {
+            $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
+            $body = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
+        }
+
+        return $body;
     }
 }

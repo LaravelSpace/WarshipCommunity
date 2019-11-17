@@ -27,16 +27,6 @@ Route::namespace('V1\Web')->group(function(){
     Route::get('article/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
 });
 
-Route::prefix('permissions')->namespace('User')->group(function () {
-    Route::get('/', 'PermissionController@indexPermission')->name('permissions.index');
-    Route::post('/', 'PermissionController@storePermission')->name('permissions.store');
-});
-
-Route::prefix('roles')->namespace('User')->group(function () {
-    Route::get('/', 'PermissionController@indexRole')->name('roles.index');
-    Route::post('/', 'PermissionController@storeRole')->name('roles.store');
-});
-
 if (env('APP_DEBUG')) {
     Route::get('/test', 'Test\TestController@test');
     Route::get('/test/sensitive-word', 'Test\TestSensitiveWordController@test');

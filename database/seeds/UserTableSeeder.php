@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $userList = [];
 
-        $length = rand(1, 20);
+        $length = rand(5, 20);
         for ($i = 0; $i < $length; $i++) {
             $userList[] = [
                 'name'              => $faker->name,
@@ -29,7 +29,7 @@ class UserTableSeeder extends Seeder
                 'api_token'         => Str::random(32),
                 'remember_token'    => Str::random(32),
                 'created_at'        => $faker->dateTimeBetween('-1 years', 'now'),
-                'updated_at'        => $faker->dateTimeBetween('-1 years', 'now'),
+                'updated_at'        => $faker->dateTimeBetween('-1 years', 'now')
             ];
         }
 

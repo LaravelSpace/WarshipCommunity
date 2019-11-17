@@ -1,20 +1,21 @@
 <script>
-    function gSplitUrl(url){
-        let urlArray = url.split('?');
-        let urlOnly = urlArray[0];
+    // 将路由去掉参数后，以 '/' 分割并转化为数组
+    function gGetUrI(url) {
+        let urlArr = url.split('?');
 
-        return urlOnly.split('/');
+        return urlArr[0].split('/');
     }
 
-    function gGetParameterFromUrl(url, parameterName) {
-        let urlArray = url.split('?');
-        if (urlArray.length > 1) {
-            let parameterString = urlArray[1];
-            let parameterArray = parameterString.split('&');
-            for (let i = 0; i < parameterArray.length; i++) {
-                let parameterObject = parameterArray[i].split('=');
-                if (parameterObject !== null && parameterName === parameterObject[0]) {
-                    return parameterObject[1];
+    // 获取路由中的参数
+    function gGetParam(url, param) {
+        let urlArr = url.split('?');
+        if (urlArr.length > 1) {
+            let paramStr = urlArr[1];
+            let paramArr = paramStr.split('&');
+            for (let i = 0; i < paramArr.length; i++) {
+                let paramObj = paramArr[i].split('=');
+                if (paramObj !== null && param === paramObj[0]) {
+                    return paramObj[1];
                 }
             }
         }

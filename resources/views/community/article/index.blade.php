@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div id="article-list">
-                    <vue-article-list></vue-article-list>
+                    <article-list></article-list>
                 </div>
             </div>
             <div class="col-md-3">

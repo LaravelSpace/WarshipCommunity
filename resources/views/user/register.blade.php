@@ -153,10 +153,12 @@
                         if (REG.name.test(this.name)) {
                             this.nameMsg = '';
                             this.nameTag = true;
+
                             return 'is-valid';
                         } else {
                             this.nameMsg = REG_MESSAGE.name;
                             this.nameTag = false;
+
                             return 'is-invalid';
                         }
                     } else {
@@ -169,20 +171,24 @@
                             if (REG.email.test(this.identity)) {
                                 this.identityMsg = '';
                                 this.identityTag = true;
+
                                 return 'is-valid';
                             } else {
                                 this.identityMsg = REG_MESSAGE.email;
                                 this.identityTag = false;
+
                                 return 'is-invalid';
                             }
                         } else {
                             if (REG.phone.test(this.identity)) {
                                 this.identityMsg = '';
                                 this.identityTag = true;
+
                                 return 'is-valid';
                             } else {
                                 this.identityMsg = REG_MESSAGE.phone;
                                 this.identityTag = false;
+
                                 return 'is-invalid';
                             }
                         }
@@ -195,10 +201,12 @@
                         if (REG.password.test(this.password) && this.password.length <= 16) {
                             this.passwordMsg = '';
                             this.passwordTag = true;
+
                             return 'is-valid';
                         } else {
                             this.passwordMsg = REG_MESSAGE.password;
                             this.passwordTag = false;
+
                             return 'is-invalid';
                         }
                     } else {
