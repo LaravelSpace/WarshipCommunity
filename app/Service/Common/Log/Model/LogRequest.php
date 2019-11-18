@@ -17,6 +17,7 @@ class LogRequest extends Model
         'client_id',
         'uri',
         'request',
-        'response'
+        'response',
+        'consumption'
     ];
 }

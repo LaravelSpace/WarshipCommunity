@@ -51,8 +51,9 @@ class RequestLogListener
         } else if (isset($logData['response'])) {
             $whereField = ['request' => $logKey];
             $updateField = [
-                'response'   => $logKey,
-                'updated_at' => $logData['time']
+                'response'    => $logKey,
+                'consumption' => $logData['consumption'],
+                'updated_at'  => $logData['time']
             ];
             LogRequest::where($whereField)->update($updateField);
             $this->saveToFile($logKey, $logData);
@@ -68,7 +69,7 @@ class RequestLogListener
     public function saveToFile(string $logKey, array $logData)
     {
         $dateToday = dateNow();
-        $dirPath = '/temp/log/request/' . $dateToday . '/';
+        $dirPath = config('constant.file_path.request') . $dateToday . '/';
         (new LogService())->saveToFile($dirPath, $logKey, $logData);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommentsTable extends Migration
+class CreateArticleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('comments')) {
-            echo "Table comments Is Already Exist! \n";
+        if (Schema::hasTable('article')) {
+            echo "Table article Is Already Exist! \n";
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('article', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
+            $table->string('title', 64)->index(); // 标题
             $table->string('body', 64); // 内容
-            $table->unsignedInteger('user_id')->index(); // table:users->id
-            $table->unsignedInteger('article_id')->index(); // table:articles->id
+            $table->unsignedInteger('user_id')->index(); // DB:users->id
             $table->unsignedTinyInteger('examine')->default(0);
-            // DB:comments->examine(审核状态):0=未触发,1=待审核,2=通过,3=拒绝
+            // DB:articles->examine(审核状态):0=未触发,1=待审核,2=通过,3=拒绝
             $table->boolean('blacklist')->default(false); // 黑名单
             $table->dateTime('deleted_at')->nullable(); // 软删除的时间
             $table->dateTime('created_at')->useCurrent();
@@ -33,11 +33,11 @@ class CreateCommentsTable extends Migration
         });
         // \Log::debug(\DB::getQueryLog());
 
-        // create table `comments` (
+        // create table `article` (
         // `id` int unsigned not null auto_increment primary key,
+        // `title` varchar(64) not null,
         // `body` varchar(64) not null,
         // `user_id` int unsigned not null,
-        // `article_id` int unsigned not null,
         // `examine` tinyint unsigned not null default '0',
         // `blacklist` tinyint(1) not null default '0',
         // `deleted_at` datetime null,
@@ -45,8 +45,8 @@ class CreateCommentsTable extends Migration
         // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
-        // alter table `comments` add index `comments_user_id_index`(`user_id`)
-        // alter table `comments` add index `comments_article_id_index`(`article_id`)
+        // alter table `article` add index `article_title_index`(`title`)
+        // alter table `article` add index `article_user_id_index`(`user_id`)
     }
 
     /**
@@ -60,6 +60,6 @@ class CreateCommentsTable extends Migration
             echo "Not In Test Environment! \n";
             return;
         }
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('article');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Test;
 
 use App\Jobs\Common\SensitiveWordJob;
+use App\Service\Common\Log\Model\LogRequest;
 use App\Service\Community\Article\Model\Article;
 use App\Service\User\Handler\JWTHandler;
 use App\Service\User\Model\User;
@@ -22,6 +23,15 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $createField = [
+            'ip'         => 1,
+            'client'     => 1,
+            'client_id'  => 1,
+            'uri'        => 1,
+            'request'    => 1
+        ];
+        LogRequest::create($createField);
+        dd(1);
         return redirect('/');
     }
 }

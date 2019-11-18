@@ -25,11 +25,10 @@ class CommentTableSeeder extends Seeder
         for ($i = 0; $i < $length; $i++) {
             $key = Str::random(32);
             $userId = $faker->randomElement($userIdList);
-            $articleId = $faker->randomElement($articleIdList);
             $commentList[] = [
                 'body'       => $key,
                 'user_id'    => $userId,
-                'article_id' => $articleId,
+                'article_id' => $faker->randomElement($articleIdList),
                 'examine'    => rand(0, 3),
                 'blacklist'  => $faker->boolean,
                 'created_at' => $faker->dateTimeBetween('-1 years', 'now'),
@@ -37,13 +36,17 @@ class CommentTableSeeder extends Seeder
             ];
 
             $bodyList[] = [
-                'body'       => $faker->text,
-                'key'        => $key,
-                'user_id'    => $userId,
-                'article_id' => $articleId
+                'body'    => $faker->text,
+                'key'     => $key,
+                'user_id' => $userId
             ];
         }
 
-        DB::table('comments')->insert($commentList);
+        $handler = new \App\Service\Community\Article\Handler\CommentHandler();
+        foreach ($bodyList as $item) {
+            $handler->saveToFile($item['user_id'], $item['key'], $item['body']);
+        }
+
+        DB::table('comment')->insert($commentList);
     }
 }

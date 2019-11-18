@@ -13,7 +13,7 @@ class Comment extends Model
 
     protected $connection = 'mysql';
 
-    protected $table = 'comments';
+    protected $table = 'comment';
 
     protected $fillable = [
         'body',

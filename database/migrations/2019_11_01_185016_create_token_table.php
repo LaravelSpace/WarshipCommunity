@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTokensTable extends Migration
+class CreateTokenTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateTokensTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('tokens')) {
-            echo "Table tokens Is Already Exist! \n";
+        if (Schema::hasTable('token')) {
+            echo "Table token Is Already Exist! \n";
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('tokens', function (Blueprint $table) {
+        Schema::create('token', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
             $table->string('client',32);
@@ -26,26 +26,26 @@ class CreateTokensTable extends Migration
             $table->string('access_token',64);
             $table->dateTime('expires_at');
             $table->string('refresh_token',64);
-            $table->string('scope',128)->nullable();
-            $table->dateTime('created_at')->nullable();
+            $table->string('scope',128)->default('');
+            $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();
             $table->index(['client','client_id']);
         });
         // \Log::debug(\DB::getQueryLog());
 
-        // create table `tokens` (
+        // create table `token` (
         // `id` int unsigned not null auto_increment primary key,
         // `client` varchar(32) not null,
         // `client_id` int unsigned not null,
         // `access_token` varchar(64) not null,
         // `expires_at` datetime not null,
         // `refresh_token` varchar(64) not null,
-        // `scope` varchar(128) null,
+        // `scope` varchar(128) not null default '',
         // `created_at` datetime not null default CURRENT_TIMESTAMP,
         // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
-        // alter table `tokens` add index `tokens_client_client_id_index`(`client`, `client_id`)
+        // alter table `token` add index `token_client_client_id_index`(`client`, `client_id`)
     }
 
     /**
@@ -59,6 +59,6 @@ class CreateTokensTable extends Migration
             echo "Not In Test Environment! \n";
             return;
         }
-        Schema::dropIfExists('tokens');
+        Schema::dropIfExists('token');
     }
 }

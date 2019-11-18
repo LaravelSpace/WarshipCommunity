@@ -33,7 +33,7 @@ class LogService
                 file_put_contents($filePath, $text, FILE_APPEND);
             }
         } catch (\Exception $e) {
-            $filePath = '/temp/log/exception/' . $fileName;
+            $filePath = config('constant.file_path.exception') . $fileName;
             $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
             $text = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
             file_put_contents($filePath, $text, FILE_APPEND);

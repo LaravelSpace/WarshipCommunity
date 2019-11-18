@@ -22,6 +22,7 @@ class RequestLog
         }
 
         // 记录请求
+        $startTime = microtime(true) * 1000;
         $logData = [
             'ip'        => $request->ip(),
             'client'    => $client,
@@ -36,9 +37,11 @@ class RequestLog
         $response = $next($request);
 
         // 记录响应
+        $endTime = microtime(true) * 1000;
         $logData = [
-            'response' => $response->getContent(),
-            'time'     => timeNow()
+            'response'    => $response->getContent(),
+            'consumption' => (int)$endTime - (int)$startTime,
+            'time'        => timeNow()
         ];
         event(new RequestLogEvent($logKey, $logData));
 

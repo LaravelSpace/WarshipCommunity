@@ -9,7 +9,7 @@ class Role extends Model
 {
     protected $connection = 'mysql';
 
-    protected $table = 'roles';
+    protected $table = 'role';
 
     protected $fillable = [
         'name',

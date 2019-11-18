@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticlesTable extends Migration
+class CreateCommentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('articles')) {
-            echo "Table articles Is Already Exist! \n";
+        if (Schema::hasTable('comment')) {
+            echo "Table comment Is Already Exist! \n";
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('comment', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
-            $table->string('title', 64)->index(); // 标题
             $table->string('body', 64); // 内容
-            $table->unsignedInteger('user_id')->index(); // DB:users->id
+            $table->unsignedInteger('user_id')->index(); // table:users->id
+            $table->unsignedInteger('article_id')->index(); // table:articles->id
             $table->unsignedTinyInteger('examine')->default(0);
-            // DB:articles->examine(审核状态):0=未触发,1=待审核,2=通过,3=拒绝
+            // DB:comments->examine(审核状态):0=未触发,1=待审核,2=通过,3=拒绝
             $table->boolean('blacklist')->default(false); // 黑名单
             $table->dateTime('deleted_at')->nullable(); // 软删除的时间
             $table->dateTime('created_at')->useCurrent();
@@ -33,11 +33,11 @@ class CreateArticlesTable extends Migration
         });
         // \Log::debug(\DB::getQueryLog());
 
-        // create table `articles` (
+        // create table `comment` (
         // `id` int unsigned not null auto_increment primary key,
-        // `title` varchar(64) not null,
         // `body` varchar(64) not null,
         // `user_id` int unsigned not null,
+        // `article_id` int unsigned not null,
         // `examine` tinyint unsigned not null default '0',
         // `blacklist` tinyint(1) not null default '0',
         // `deleted_at` datetime null,
@@ -45,8 +45,8 @@ class CreateArticlesTable extends Migration
         // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
-        // alter table `articles` add index `articles_title_index`(`title`)
-        // alter table `articles` add index `articles_user_id_index`(`user_id`)
+        // alter table `comment` add index `comment_user_id_index`(`user_id`)
+        // alter table `comment` add index `comment_article_id_index`(`article_id`)
     }
 
     /**
@@ -60,6 +60,6 @@ class CreateArticlesTable extends Migration
             echo "Not In Test Environment! \n";
             return;
         }
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('comment');
     }
 }

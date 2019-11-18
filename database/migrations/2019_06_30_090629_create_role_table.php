@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePasswordResetsTable extends Migration
+class CreateRoleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,28 @@ class CreatePasswordResetsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('password_resets')) {
-            echo "Table password_resets Is Already Exist! \n";
+        if (Schema::hasTable('role')) {
+            echo "Table role Is Already Exist! \n";
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('password_resets', function (Blueprint $table) {
+        Schema::create('role', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
-            $table->string('email', 64)->index();
-            $table->string('token', 64);
+            $table->increments('id');
+            $table->string('name', 64)->unique(); // 角色名称
+            $table->string('describe', 255)->default(''); // 描述
             $table->dateTime('created_at')->useCurrent();
         });
-        // \Log::debug(\DB::getQueryLog());
+        // \Log::debug(\DB::getQueryLog());.
 
-        // create table `password_resets` (
-        // `email` varchar(255) not null,
-        // `token` varchar(255) not null,
+        // create table `role` (
+        // `id` int unsigned not null auto_increment primary key,
+        // `name` varchar(64) not null,
+        // `describe` varchar(255) not null default '',
         // `created_at` datetime not null default CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
-        // alter table `password_resets` add index `password_resets_email_index`(`email`)
+        // alter table `role` add unique `role_name_unique`(`name`)
     }
 
     /**
@@ -46,6 +48,6 @@ class CreatePasswordResetsTable extends Migration
             echo "Not In Test Environment! \n";
             return;
         }
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('role');
     }
 }

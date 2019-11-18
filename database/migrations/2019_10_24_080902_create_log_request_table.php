@@ -26,10 +26,11 @@ class CreateLogRequestTable extends Migration
             $table->unsignedInteger('client_id');
             $table->string('uri', 64)->index();
             $table->string('request', 64);
-            $table->string('response', 64)->nullable();
+            $table->string('response', 64)->default('');
+            $table->unsignedInteger('consumption')->default(0);
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();
-            $table->index(['client', 'client_id']);
+            $table->index(['client', 'client_id', 'uri']);
         });
         // \Log::debug(\DB::getQueryLog());
 
@@ -40,13 +41,14 @@ class CreateLogRequestTable extends Migration
         // `client_id` int unsigned not null,
         // `uri` varchar(64) not null,
         // `request` varchar(64) not null,
-        // `response` varchar(64) null,
+        // `response` varchar(64) not null default '',
+        // `consumption` int unsigned not null default 0,
         // `created_at` datetime not null default CURRENT_TIMESTAMP,
         // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
-        // alter table `log_request` add index `log_request_client_client_id_index`(`client`, `client_id`)
         // alter table `log_request` add index `log_request_uri_index`(`uri`)
+        // alter table `log_request` add index `log_request_client_client_id_uri_index`(`client`, `client_id`, `uri`)
     }
 
     /**

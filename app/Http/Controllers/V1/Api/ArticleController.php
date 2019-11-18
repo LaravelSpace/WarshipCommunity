@@ -6,6 +6,7 @@ namespace App\Http\Controllers\V1\Api;
 use App\Http\Controllers\V1\ApiController;
 use App\Http\Controllers\V1\ResourceApiInterface;
 use App\Service\Community\Article\ArticleService;
+use App\Service\Community\Article\CommentService;
 use Illuminate\Http\Request;
 
 class ArticleController extends ApiController implements ResourceApiInterface
@@ -65,7 +66,7 @@ class ArticleController extends ApiController implements ResourceApiInterface
     {
         $page = (int)$request->input('page', 1);
 
-        $result = (new ArticleService())->getCommentList($id);
+        $result = (new CommentService())->getCommentList('article', $id, $page);
 
         return $this->response($result);
     }

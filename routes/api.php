@@ -18,7 +18,7 @@
 // });
 
 // Route::namespace('V1\Api')->middleware(['request_throttle','request_log'])->group(function(){});
-Route::namespace('V1\Api')->group(function () {
+Route::namespace('V1\Api')->middleware('request_log')->group(function () {
     Route::prefix('user')->group(function () {
         Route::post('register', 'UserController@register');
         Route::post('login', 'UserController@login');

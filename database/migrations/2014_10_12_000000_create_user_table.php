@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('users')) {
-            echo "Table users Is Already Exist! \n";
+        if (Schema::hasTable('user')) {
+            echo "Table user Is Already Exist! \n";
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
             $table->string('name', 32)->unique(); // 昵称
@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
         });
         // \Log::debug(\DB::getQueryLog());
 
-        // create table `users` (
+        // create table `user` (
         // `id` int unsigned not null auto_increment primary key,
         // `name` varchar(16) not null,
         // `email` varchar(64) not null,
@@ -50,9 +50,9 @@ class CreateUsersTable extends Migration
         // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
         // ) AUTO_INCREMENT=1000 default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
-        // alter table `users` add unique `users_name_unique`(`name`)
-        // alter table `users` add unique `users_email_unique`(`email`)
-        // alter table `users` add unique `users_phone_unique`(`phone`)
+        // alter table `user` add unique `user_name_unique`(`name`)
+        // alter table `user` add unique `user_email_unique`(`email`)
+        // alter table `user` add unique `user_phone_unique`(`phone`)
     }
 
     /**
@@ -66,6 +66,6 @@ class CreateUsersTable extends Migration
             echo "Not In Test Environment! \n";
             return;
         }
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user');
     }
 }

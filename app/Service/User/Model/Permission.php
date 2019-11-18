@@ -9,7 +9,7 @@ class Permission extends Model
 {
     protected $connection = 'mysql';
 
-    protected $table = 'permissions';
+    protected $table = 'permission';
 
     protected $fillable = [
         'name',

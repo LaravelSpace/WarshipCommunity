@@ -5,7 +5,6 @@ namespace App\Service\Community\Article\Handler;
 
 use App\Events\Community\ArticleSensitiveEvent;
 use App\Service\Community\Article\Model\Article;
-use App\Service\Community\Article\Model\Comment;
 use Parsedown;
 
 class ArticleHandler
@@ -71,19 +70,6 @@ class ArticleHandler
         return $id;
     }
 
-    public function getCommentList(int $id)
-    {
-        $whereField = ['article_id' => $id];
-        $dbCommentList = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->get();
-        if ($dbCommentList->count() > 0) {
-            $dbCommentList = $dbCommentList->toArray();
-        } else {
-            $dbCommentList = [];
-        }
-
-        return $dbCommentList;
-    }
-
     /**
      * @param int    $userId
      * @param string $key
@@ -94,7 +80,7 @@ class ArticleHandler
         $fileName = $key . '.txt';
         // 创建目录
         try {
-            $dirPath = '/wsc/article/' . $userId . '/';
+            $dirPath = config('constant.file_path.article') . $userId . '/';
             if (!is_dir($dirPath)) {
                 mkdir($dirPath, 0755, true);
             }
@@ -108,7 +94,7 @@ class ArticleHandler
                 file_put_contents($filePath, $text);
             }
         } catch (\Exception $e) {
-            $filePath = '/temp/log/exception/' . $fileName . '.log';
+            $filePath = config('constant.file_path.exception') . $fileName . '.log';
             $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
             $text = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
             file_put_contents($filePath, $text);
@@ -117,7 +103,7 @@ class ArticleHandler
 
     public function getFromFile(int $userId, string $key)
     {
-        $filePath = '/wsc/article/' . $userId . '/' . $key . '.txt';
+        $filePath = config('constant.file_path.article') . $userId . '/' . $key . '.txt';
         try {
             $body = file_get_contents($filePath);
         } catch (\Exception $e) {

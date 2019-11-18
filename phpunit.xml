@@ -31,7 +31,7 @@
         <env name="SESSION_DRIVER" value="array"/>
     </php>
     <logging>
-        <log type="junit" target="/temp/log/phpunit.xml"/>
-        <log type="testdox-text" target="/temp/log/phpunit.txt"/>
+        <log type="junit" target="/wsc/temp/log/phpunit.xml"/>
+        <log type="testdox-text" target="/wsc/temp/log/phpunit.txt"/>
     </logging>
 </phpunit>

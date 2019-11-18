@@ -31,9 +31,4 @@ class ArticleService
     {
         return (new ArticleHandler())->deleteArticle($id);
     }
-
-    public function getCommentList(int $id)
-    {
-        return (new ArticleHandler())->getCommentList($id);
-    }
 }

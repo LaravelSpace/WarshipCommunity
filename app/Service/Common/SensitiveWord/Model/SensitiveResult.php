@@ -9,11 +9,11 @@ class SensitiveResult extends Model
 {
     protected $connection = 'mysql';
 
-    protected $table = 'sensitive_results';
+    protected $table = 'sensitive_result';
 
     protected $fillable = [
-        'target_id',
         'classification',
+        'target_id',
         'result_data',
     ];
 }

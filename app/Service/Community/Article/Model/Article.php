@@ -14,7 +14,7 @@ class Article extends Model
 
     protected $connection = 'mysql';
 
-    protected $table = 'articles';
+    protected $table = 'article';
 
     protected $fillable = [
         'title',

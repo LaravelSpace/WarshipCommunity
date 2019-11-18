@@ -9,7 +9,7 @@ class Token extends Model
 {
     protected $connection = 'mysql';
 
-    protected $table = 'tokens';
+    protected $table = 'token';
 
     protected $fillable = [
         'client',

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePermissionsTable extends Migration
+class CreateSensitiveResultTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,28 +13,30 @@ class CreatePermissionsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('permissions')) {
-            echo "Table permissions Is Already Exist! \n";
+        if (Schema::hasTable('sensitive_result')) {
+            echo "Table sensitive_result Is Already Exist! \n";
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->charset = 'utf8mb4';
+        Schema::create('sensitive_result', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 64)->unique(); // 权限名称
-            $table->string('describe',255)->nullable(); // 描述
+            $table->string('classification', 64); // 目标类型
+            $table->unsignedInteger('target_id'); // 目标 id
+            $table->string('result_data', 255);
             $table->dateTime('created_at')->useCurrent();
+            $table->index(['classification', 'target_id']);
         });
         // \Log::debug(\DB::getQueryLog());
 
-        // create table `permissions` (
+        // create table `sensitive_result` (
         // `id` int unsigned not null auto_increment primary key,
-        // `name` varchar(64) not null,
-        // `describe` varchar(255) null,
+        // `classification` varchar(64) not null,
+        // `target_id` int unsigned not null,
+        // `result_data` varchar(255) not null,
         // `created_at` datetime not null default CURRENT_TIMESTAMP
         // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
 
-        // alter table `permissions` add unique `permissions_name_unique`(`name`)
+        // alter table `sensitive_result` add index `sensitive_result_classification_target_id_index`(`classification`, `target_id`)
     }
 
     /**
@@ -48,6 +50,6 @@ class CreatePermissionsTable extends Migration
             echo "Not In Test Environment! \n";
             return;
         }
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('sensitive_result');
     }
 }

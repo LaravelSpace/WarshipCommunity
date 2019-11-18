@@ -47,6 +47,6 @@ class ArticleTableSeeder extends Seeder
             $handler->saveToFile($item['user_id'], $item['key'], $item['body']);
         }
 
-        DB::table('articles')->insert($articleList);
+        DB::table('article')->insert($articleList);
     }
 }
