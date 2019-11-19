@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\V1\Api;
 
 
-use App\Http\Controllers\V1\ApiController;
-use App\Http\Controllers\V1\ResourceApiInterface;
+use App\Http\Controllers\V1\ApiControllerAbstract;
+use App\Http\Controllers\V1\ApiResourceInterface;
 use App\Service\Community\Article\ArticleService;
 use App\Service\Community\Article\CommentService;
 use Illuminate\Http\Request;
 
-class ArticleController extends ApiController implements ResourceApiInterface
+class ArticleController extends ApiControllerAbstract implements ApiResourceInterface
 {
     public function store(Request $request)
     {
@@ -26,7 +26,7 @@ class ArticleController extends ApiController implements ResourceApiInterface
     {
         $page = (int)$request->input('page', 1);
 
-        $result = (new ArticleService())->getArticleList($page);
+        $result = (new ArticleService())->listArticle($page);
 
         return $this->response($result);
     }
@@ -66,7 +66,7 @@ class ArticleController extends ApiController implements ResourceApiInterface
     {
         $page = (int)$request->input('page', 1);
 
-        $result = (new CommentService())->getCommentList('article', $id, $page);
+        $result = (new CommentService())->listComment('article', $id, $page);
 
         return $this->response($result);
     }

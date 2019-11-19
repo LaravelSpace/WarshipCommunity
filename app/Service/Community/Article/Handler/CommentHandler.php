@@ -7,7 +7,7 @@ use App\Service\Community\Article\Model\Comment;
 
 class CommentHandler
 {
-    public function getCommentList(string $classification, int $id, int $page)
+    public function listComment(string $classification, int $id, int $page)
     {
         if ($classification === 'article') {
             $whereField = ['article_id' => $id];

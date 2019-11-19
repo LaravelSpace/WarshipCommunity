@@ -5,7 +5,7 @@ namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
 
-interface ResourceWebInterface
+interface WebResourceInterface
 {
     public function store(Request $request);
 

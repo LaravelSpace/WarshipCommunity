@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\V1\Web;
 
 
-use App\Http\Controllers\V1\ResourceWebInterface;
-use App\Http\Controllers\V1\WebController;
+use App\Http\Controllers\V1\WebResourceInterface;
+use App\Http\Controllers\V1\WebControllerAbstract;
 use Illuminate\Http\Request;
 
-class ArticleController extends WebController implements ResourceWebInterface
+class ArticleController extends WebControllerAbstract implements WebResourceInterface
 {
     public function store(Request $request)
     {

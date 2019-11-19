@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\V1\Web;
 
 
-use App\Http\Controllers\V1\WebController;
+use App\Http\Controllers\V1\WebControllerAbstract;
 use Illuminate\Http\Request;
 
-class UserController extends WebController
+class UserController extends WebControllerAbstract
 {
     public function register(Request $request)
     {

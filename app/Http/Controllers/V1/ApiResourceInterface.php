@@ -5,7 +5,7 @@ namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
 
-interface ResourceApiInterface
+interface ApiResourceInterface
 {
     public function store(Request $request);
 

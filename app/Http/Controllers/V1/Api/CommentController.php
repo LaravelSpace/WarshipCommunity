@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\V1\Api;
 
 
-use App\Http\Controllers\V1\ApiController;
-use App\Http\Controllers\V1\ResourceApiInterface;
+use App\Http\Controllers\V1\ApiControllerAbstract;
+use App\Http\Controllers\V1\ApiResourceInterface;
 use Illuminate\Http\Request;
 
-class CommentController extends ApiController implements ResourceApiInterface
+class CommentController extends ApiControllerAbstract implements ApiResourceInterface
 {
     public function store(Request $request)
     {

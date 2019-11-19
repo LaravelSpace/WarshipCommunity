@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\V1\Api;
 
 
-use App\Http\Controllers\V1\ApiController;
+use App\Http\Controllers\V1\ApiControllerAbstract;
 use App\Service\User\UserService;
 use Illuminate\Http\Request;
 
-class UserController extends ApiController
+class UserController extends ApiControllerAbstract
 {
     public function register(Request $request)
     {

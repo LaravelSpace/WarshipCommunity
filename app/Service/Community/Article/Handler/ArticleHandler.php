@@ -21,7 +21,7 @@ class ArticleHandler
         return $dbArticle->id;
     }
 
-    public function getArticleList(int $page)
+    public function listArticle(int $page)
     {
         $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->get();
         if ($dbArticleList->count() > 0) {

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 
-abstract class WebController extends Controller
+abstract class WebControllerAbstract extends Controller
 {
-    use ControllerHelper;
+    use ResponseTrait;
 }
 
 //                                   ,\`.

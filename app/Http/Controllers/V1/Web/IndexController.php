@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\V1\Web;
 
-use App\Http\Controllers\V1\WebController;
+use App\Http\Controllers\V1\WebControllerAbstract;
 
-class IndexController extends WebController
+class IndexController extends WebControllerAbstract
 {
     public function index()
     {
