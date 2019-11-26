@@ -34,11 +34,19 @@
     </script>
 
     <template id="template-article-item">
-        <div v-if="vifArticleShow">
-            <a href="#" :href="editUrl"><h5 class="mt-0 mb-1">修改帖子</h5></a>
-            <a href="#" :href="deleteUrl"><h5 class="mt-0 mb-1">删除帖子</h5></a>
-            <h1>@{{ article.title }}</h1>
-            <div v-html="article.body"></div>
+        <div class="card border-primary" v-if="vifArticleShow">
+            <div class="card-header">
+                <h3>
+                    @{{ article.title }}
+                    <a class="btn btn-danger" style="float: right;margin-right: 10px"
+                       href="#" :href="deleteUrl"><h5 class="mt-0 mb-1">删除帖子</h5></a>
+                    <a class="btn btn-primary" style="float: right;margin-right: 10px"
+                       href="#" :href="editUrl"><h5 class="mt-0 mb-1">修改帖子</h5></a>
+                </h3>
+            </div>
+            <div class="card-body">
+                <div v-html="article.body"></div>
+            </div>
         </div>
     </template>
     <script>
@@ -77,8 +85,17 @@
 
     <template id="template-comment-list">
         <div v-if="vifCommentShow">
-            <div v-for="comment in commentList">
-                <div>@{{ comment.body }}</div>
+            <div class="card border-info" style="margin: 10px 0" v-for="comment in commentList">
+                <div class="card-header">
+                    <h6>
+                        <img class="rounded-circle mr-3" style="width: 30px; height: 30px"
+                             src="" :src="comment.user.avatar" alt="" :alt="comment.user.name">
+                        @{{ comment.user.name }}
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div>@{{ comment.body }}</div>
+                </div>
             </div>
         </div>
     </template>

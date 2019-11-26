@@ -24,11 +24,6 @@ class Article extends Model
         'blacklist'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function scopePassExamine(Builder $query)
     {
         $query->where('examine', '=', 2); // 通过敏感词审核
@@ -37,5 +32,10 @@ class Article extends Model
     public function scopeNotInBlacklist(Builder $query)
     {
         $query->where('blacklist', '=', false); // 不在黑名单中
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

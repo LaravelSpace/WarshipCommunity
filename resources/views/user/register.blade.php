@@ -100,14 +100,14 @@
         </div>
     </template>
     <script>
-        Vue.component('vue-register', {
-            template: '#template-register',
+        Vue.component("vue-register", {
+            template: "#template-register",
             data: function () {
                 return {
-                    name: '', nameMsg: '', nameTag: false,
-                    identity: '', identityMsg: '', identityTag: false,
+                    name: "", nameMsg: "", nameTag: false,
+                    identity: "", identityMsg: "", identityTag: false,
                     isEmail: true,
-                    password: '', passwordMsg: '', passwordTag: false
+                    password: "", passwordMsg: "", passwordTag: false
                 }
             },
             created: function () {
@@ -127,69 +127,69 @@
                 register: function () {
                     let thisVue = this;
                     axios.post(URI_API.user.register, {
-                        'name': thisVue.name,
-                        'identity': thisVue.identity,
-                        'is_email': thisVue.isEmail,
-                        'password': thisVue.password
+                        "name": thisVue.name,
+                        "identity": thisVue.identity,
+                        "is_email": thisVue.isEmail,
+                        "password": thisVue.password
                     }).then(function (response) {
                         console.debug(response.data);
                     });
                 },
                 reset: function () {
-                    this.name = '';
-                    this.nameMsg = '';
+                    this.name = "";
+                    this.nameMsg = "";
                     this.nameTag = false;
-                    this.identity = '';
-                    this.identityMsg = '';
+                    this.identity = "";
+                    this.identityMsg = "";
                     this.identityTag = false;
-                    this.password = '';
-                    this.passwordMsg = '';
+                    this.password = "";
+                    this.passwordMsg = "";
                     this.passwordTag = false;
                 }
             },
             computed: {
                 nameValid: function () {
-                    if (this.name !== null && this.name !== '') {
+                    if (this.name !== null && this.name !== "") {
                         if (REG.name.test(this.name)) {
-                            this.nameMsg = '';
+                            this.nameMsg = "";
                             this.nameTag = true;
 
-                            return 'is-valid';
+                            return "is-valid";
                         } else {
                             this.nameMsg = REG_MESSAGE.name;
                             this.nameTag = false;
 
-                            return 'is-invalid';
+                            return "is-invalid";
                         }
                     } else {
                         this.nameTag = false;
                     }
                 },
                 identityValid: function () {
-                    if (this.identity !== null && this.identity !== '') {
+                    if (this.identity !== null && this.identity !== "") {
                         if (this.isEmail) {
                             if (REG.email.test(this.identity)) {
-                                this.identityMsg = '';
+                                this.identityMsg = "";
                                 this.identityTag = true;
 
-                                return 'is-valid';
+                                return "is-valid";
                             } else {
                                 this.identityMsg = REG_MESSAGE.email;
                                 this.identityTag = false;
 
-                                return 'is-invalid';
+                                return "is-invalid";
                             }
                         } else {
                             if (REG.phone.test(this.identity)) {
-                                this.identityMsg = '';
+                                this.identityMsg = "";
                                 this.identityTag = true;
 
-                                return 'is-valid';
+                                return "is-valid";
                             } else {
                                 this.identityMsg = REG_MESSAGE.phone;
                                 this.identityTag = false;
 
-                                return 'is-invalid';
+                                return "is-invalid";
                             }
                         }
                     } else {
@@ -197,17 +197,17 @@
                     }
                 },
                 passwordValid: function () {
-                    if (this.password !== null && this.password !== '') {
+                    if (this.password !== null && this.password !== "") {
                         if (REG.password.test(this.password) && this.password.length <= 16) {
-                            this.passwordMsg = '';
+                            this.passwordMsg = "";
                             this.passwordTag = true;
 
-                            return 'is-valid';
+                            return "is-valid";
                         } else {
                             this.passwordMsg = REG_MESSAGE.password;
                             this.passwordTag = false;
 
-                            return 'is-invalid';
+                            return "is-invalid";
                         }
                     } else {
                         this.passwordTag = false;
@@ -218,6 +218,6 @@
                 }
             },
         });
-        new Vue({el: '#vue-register'});
+        new Vue({el: "#vue-register"});
     </script>
 @endsection

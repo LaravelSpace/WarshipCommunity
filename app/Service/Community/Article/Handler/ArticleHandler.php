@@ -23,14 +23,40 @@ class ArticleHandler
 
     public function listArticle(int $page)
     {
-        $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->get();
+        $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate(10);
+        $count = Article::query()->passExamine()->notInBlacklist()->count();
+        $maxPage = (int)($count / 10)+2;
         if ($dbArticleList->count() > 0) {
             $dbArticleList = $dbArticleList->toArray();
+            $articleList = $dbArticleList['data'];
+            $prevMinPage = $dbArticleList['current_page'] - 3;
+            $nextMaxPage = $dbArticleList['current_page'] + 4;
+            $pageArr = [];
+            for ($i = $prevMinPage; $i < $nextMaxPage; $i++) {
+                if ($i > 0 && $i < $maxPage) {
+                    $pageArr[] = $i;
+                }
+            }
+            $prevPage = ($dbArticleList['current_page'] - 1) > 0 ? $dbArticleList['current_page'] - 1 : '';
+            $nextPage = ($dbArticleList['current_page'] + 1) < $maxPage ? $dbArticleList['current_page'] + 1 : '';
+            $paginate = [
+                'prev_page'    => $prevPage,
+                'current_page' => $dbArticleList['current_page'],
+                'next_page'    => $nextPage,
+                'page_list'    => $pageArr
+            ];
+            $articleData = [
+                'article_list' => $articleList,
+                'paginate'     => $paginate
+            ];
         } else {
-            $dbArticleList = [];
+            $articleData = [
+                'article_list' => [],
+                'paginate'     => []
+            ];
         }
 
-        return $dbArticleList;
+        return $articleData;
     }
 
     public function getArticle(int $id, bool $markdown)

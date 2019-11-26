@@ -16,7 +16,7 @@ class CommentHandler
         } else {
             $whereField = ['article_id' => $id];
         }
-        $dbCommentList = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->get();
+        $dbCommentList = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->with('user')->get();
 
         $commentList = [];
         if ($dbCommentList->count() > 0) {
