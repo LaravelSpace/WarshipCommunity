@@ -13,6 +13,10 @@ class CreateArticleTable extends Migration
      */
     public function up()
     {
+        if (env('APP_ENV') !== 'local') {
+            echo "Not In Local Environment! \n";
+            return;
+        }
         if (Schema::hasTable('article')) {
             echo "Table article Is Already Exist! \n";
             return;
@@ -21,32 +25,16 @@ class CreateArticleTable extends Migration
         Schema::create('article', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
-            $table->string('title', 64)->index(); // 标题
-            $table->string('body', 64); // 内容
-            $table->unsignedInteger('user_id')->index(); // DB:users->id
+            $table->string('title', 64)->index();
+            $table->string('body', 64);
+            $table->unsignedInteger('user_id')->index();
             $table->unsignedTinyInteger('examine')->default(0);
-            // DB:articles->examine(审核状态):0=未触发,1=待审核,2=通过,3=拒绝
-            $table->boolean('blacklist')->default(false); // 黑名单
-            $table->dateTime('deleted_at')->nullable(); // 软删除的时间
+            $table->boolean('blacklist')->default(false);
+            $table->dateTime('deleted_at')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();
         });
         // \Log::debug(\DB::getQueryLog());
-
-        // create table `article` (
-        // `id` int unsigned not null auto_increment primary key,
-        // `title` varchar(64) not null,
-        // `body` varchar(64) not null,
-        // `user_id` int unsigned not null,
-        // `examine` tinyint unsigned not null default '0',
-        // `blacklist` tinyint(1) not null default '0',
-        // `deleted_at` datetime null,
-        // `created_at` datetime not null default CURRENT_TIMESTAMP,
-        // `updated_at` datetime null ON UPDATE CURRENT_TIMESTAMP
-        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
-
-        // alter table `article` add index `article_title_index`(`title`)
-        // alter table `article` add index `article_user_id_index`(`user_id`)
     }
 
     /**
@@ -56,8 +44,8 @@ class CreateArticleTable extends Migration
      */
     public function down()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
+        if (env('APP_ENV') !== 'local') {
+            echo "Not In Local Environment! \n";
             return;
         }
         Schema::dropIfExists('article');
