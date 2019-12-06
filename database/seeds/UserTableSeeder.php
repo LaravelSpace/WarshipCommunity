@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $userList = [];
 
-        $length = rand(5, 20);
+        $length = 5;
         for ($i = 0; $i < $length; $i++) {
             $userList[] = [
                 'name'              => $faker->name,

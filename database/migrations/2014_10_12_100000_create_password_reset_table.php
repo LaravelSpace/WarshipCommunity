@@ -13,10 +13,6 @@ class CreatePasswordResetTable extends Migration
      */
     public function up()
     {
-        if (env('APP_ENV') !== 'local') {
-            echo "Not In Local Environment! \n";
-            return;
-        }
         if (Schema::hasTable('password_reset')) {
             echo "Table password_reset Is Already Exist! \n";
             return;
@@ -24,6 +20,7 @@ class CreatePasswordResetTable extends Migration
         // \DB::connection()->enableQueryLog();
         Schema::create('password_reset', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
+            $table->increments('id');
             $table->string('email', 64)->index();
             $table->string('token', 64);
             $table->dateTime('created_at')->useCurrent();

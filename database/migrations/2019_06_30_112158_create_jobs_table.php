@@ -28,18 +28,6 @@ class CreateJobsTable extends Migration
             $table->unsignedInteger('created_at');
         });
         // \Log::debug(\DB::getQueryLog());
-
-        // create table `jobs` (
-        // `id` bigint unsigned not null auto_increment primary key,
-        // `queue` varchar(255) not null,
-        // `payload` longtext not null,
-        // `attempts` tinyint unsigned not null,
-        // `reserved_at` int unsigned null,
-        // `available_at` int unsigned not null,
-        // `created_at` int unsigned not null
-        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
-
-        // alter table `jobs` add index `jobs_queue_index`(`queue`)
     }
 
     /**
@@ -49,8 +37,8 @@ class CreateJobsTable extends Migration
      */
     public function down()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
+        if (env('APP_ENV') !== 'local') {
+            echo "Not In Local Environment! \n";
             return;
         }
         Schema::dropIfExists('jobs');

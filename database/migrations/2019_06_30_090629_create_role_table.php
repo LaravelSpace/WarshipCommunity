@@ -21,20 +21,11 @@ class CreateRoleTable extends Migration
         Schema::create('role', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
-            $table->string('name', 64)->unique(); // 角色名称
-            $table->string('describe', 255)->default(''); // 描述
+            $table->string('name', 64)->unique();
+            $table->string('describe', 255)->nullable()->default('');
             $table->dateTime('created_at')->useCurrent();
         });
         // \Log::debug(\DB::getQueryLog());.
-
-        // create table `role` (
-        // `id` int unsigned not null auto_increment primary key,
-        // `name` varchar(64) not null,
-        // `describe` varchar(255) not null default '',
-        // `created_at` datetime not null default CURRENT_TIMESTAMP
-        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
-
-        // alter table `role` add unique `role_name_unique`(`name`)
     }
 
     /**
@@ -44,8 +35,8 @@ class CreateRoleTable extends Migration
      */
     public function down()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
+        if (env('APP_ENV') !== 'local') {
+            echo "Not In Local Environment! \n";
             return;
         }
         Schema::dropIfExists('role');

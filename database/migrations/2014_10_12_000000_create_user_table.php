@@ -13,10 +13,6 @@ class CreateUserTable extends Migration
      */
     public function up()
     {
-        if (env('APP_ENV') !== 'local') {
-            echo "Not In Local Environment! \n";
-            return;
-        }
         if (Schema::hasTable('user')) {
             echo "Table user Is Already Exist! \n";
             return;

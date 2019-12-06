@@ -21,7 +21,7 @@ class CommentTableSeeder extends Seeder
         $userIdList = User::pluck('id');
         $articleIdList = Article::pluck('id');
 
-        $length = rand(50, 200);
+        $length = 200;
         for ($i = 0; $i < $length; $i++) {
             $key = Str::random(32);
             $userId = $faker->randomElement($userIdList);
@@ -29,7 +29,7 @@ class CommentTableSeeder extends Seeder
                 'body'       => $key,
                 'user_id'    => $userId,
                 'article_id' => $faker->randomElement($articleIdList),
-                'examine'    => rand(0, 3),
+                'examine'    => 2,
                 'blacklist'  => $faker->boolean,
                 'created_at' => $faker->dateTimeBetween('-1 years', 'now'),
                 'updated_at' => $faker->dateTimeBetween('-1 years', 'now')

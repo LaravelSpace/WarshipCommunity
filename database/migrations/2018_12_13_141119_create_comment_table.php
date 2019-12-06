@@ -13,10 +13,6 @@ class CreateCommentTable extends Migration
      */
     public function up()
     {
-        if (env('APP_ENV') !== 'local') {
-            echo "Not In Local Environment! \n";
-            return;
-        }
         if (Schema::hasTable('comment')) {
             echo "Table comment Is Already Exist! \n";
             return;

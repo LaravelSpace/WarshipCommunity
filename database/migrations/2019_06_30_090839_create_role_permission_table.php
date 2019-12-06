@@ -26,13 +26,6 @@ class CreateRolePermissionTable extends Migration
             $table->dateTime('created_at')->useCurrent();
         });
         // \Log::debug(\DB::getQueryLog());
-
-        // create table `role_permission` (
-        // `id` int unsigned not null auto_increment primary key,
-        // `permission_id` int unsigned not null,
-        // `role_id` int unsigned not null,
-        // `created_at` datetime not null default CURRENT_TIMESTAMP
-        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
     }
 
     /**
@@ -42,8 +35,8 @@ class CreateRolePermissionTable extends Migration
      */
     public function down()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
+        if (env('APP_ENV') !== 'local') {
+            echo "Not In Local Environment! \n";
             return;
         }
         Schema::dropIfExists('role_permission');

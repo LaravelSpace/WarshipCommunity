@@ -22,7 +22,7 @@ class ArticleTableSeeder extends Seeder
         $bodyList = [];
         $userIdList = User::pluck('id');
 
-        $length = rand(10, 40);
+        $length = 20;
         for ($i = 0; $i < $length; $i++) {
             $key = Str::random(32);
             $userId = $faker->randomElement($userIdList);
@@ -30,7 +30,7 @@ class ArticleTableSeeder extends Seeder
                 'title'      => $faker->sentence(2),
                 'body'       => $key,
                 'user_id'    => $userId,
-                'examine'    => rand(0, 3),
+                'examine'    => 2,
                 'blacklist'  => $faker->boolean,
                 'created_at' => $faker->dateTimeBetween('-1 years', 'now'),
                 'updated_at' => $faker->dateTimeBetween('-1 years', 'now')

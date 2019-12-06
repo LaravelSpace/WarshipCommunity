@@ -13,10 +13,6 @@ class CreateArticleTable extends Migration
      */
     public function up()
     {
-        if (env('APP_ENV') !== 'local') {
-            echo "Not In Local Environment! \n";
-            return;
-        }
         if (Schema::hasTable('article')) {
             echo "Table article Is Already Exist! \n";
             return;

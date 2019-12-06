@@ -27,15 +27,6 @@ class CreateFailedJobsTable extends Migration
             $table->dateTime('failed_at')->useCurrent();
         });
         // \Log::debug(\DB::getQueryLog());
-
-        // create table `failed_jobs` (
-        // `id` bigint unsigned not null auto_increment primary key,
-        // `connection` text not null,
-        // `queue` text not null,
-        // `payload` longtext not null,
-        // `exception` longtext not null,
-        // `failed_at` datetime not null default CURRENT_TIMESTAMP
-        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
     }
 
     /**
@@ -45,8 +36,8 @@ class CreateFailedJobsTable extends Migration
      */
     public function down()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
+        if (env('APP_ENV') !== 'local') {
+            echo "Not In Local Environment! \n";
             return;
         }
         Schema::dropIfExists('failed_jobs');

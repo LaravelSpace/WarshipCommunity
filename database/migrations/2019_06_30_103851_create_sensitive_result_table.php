@@ -22,21 +22,11 @@ class CreateSensitiveResultTable extends Migration
             $table->increments('id');
             $table->string('classification', 64); // 目标类型
             $table->unsignedInteger('target_id'); // 目标 id
-            $table->string('result_data', 255);
+            $table->string('result_data', 255)->nullable()->default('');
             $table->dateTime('created_at')->useCurrent();
             $table->index(['classification', 'target_id']);
         });
         // \Log::debug(\DB::getQueryLog());
-
-        // create table `sensitive_result` (
-        // `id` int unsigned not null auto_increment primary key,
-        // `classification` varchar(64) not null,
-        // `target_id` int unsigned not null,
-        // `result_data` varchar(255) not null,
-        // `created_at` datetime not null default CURRENT_TIMESTAMP
-        // ) default character set utf8mb4 collate 'utf8mb4_unicode_ci'
-
-        // alter table `sensitive_result` add index `sensitive_result_classification_target_id_index`(`classification`, `target_id`)
     }
 
     /**
@@ -46,8 +36,8 @@ class CreateSensitiveResultTable extends Migration
      */
     public function down()
     {
-        if (!env('APP_DEBUG')) {
-            echo "Not In Test Environment! \n";
+        if (env('APP_ENV') !== 'local') {
+            echo "Not In Local Environment! \n";
             return;
         }
         Schema::dropIfExists('sensitive_result');
