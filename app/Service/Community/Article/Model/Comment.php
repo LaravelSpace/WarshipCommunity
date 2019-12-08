@@ -19,7 +19,7 @@ class Comment extends Model
     protected $fillable = [
         'body',
         'user_id',
-        'article_id'
+        'article_id',
     ];
 
     public function scopePassExamine(Builder $query)

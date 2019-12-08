@@ -18,6 +18,6 @@ class LogRequest extends Model
         'uri',
         'request',
         'response',
-        'consumption'
+        'consumption',
     ];
 }

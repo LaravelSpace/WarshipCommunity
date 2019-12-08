@@ -21,7 +21,7 @@ class Article extends Model
         'body',
         'user_id',
         'examine',
-        'blacklist'
+        'blacklist',
     ];
 
     public function scopePassExamine(Builder $query)

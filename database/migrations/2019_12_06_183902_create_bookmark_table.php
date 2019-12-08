@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogRequestTable extends Migration
+class CreateBookmarkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,19 @@ class CreateLogRequestTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('log_request')) {
-            echo "Table log_request Is Already Exist! \n";
+        if (Schema::hasTable('bookmark')) {
+            echo "Table bookmark Is Already Exist! \n";
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('log_request', function (Blueprint $table) {
+        Schema::create('bookmark', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->bigIncrements('id');
-            $table->string('ip', 32);
-            $table->string('client', 32);
-            $table->unsignedInteger('client_id');
-            $table->string('uri', 64)->index();
-            $table->string('request', 64);
-            $table->string('response', 64)->nullable()->default('');
-            $table->unsignedInteger('consumption')->nullable()->default(0);
+            $table->unsignedInteger('user_id')->index();
+            $table->string('classification', 64);
+            $table->unsignedInteger('target_id');
             $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->nullable();
-            $table->index(['client', 'client_id', 'uri']);
+            $table->index(['classification', 'target_id']);
         });
         // \Log::debug(\DB::getQueryLog());
     }
@@ -46,6 +41,6 @@ class CreateLogRequestTable extends Migration
             echo "Not In Local Environment! \n";
             return;
         }
-        Schema::dropIfExists('log_request');
+        Schema::dropIfExists('bookmark');
     }
 }

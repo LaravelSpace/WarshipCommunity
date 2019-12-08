@@ -19,9 +19,9 @@ class CreateSensitiveResultTable extends Migration
         }
         // \DB::connection()->enableQueryLog();
         Schema::create('sensitive_result', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('classification', 64); // 目标类型
-            $table->unsignedInteger('target_id'); // 目标 id
+            $table->bigIncrements('id');
+            $table->string('classification', 64);
+            $table->unsignedInteger('target_id');
             $table->string('result_data', 255)->nullable()->default('');
             $table->dateTime('created_at')->useCurrent();
             $table->index(['classification', 'target_id']);

@@ -13,6 +13,6 @@ class Role extends Model
 
     protected $fillable = [
         'name',
-        'describe'
+        'describe',
     ];
 }
