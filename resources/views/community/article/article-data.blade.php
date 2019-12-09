@@ -12,7 +12,6 @@
             {{--:class="bodyValid" v-model="body"></textarea>--}}
             <textarea id="article-body" class="form-control" rows="10" placeholder="Body"></textarea>
         </div>
-        <hr class="my-4">
         <div class="form-group text-center">
             <div class="btn-group">
                 <button type="button" class="btn btn-lg btn-primary px-5"

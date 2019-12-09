@@ -26,6 +26,9 @@ class CreateArticleTable extends Migration
             $table->unsignedInteger('user_id')->index();
             $table->unsignedTinyInteger('examine')->default(0);
             $table->boolean('blacklist')->default(false);
+            $table->unsignedInteger('mention')->default(0);
+            $table->unsignedInteger('star')->default(0);
+            $table->unsignedInteger('bookmark')->default(0);
             $table->dateTime('deleted_at')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();

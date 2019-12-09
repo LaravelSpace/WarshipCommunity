@@ -23,18 +23,24 @@ class ArticleHandler
 
     public function listArticle(int $page)
     {
+        $articleData = [
+            'article_list' => [],
+            'paginate'     => [],
+        ];
+
         $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate(10);
-        $count = Article::query()->passExamine()->notInBlacklist()->count();
-        $maxPage = (int)($count / 10)+2;
+
         if ($dbArticleList->count() > 0) {
             $dbArticleList = $dbArticleList->toArray();
-            $articleList = $dbArticleList['data'];
+            // 计算分页
             $prevMinPage = $dbArticleList['current_page'] - 3;
             $nextMaxPage = $dbArticleList['current_page'] + 4;
-            $pageArr = [];
+            $pageList = [];
+            $count = Article::query()->passExamine()->notInBlacklist()->count();
+            $maxPage = (int)($count / 10) + 2;
             for ($i = $prevMinPage; $i < $nextMaxPage; $i++) {
                 if ($i > 0 && $i < $maxPage) {
-                    $pageArr[] = $i;
+                    $pageList[] = $i;
                 }
             }
             $prevPage = ($dbArticleList['current_page'] - 1) > 0 ? $dbArticleList['current_page'] - 1 : '';
@@ -43,16 +49,11 @@ class ArticleHandler
                 'prev_page'    => $prevPage,
                 'current_page' => $dbArticleList['current_page'],
                 'next_page'    => $nextPage,
-                'page_list'    => $pageArr
+                'page_list'    => $pageList,
             ];
             $articleData = [
-                'article_list' => $articleList,
-                'paginate'     => $paginate
-            ];
-        } else {
-            $articleData = [
-                'article_list' => [],
-                'paginate'     => []
+                'article_list' => $dbArticleList['data'],
+                'paginate'     => $paginate,
             ];
         }
 
