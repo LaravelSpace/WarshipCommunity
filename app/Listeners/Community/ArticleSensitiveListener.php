@@ -32,44 +32,46 @@ class ArticleSensitiveListener
      */
     public function handle(ArticleSensitiveEvent $event)
     {
-        $id = $event->id;
         $classification = $event->classification;
-        $text = $this->iGetModelText($id, $classification);
-        if ($text !== null && $text !== '') {
-            $resultData = (new SensitiveWordService())->checkSensitiveWord($text);
-            $this->iHandleResult($id, $classification, $resultData);
+        $id = $event->id;
+        $text = $this->iGetModelText($classification, $id);
+        if (is_string($text)) {
+            $result = (new SensitiveWordService())->checkSensitiveWord($text);
+            $this->iHandleResult($classification, $id, $result);
         }
     }
 
-    private function iGetModelText(int $id, string $classification)
+    private function iGetModelText(string $classification, int $id)
     {
         $text = '';
         switch ($classification) {
             case 'article':
-                $modelData = Article::find($id);
-                if ($modelData !== null) {
-                    $text = $modelData->body;
+                $dbModel = Article::find($id);
+                if (!is_null($dbModel)) {
+                    $text = $dbModel->body;
                 }
                 break;
         }
         return $text;
     }
 
-    private function iHandleResult(int $id,string $classification,array $resultData)
+    private function iHandleResult(string $classification, int $id, array $result)
     {
-        if (count($resultData) <= 0) {
-            $examineResult = 2;
-        } else {
-            SensitiveResult::create([
-                'target_id'      => $id,
+        $examine = 2;
+        if (count($result) > 0) {
+            $examine = 3;
+            $createField = [
                 'classification' => $classification,
-                'result_data'    => json_encode($resultData)
-            ]);
-            $examineResult = 3;
+                'target_id'      => $id,
+                'result_data'    => json_encode($result),
+            ];
+            SensitiveResult::create($createField);
         }
+        $whereField = ['id' => $id];
+        $updateField = ['examine' => $examine];
         switch ($classification) {
             case 'article':
-                Article::where('id', '=', $id)->update(['examine' => $examineResult]);
+                Article::where($whereField)->update($updateField);
                 break;
         }
     }

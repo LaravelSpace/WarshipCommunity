@@ -14,20 +14,20 @@ class ArticleSensitiveEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $id; // DB:article->id|DB:comment->id
-
     public $classification; // article|comment
+
+    public $id; // DB:article->id|DB:comment->id
 
     /**
      * Create a new event instance.
      *
-     * @param int    $id
      * @param string $classification
+     * @param int    $id
      */
-    public function __construct(int $id, string $classification)
+    public function __construct(string $classification, int $id)
     {
-        $this->id = $id;
         $this->classification = $classification;
+        $this->id = $id;
     }
 
     /**

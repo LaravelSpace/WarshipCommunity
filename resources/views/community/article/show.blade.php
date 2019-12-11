@@ -33,7 +33,7 @@
         Vue.component("vue-article", {
             template: "#template-vue-article",
             data: function () {
-                return {articleId: ''}
+                return {articleId: 0}
             },
             created: function () {
                 let thisVue = this;

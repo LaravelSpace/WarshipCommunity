@@ -3,32 +3,66 @@
 namespace App\Service\Community\Article\Handler;
 
 
+use App\Events\Community\ArticleSensitiveEvent;
 use App\Service\Community\Article\Model\Comment;
 
 class CommentHandler
 {
+    public function createComment(array $user, string $articleId, string $body)
+    {
+        $key = makeUniqueKey32();
+        $this->saveToFile($user['id'], $key, $body);
+        $createField = ['body' => $key, 'article_id' => $articleId, 'user_id' => $user['id'], 'examine' => 1];
+        $dbComment = Comment::create($createField);
+        $classification = config('constant.classification.comment');
+        event(new ArticleSensitiveEvent($classification, $dbComment->id));
+
+        return $dbComment->id;
+    }
+
     public function listComment(string $classification, int $id, int $page)
     {
-        if ($classification === 'article') {
-            $whereField = ['article_id' => $id];
-        } else if ($classification === 'user') {
-            $whereField = ['user_id' => $id];
-        } else {
-            $whereField = ['article_id' => $id];
-        }
-        $dbCommentList = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->with('user')->get();
+        $commentData = ['comment_list' => [], 'paginate' => []];
 
-        $commentList = [];
+        $whereField = ['article_id' => $id];
+        if ($classification === 'user') {
+            $whereField = ['user_id' => $id];
+        }
+        $dbCommentList = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->with('user')->simplePaginate(10);
         if ($dbCommentList->count() > 0) {
             $dbCommentList = $dbCommentList->toArray();
-            foreach ($dbCommentList as $item){
+            // 获取内容
+            $commentList = [];
+            foreach ($dbCommentList as $item) {
                 $body = $this->getFromFile($item['user_id'], $item['body']);
                 $item['body'] = $body;
                 $commentList[] = $item;
             }
+            // 计算分页
+            $prevMinPage = $dbCommentList['current_page'] - 3;
+            $nextMaxPage = $dbCommentList['current_page'] + 4;
+            $pageList = [];
+            $count = Comment::query()->passExamine()->notInBlacklist()->count();
+            $maxPage = (int)($count / 10) + 2;
+            $lastPageNum = $count % 10;
+            for ($i = $prevMinPage; $i < $nextMaxPage; $i++) {
+                if ($i > 0 && $i < $maxPage) {
+                    $pageList[] = $i;
+                }
+            }
+            $prevPage = ($dbCommentList['current_page'] - 1) > 0 ? $dbCommentList['current_page'] - 1 : '';
+            $nextPage = ($dbCommentList['current_page'] + 1) < $maxPage ? $dbCommentList['current_page'] + 1 : '';
+            $paginate = [
+                'prev_page'     => $prevPage,
+                'current_page'  => $dbCommentList['current_page'],
+                'next_page'     => $nextPage,
+                'page_list'     => $pageList,
+                'last_page_num' => $lastPageNum,
+            ];
+            $commentData = ['comment_list' => $commentList, 'paginate' => $paginate];
         }
 
-        return $commentList;
+        return $commentData;
     }
 
     /**

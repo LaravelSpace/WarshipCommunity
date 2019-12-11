@@ -15,8 +15,8 @@ class ArticleHandler
         $this->saveToFile($user['id'], $key, $body);
         $createField = ['title' => $title, 'body' => $key, 'user_id' => $user['id'], 'examine' => 1];
         $dbArticle = Article::create($createField);
-
-        event(new ArticleSensitiveEvent($dbArticle->id, 'article'));
+        $classification = config('constant.classification.article');
+        event(new ArticleSensitiveEvent($classification, $dbArticle->id));
 
         return $dbArticle->id;
     }
@@ -25,11 +25,9 @@ class ArticleHandler
     {
         $articleData = [
             'article_list' => [],
-            'paginate'     => [],
+            'paginate'     => []
         ];
-
         $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate(10);
-
         if ($dbArticleList->count() > 0) {
             $dbArticleList = $dbArticleList->toArray();
             // 计算分页
@@ -63,7 +61,7 @@ class ArticleHandler
     public function getArticle(int $id, bool $markdown)
     {
         try {
-            $dbArticle = Article::findOrFail($id)->toArray();
+            $dbArticle = Article::find($id)->toArray();
             $body = $this->getFromFile($dbArticle['user_id'], $dbArticle['body']);
             if ($markdown) {
                 $dbArticle['body'] = (new Parsedown())->text($body);
@@ -79,11 +77,10 @@ class ArticleHandler
 
     public function updateArticle(int $id, string $title, string $body)
     {
-        $whereField = ['id' => $id];
         $updateField = ['title' => $title, 'body' => $body, 'examine' => 1];
-        $rows = Article::where($whereField)->update($updateField);
+        $rows = Article::where('id', '=', $id)->update($updateField);
         if ($rows > 0) {
-            event(new ArticleSensitiveEvent($id, 'article'));
+            event(new ArticleSensitiveEvent('article', $id));
         }
 
         return $id;

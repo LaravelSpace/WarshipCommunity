@@ -22,6 +22,9 @@ class Article extends Model
         'user_id',
         'examine',
         'blacklist',
+        'mention_num',
+        'star_num',
+        'bookmark_num',
     ];
 
     public function scopePassExamine(Builder $query)

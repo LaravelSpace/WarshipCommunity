@@ -16,7 +16,7 @@ return [
             'second' => 1,
             'minute' => 60,
             'hour'   => 3600,
-            'day'    => 86400
+            'day'    => 86400,
         ],
         'ip'     => [
             'second' => 5,
@@ -28,7 +28,7 @@ return [
             'second' => 10,
             'minute' => 120,
             'hour'   => 7200,
-            'day'    => 172800
+            'day'    => 172800,
         ]
     ],
 
@@ -36,6 +36,12 @@ return [
         'exception' => '/wsc/temp/log/exception/',
         'request'   => '/wsc/temp/log/request/',
         'article'   => '/wsc/article/',
-        'comment'   => '/wsc/comment/'
-    ]
+        'comment'   => '/wsc/comment/',
+    ],
+
+    'classification' => [
+        'user'    => 'user',
+        'article' => 'article',
+        'comment' => 'comment',
+    ],
 ];

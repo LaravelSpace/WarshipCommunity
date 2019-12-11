@@ -26,6 +26,7 @@ class CreateCommentTable extends Migration
             $table->unsignedInteger('article_id')->index();
             $table->unsignedTinyInteger('examine')->default(0);
             $table->boolean('blacklist')->default(false);
+            $table->unsignedInteger('star_num')->default(0);
             $table->dateTime('deleted_at')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();

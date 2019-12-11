@@ -5,13 +5,20 @@ namespace App\Http\Controllers\V1\Api;
 
 use App\Http\Controllers\V1\ApiControllerAbstract;
 use App\Http\Controllers\V1\ApiResourceInterface;
+use App\Service\Community\Article\CommentService;
 use Illuminate\Http\Request;
 
 class CommentController extends ApiControllerAbstract implements ApiResourceInterface
 {
     public function store(Request $request)
     {
-        // TODO: Implement store() method.
+        $articleId = $request->input('article_id');
+        $body = $request->input('body');
+        $user = ['id' => 4];
+
+        $result = (new CommentService())->createComment($user, $articleId, $body);
+
+        return $this->response(['comment_id' => $result]);
     }
 
     public function index(Request $request)

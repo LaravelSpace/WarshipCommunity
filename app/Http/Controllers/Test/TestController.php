@@ -23,15 +23,15 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $createField = [
-            'ip'         => 1,
-            'client'     => 1,
-            'client_id'  => 1,
-            'uri'        => 1,
-            'request'    => 1
+        $a = null;
+        $b = 1;
+        $result = [
+            is_string(null),
+            is_numeric('0'),
+            is_numeric(0),
+            is_numeric('012a'),
         ];
-        LogRequest::create($createField);
-        dd(1);
+        dd($result);
         return redirect('/');
     }
 }

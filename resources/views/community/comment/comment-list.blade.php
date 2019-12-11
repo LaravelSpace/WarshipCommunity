@@ -21,7 +21,9 @@
         props: ['article_id'],
         data: function () {
             return {
-                articleId: this.article_id, commentList: [], vifCommentShow: false
+                articleId: this.article_id,
+                commentList: [],
+                vifCommentShow: false
             }
         },
         created: function () {

@@ -46,10 +46,7 @@
                         'article_id': thisVue.articleId,
                         'body': thisVue.body
                     }).then(function (response) {
-                        let articleId = response.data.data.article_id;
-                        if (articleId !== null && articleId !== '') {
-                            window.location.href = URI_WEB.article + '/' + articleId;
-                        }
+
                     }).catch(function (error) {
                         console.error(error.response);
                     });
