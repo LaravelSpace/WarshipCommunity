@@ -10,6 +10,7 @@
 | user_id      | int unsigned     | not null           | DB:user->id                               |
 | examine      | tinyint unsigned | not null default 0 | 审核状态：0=未触发,1=待审核,2=通过,3=拒绝 |
 | blacklist    | boolean          | not null default 0 | 黑名单：0=不在,1=在                       |
+| comment_num  | int unsigned     | null default 0     | 评论个数                                  |
 | mention_num  | int unsigned     | null default 0     | 指名（访问）次数                          |
 | star_num     | int unsigned     | null default 0     | 星标（点赞）次数                          |
 | bookmark_num | int unsigned     | null default 0     | 书签（收藏）个数                          |
@@ -32,6 +33,7 @@ create table `article` (
 `user_id` int unsigned not null,
 `examine` tinyint unsigned not null default 0,
 `blacklist` tinyint(1) not null default 0,
+`comment_num` int unsigned not null default 0,
 `mention_num` int unsigned null default 0,
 `star_num` int unsigned null default 0,
 `bookmark_num` int unsigned null default 0,

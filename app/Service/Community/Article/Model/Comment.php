@@ -20,6 +20,7 @@ class Comment extends Model
         'body',
         'user_id',
         'article_id',
+        'article_floor',
         'examine',
         'blacklist',
         'star_num',

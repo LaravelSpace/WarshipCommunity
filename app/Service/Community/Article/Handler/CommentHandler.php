@@ -12,7 +12,15 @@ class CommentHandler
     {
         $key = makeUniqueKey32();
         $this->saveToFile($user['id'], $key, $body);
-        $createField = ['body' => $key, 'article_id' => $articleId, 'user_id' => $user['id'], 'examine' => 1];
+        $whereField = ['article_id' => $articleId];
+        $maxArticleFloor = Comment::where($whereField)->count();
+        $createField = [
+            'body'          => $key,
+            'article_id'    => $articleId,
+            'article_floor' => $maxArticleFloor + 1,
+            'user_id'       => $user['id'],
+            'examine'       => 1,
+        ];
         $dbComment = Comment::create($createField);
         $classification = config('constant.classification.comment');
         event(new ArticleSensitiveEvent($classification, $dbComment->id));

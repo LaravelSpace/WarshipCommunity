@@ -24,6 +24,7 @@ class CreateCommentTable extends Migration
             $table->string('body', 64);
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('article_id')->index();
+            $table->unsignedInteger('article_floor');
             $table->unsignedTinyInteger('examine')->default(0);
             $table->boolean('blacklist')->default(false);
             $table->unsignedInteger('star_num')->default(0);

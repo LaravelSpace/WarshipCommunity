@@ -18,7 +18,7 @@ class CreateDiscussionTable extends Migration
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('comment', function (Blueprint $table) {
+        Schema::create('discussion', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->increments('id');
             $table->string('body', 64);
