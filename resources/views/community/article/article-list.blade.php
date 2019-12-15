@@ -13,9 +13,25 @@
                 </div>
             </li>
         </ul>
-        <div id="vue-paginate" v-if="vifPaginateShow">
-            <vue-paginate v-bind:parent_paginate="paginate"></vue-paginate>
-        </div>
+        <nav aria-label="article paginate navigation">
+            <ul class="pagination pagination-lg justify-content-center">
+                <li class="page-item" :class="prevPage">
+                    <button class="page-link" aria-label="Previous" @click="getArticleList(paginate.prev_page)">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                </li>
+                <li class="page-item" :class="activePage(page)" v-for="page in paginate.page_list">
+                    <button class="page-link" @click="getArticleList(page)">@{{ page }}</button>
+                </li>
+                <li class="page-item" :class="nextPage">
+                    <button class="page-link" aria-label="Next" @click="getArticleList(paginate.next_page)">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
     </div>
 </template>
 <script>
@@ -28,8 +44,7 @@
             }
         },
         created: function () {
-            let page = gGetParam(window.location.href, 'page');
-            this.getArticleList(page);
+            this.getArticleList();
         },
         methods: {
             getArticleList: function (page) {
@@ -47,9 +62,29 @@
                     if (thisVue.paginate.page_list.length > 0) {
                         thisVue.vifPaginateShow = true;
                     }
-                }).catch(function (error) {
-                    console.error(error.response);
                 });
+            }
+        },
+        computed: {
+            prevPage: function () {
+                if (this.paginate.prev_page === null || this.paginate.prev_page === "") {
+                    return "disabled";
+                }
+                return "";
+            },
+            nextPage: function () {
+                if (this.paginate.next_page === null || this.paginate.next_page === "") {
+                    return "disabled";
+                }
+                return "";
+            },
+            activePage() {
+                return function (page) {
+                    if (this.paginate.current_page === page) {
+                        return "active";
+                    }
+                    return "";
+                }
             }
         }
     });

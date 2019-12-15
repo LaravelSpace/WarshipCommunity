@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Test;
 
+use App\Service\Community\Article\Model\Article;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,6 +17,10 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
+        $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate(10);
+
+        dd($dbArticleList);
+
         return redirect('/');
     }
 }

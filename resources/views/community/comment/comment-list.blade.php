@@ -7,12 +7,32 @@
                     <img class="rounded-circle mr-3" style="width: 30px; height: 30px"
                          src="" :src="comment.user.avatar" alt="" :alt="comment.user.name">
                     @{{ comment.user.name }}
+                    <span class="badge badge-light"># @{{ comment.article_floor }}</span>
                 </h6>
             </div>
             <div class="card-body">
                 <div>@{{ comment.body }}</div>
             </div>
         </div>
+        <nav aria-label="article paginate navigation">
+            <ul class="pagination pagination-lg justify-content-center">
+                <li class="page-item" :class="prevPage">
+                    <button class="page-link" aria-label="Previous" @click="getCommentList(paginate.prev_page)">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                </li>
+                <li class="page-item" :class="activePage(page)" v-for="page in paginate.page_list">
+                    <button class="page-link" @click="getCommentList(page)">@{{ page }}</button>
+                </li>
+                <li class="page-item" :class="nextPage">
+                    <button class="page-link" aria-label="Next" @click="getCommentList(paginate.next_page)">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
     </div>
 </template>
 <script>
@@ -22,25 +42,52 @@
         data: function () {
             return {
                 articleId: this.article_id,
-                commentList: [],
-                vifCommentShow: false
+                commentList: [], vifCommentShow: false,
+                paginate: [], vifPaginateShow: false
             }
         },
         created: function () {
             this.getCommentList();
         },
         methods: {
-            getCommentList: function () {
+            getCommentList: function (page) {
                 let thisVue = this;
-                let url = URI_API.article + '/' + thisVue.articleId + URI_CONFIG.comment;
-                axios.get(url).then(function (response) {
-                    thisVue.commentList = response.data.data;
+                let uri = URI_API.article + '/' + thisVue.articleId + URI_CONFIG.comment;
+                if (page !== null && page !== "" && page > 0) {
+                    uri += '?page=' + page;
+                }
+                axios.get(uri).then(function (response) {
+                    thisVue.commentList = response.data.data.comment_list;
                     if (thisVue.commentList.length > 0) {
                         thisVue.vifCommentShow = true;
                     }
-                }).catch(function (error) {
-                    console.error(error.response);
+                    thisVue.paginate = response.data.data.paginate;
+                    if (thisVue.paginate.page_list.length > 0) {
+                        thisVue.vifPaginateShow = true;
+                    }
                 });
+            }
+        },
+        computed: {
+            prevPage: function () {
+                if (this.paginate.prev_page === null || this.paginate.prev_page === "") {
+                    return "disabled";
+                }
+                return "";
+            },
+            nextPage: function () {
+                if (this.paginate.next_page === null || this.paginate.next_page === "") {
+                    return "disabled";
+                }
+                return "";
+            },
+            activePage() {
+                return function (page) {
+                    if (this.paginate.current_page === page) {
+                        return "active";
+                    }
+                    return "";
+                }
             }
         }
     });

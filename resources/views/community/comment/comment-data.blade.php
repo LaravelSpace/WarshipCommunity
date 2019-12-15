@@ -42,14 +42,12 @@
         methods: {
             submit: function () {
                 let thisVue = this;
-                    axios.post(thisVue.uriSubmit, {
-                        'article_id': thisVue.articleId,
-                        'body': thisVue.body
-                    }).then(function (response) {
+                axios.post(thisVue.uriSubmit, {
+                    'article_id': thisVue.articleId,
+                    'body': thisVue.body
+                }).then(function (response) {
 
-                    }).catch(function (error) {
-                        console.error(error.response);
-                    });
+                });
             }
         },
         computed: {

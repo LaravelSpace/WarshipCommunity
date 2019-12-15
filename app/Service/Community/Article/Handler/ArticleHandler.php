@@ -21,36 +21,36 @@ class ArticleHandler
         return $dbArticle->id;
     }
 
-    public function listArticle(int $page)
+    public function listArticle(int $page, int $perPage)
     {
         $articleData = [
             'article_list' => [],
-            'paginate'     => []
+            'paginate'     => [],
         ];
-        $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate(10);
-        if ($dbArticleList->count() > 0) {
-            $dbArticleList = $dbArticleList->toArray();
+        $dbPaginate = Article::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate($perPage);
+        if ($dbPaginate->count() > 0) {
+            $dbPaginate = $dbPaginate->toArray();
             // 计算分页
-            $prevMinPage = $dbArticleList['current_page'] - 3;
-            $nextMaxPage = $dbArticleList['current_page'] + 4;
+            $prevMinPage = $dbPaginate['current_page'] - 3;
+            $nextMaxPage = $dbPaginate['current_page'] + 4;
             $pageList = [];
             $count = Article::query()->passExamine()->notInBlacklist()->count();
-            $maxPage = (int)($count / 10) + 2;
+            $maxPage = (int)($count / $perPage) + 2;
             for ($i = $prevMinPage; $i < $nextMaxPage; $i++) {
                 if ($i > 0 && $i < $maxPage) {
                     $pageList[] = $i;
                 }
             }
-            $prevPage = ($dbArticleList['current_page'] - 1) > 0 ? $dbArticleList['current_page'] - 1 : '';
-            $nextPage = ($dbArticleList['current_page'] + 1) < $maxPage ? $dbArticleList['current_page'] + 1 : '';
+            $prevPage = ($dbPaginate['current_page'] - 1) > 0 ? $dbPaginate['current_page'] - 1 : '';
+            $nextPage = ($dbPaginate['current_page'] + 1) < $maxPage ? $dbPaginate['current_page'] + 1 : '';
             $paginate = [
                 'prev_page'    => $prevPage,
-                'current_page' => $dbArticleList['current_page'],
+                'current_page' => $dbPaginate['current_page'],
                 'next_page'    => $nextPage,
                 'page_list'    => $pageList,
             ];
             $articleData = [
-                'article_list' => $dbArticleList['data'],
+                'article_list' => $dbPaginate['data'],
                 'paginate'     => $paginate,
             ];
         }
@@ -61,7 +61,7 @@ class ArticleHandler
     public function getArticle(int $id, bool $markdown)
     {
         try {
-            $dbArticle = Article::find($id)->toArray();
+            $dbArticle = Article::findOrFail($id)->toArray();
             $body = $this->getFromFile($dbArticle['user_id'], $dbArticle['body']);
             if ($markdown) {
                 $dbArticle['body'] = (new Parsedown())->text($body);

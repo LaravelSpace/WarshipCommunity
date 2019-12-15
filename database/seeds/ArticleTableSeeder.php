@@ -22,7 +22,7 @@ class ArticleTableSeeder extends Seeder
         $bodyList = [];
         $userIdList = User::pluck('id');
 
-        $length = 20;
+        $length = 50;
         for ($i = 0; $i < $length; $i++) {
             $key = Str::random(32);
             $userId = $faker->randomElement($userIdList);

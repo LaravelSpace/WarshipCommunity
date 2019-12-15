@@ -12,9 +12,9 @@ class CommentService
         return (new CommentHandler())->createComment($user, $articleId, $body);
     }
 
-    public function listComment(string $classification, int $id, int $page = 1)
+    public function listComment(string $classification, int $id, int $page = 1, int $perPage = 5)
     {
-        return (new CommentHandler())->listComment($classification, $id, $page);
+        return (new CommentHandler())->listComment($classification, $id, $page, $perPage);
     }
 
     public function getComment()

@@ -1,6 +1,7 @@
 <?php
 
 use App\Service\Community\Article\Model\Article;
+use App\Service\Community\Article\Model\Comment;
 use App\Service\User\Model\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -21,16 +22,22 @@ class CommentTableSeeder extends Seeder
         $userIdList = User::pluck('id');
         $articleIdList = Article::pluck('id');
 
-        $length = 200;
+        $length = 1000;
+        $articleFloorList = [];
         for ($i = 0; $i < $length; $i++) {
             $key = Str::random(32);
+            $userId = $faker->randomElement($userIdList);
             $articleId = $faker->randomElement($articleIdList);
             $listKey = 'article-' . $articleId;
-            $articleFloor = 1;
-            if (isset($commentList[$listKey])) {
-                $articleFloor = count($commentList[$listKey]) + 1;
+            if (isset($articleFloorList[$listKey])) {
+                $articleFloorList[$listKey] += 1;
+                $articleFloor = $articleFloorList[$listKey];
+            } else {
+                $whereField = ['article_id' => $articleId];
+                $articleFloorList[$listKey] = Comment::query()->where($whereField)->count();
+                $articleFloorList[$listKey] += 1;
+                $articleFloor = $articleFloorList[$listKey];
             }
-            $userId = $faker->randomElement($userIdList);
             $commentList[$listKey][] = [
                 'body'          => $key,
                 'user_id'       => $userId,
