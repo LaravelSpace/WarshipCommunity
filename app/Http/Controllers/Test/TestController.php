@@ -17,9 +17,9 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $dbArticleList = Article::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate(10);
+        Article::all();
 
-        dd($dbArticleList);
+        dd(1);
 
         return redirect('/');
     }

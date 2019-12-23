@@ -30,7 +30,7 @@ class RequestLog
             'uri'       => $request->path(),
             'header'    => $request->header(),
             'request'   => $request->all(),
-            'time'      => timeNow()
+            'time'      => dateTimeNow()
         ];
         event(new RequestLogEvent($logKey, $logData));
 
@@ -41,7 +41,7 @@ class RequestLog
         $logData = [
             'response'    => $response->getContent(),
             'consumption' => (int)$endTime - (int)$startTime,
-            'time'        => timeNow()
+            'time'        => dateTimeNow()
         ];
         event(new RequestLogEvent($logKey, $logData));
 

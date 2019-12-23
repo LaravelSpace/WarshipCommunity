@@ -40,26 +40,26 @@ if (!function_exists('dateCreate')) {
     }
 }
 
-if (!function_exists('timeNow')) {
+if (!function_exists('dateTimeNow')) {
     /**
      * 返回当前时间 Y-m-d H:i:s
      *
      * @return false|string
      */
-    function timeNow()
+    function dateTimeNow()
     {
         return date('Y-m-d H:i:s', time());
     }
 }
 
-if (!function_exists('timeCreate')) {
+if (!function_exists('dateTimeCreate')) {
     /**
      * 使用 time 创建当前时间 Y-m-d H:i:s
      *
      * @param int $time
      * @return false|string
      */
-    function timeCreate(int $time)
+    function dateTimeCreate(int $time)
     {
         return date('Y-m-d H:i:s', $time);
     }

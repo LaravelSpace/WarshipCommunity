@@ -114,13 +114,13 @@ class ArticleHandler
                 file_put_contents($filePath, $body);
             } catch (\Exception $e) {
                 $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
-                $text = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
+                $text = "\nTIME IS:" . dateTimeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
                 file_put_contents($filePath, $text);
             }
         } catch (\Exception $e) {
             $filePath = config('constant.file_path.exception') . $fileName . '.log';
             $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
-            $text = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
+            $text = "\nTIME IS:" . dateTimeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
             file_put_contents($filePath, $text);
         }
     }
@@ -132,7 +132,7 @@ class ArticleHandler
             $body = file_get_contents($filePath);
         } catch (\Exception $e) {
             $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
-            $body = "\nTIME IS:" . timeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
+            $body = "\nTIME IS:" . dateTimeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
         }
 
         return $body;
