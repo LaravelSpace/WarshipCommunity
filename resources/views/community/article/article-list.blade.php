@@ -13,7 +13,7 @@
                 </div>
             </li>
         </ul>
-        <nav aria-label="article paginate navigation">
+        <nav aria-label="article paginate navigation" v-if="vifPaginateShow">
             <ul class="pagination pagination-lg justify-content-center">
                 <li class="page-item" :class="prevPage">
                     <button class="page-link" aria-label="Previous" @click="getArticleList(paginate.prev_page)">

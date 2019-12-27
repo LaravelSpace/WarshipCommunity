@@ -2,16 +2,16 @@
 
 所有说明文档内的文件路径，如无特殊说明，默认以项目根目录为参照的相对路径。
 
-目录 `./document/api/`，存放路由说明文档。
+目录 **./document/api/**，存放路由说明文档。
 
-目录 `./document/database/`，存放数据库说明文档。
+目录 **./document/database/**，存放数据库说明文档。
 
 ## 更新记录
 
 #### 2019-12-23
 
 使用 Monolog 记录执行的 SQL。
-日志文件以日期为纬度切割，存放在 **.../storage/logs/sql_yyyy-mm-dd.log**。
+日志文件以日期为纬度切割，存放在 **./storage/logs/sql_yyyy-mm-dd.log**。
 
 #### 2019-12-15
 
@@ -139,21 +139,21 @@ PHP 版本升级至 7.2.23
 
 #### 2019-08-04
 
-增加 `Service` 目录，这么做是为了让功能模块的 **Service** 和框架本身的模块目录可以直接映射。
-  比如：**Community** 功能模块 `app/Service/Community` 和 框架本身的 **Job** 模块 `app/Job/Community` 可以直接映射。
-根据 `Service` 目录，调整 `resources/views` 视图目录。
+增加 **./app/Service** 目录，这么做是为了让功能模块的 **Service** 和框架本身的模块目录可以直接映射。
+  比如：**Community** 功能模块 `App/Service/Community` 和框架本身的 **Job** 模块 `App/Job/Community` 可以直接映射。
+根据 **./app/Service** 目录，调整 **./resources/views** 视图目录。
 使用 JWT 登录。
 
 #### 2019-08-03
 
 添加 `unity` 笔记目录。
-调整笔记草稿原稿目录，将图片移动到各个分类下的 `images` 目录。
+调整笔记草稿原稿目录，将图片移动到各个分类下的 `.../images/` 目录。
 修改笔记中的图片应用路径。
 
 #### 2019-07-31
 
 调整笔记草稿原稿目录。
-将原有笔记分类至不同目录，增加无类别 `unclassified` 目录。
+将原有笔记分类至不同目录，增加无类别 `./unclassified/` 目录。
 
 #### 2019-07-30
 
@@ -190,11 +190,11 @@ PHP 版本升级至 7.2.23
 
 #### 2019-07-14
 
-把笔记原稿从单独的项目移动到本项目 `app` 目录下。
+把笔记原稿从单独的项目移动到本项目 **./app/** 目录下。
 将算法和笔记原稿从项目功能模块分离出去。
-算法以及实验性质的代码移动到 `app/AlgorithmDemo` 目录下。
-笔记原稿移动到 `app/NotesManuscript` 目录下，统一使用 **markdown** 格式。
-笔记原稿的图片资源移动到 `app/NotesManuscript/images` 目录下，统一使用 **jpg|jpeg|png** 格式。
+算法以及实验性质的代码移动到 **./app/AlgorithmDemo/** 目录下。
+笔记原稿移动到 **./app/NotesManuscript/** 目录下，统一使用 **markdown** 格式。
+笔记原稿的图片资源移动到 **./app/NotesManuscript/images/** 目录下，统一使用 **jpg|jpeg|png** 格式。
 动态规划，爬楼梯问题。
 动态规划，矩阵最小路径问题。
 动态规划，找出找零钱总方法数问题。
@@ -213,7 +213,7 @@ PHP 版本升级至 7.2.23
 
 #### 2019-07-01
 
-移动 `App\User` 到 `App\Community\User\Model\User`
+移动 **app\User.php** 到 **app\Community\User\Model\User.php**
 
 #### 2019-06-30
 
@@ -302,7 +302,7 @@ Laravel 5.7 升级至 Laravel 5.8。
 
 #### 2019-03-25
 
-移除 `.idea` 目录。
+移除 **./.idea/** 目录。
 
 #### 2019-03-09
 

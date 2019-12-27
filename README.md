@@ -1,1 +1,3 @@
-目录 `./document/` 存放项目的说明文档，详见 `./document/REAMDE.md`。
+所有说明文档内的文件路径，如无特殊说明，默认以项目根目录为参照的相对路径。
+
+目录 **./document/** 存放项目的说明文档，详见 **./document/REAMDE.md**。
