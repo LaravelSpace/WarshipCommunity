@@ -11,18 +11,22 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
-                            <input id='input-image' type="file" accept="image/jpg,image/jpeg,image/png" hidden/>
-                            <div style="max-width: 100%;max-height: 450px">
-                                <img id="cropper-image" src="">
+                        <div class="modal-body row">
+                            <div class=col-md-6>
+                                <input id='input-image' type="file" accept="image/jpg,image/jpeg,image/png" hidden/>
+                                <div style="max-width:500px; max-height:500px">
+                                    <img id="cropper-image" src="">
+                                </div>
                             </div>
-                            <p>CropperData: <span id="cropper-data"></span></p>
-                            <p>CropperCropBoxData: <span id="cropper-box-data"></span></p>
-                            <div id="result-image" style="max-width: 100%;max-height: 450px"></div>
+                            <div class=col-md-6>
+                                <div id="result-image" style="max-width:500px; max-height:500px"></div>
+                            </div>
+                            {{--<p>CropperData: <span id="cropper-data"></span></p>--}}
+                            {{--<p>CropperCropBoxData: <span id="cropper-box-data"></span></p>--}}
                         </div>
                         <div class="modal-footer">
                             <button id="btn-choose-image" type="button" class="btn btn-primary">点击选择图片</button>
-                            <button type="button" class="btn btn-success">上传</button>
+                            <button type="button" class="btn btn-success" @click="uploadImage()">上传</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
                         </div>
                     </div>
@@ -36,7 +40,6 @@
 </template>
 <script>
     Vue.component("vue-cropper", {
-        props: ['article_id'],
         template: "#template-vue-cropper",
         data: function () {
             return {
@@ -47,12 +50,9 @@
                 eCropperBoxData: Object,
                 eResultImage: Object,
                 eBtnUploadImage: Object,
-                eUploadImage: Object,
                 croppedCanvas: Object,
                 cropper: Object,
             }
-        },
-        created: function () {
         },
         methods: {
             showModal: function () {
@@ -67,7 +67,6 @@
                 this.eCropperBoxData = document.getElementById('cropper-box-data');
                 this.eResultImage = document.getElementById('result-image');
                 this.eBtnUploadImage = document.getElementById('btn-upload-image');
-                this.eUploadImage = document.getElementById('upload-image');
                 this.croppedCanvas = document.createElement('canvas');
 
                 this.eBtnChooseImage.onclick = this.chooseImage;
@@ -78,10 +77,10 @@
                     viewMode: 1,
                     aspectRatio: 1,
                     crop: function (event) {
-                        let tempCropperData = thisVue.cropper.getData();
-                        let tempCropperBoxData = thisVue.cropper.getCropBoxData();
-                        thisVue.eCropperData.textContent = JSON.stringify(tempCropperData);
-                        thisVue.eCropperBoxData.textContent = JSON.stringify(tempCropperBoxData);
+                        // let tempCropperData = thisVue.cropper.getData();
+                        // let tempCropperBoxData = thisVue.cropper.getCropBoxData();
+                        // thisVue.eCropperData.textContent = JSON.stringify(tempCropperData);
+                        // thisVue.eCropperBoxData.textContent = JSON.stringify(tempCropperBoxData);
                         thisVue.cropImage();
                     },
                 });
@@ -99,14 +98,21 @@
             },
             cropImage: function (event) {
                 let croppedCanvas = this.cropper.getCroppedCanvas();
+                croppedCanvas.style.width = '500px';
+                croppedCanvas.style.height = '500px';
                 this.eResultImage.innerHTML = '';
                 this.eResultImage.appendChild(croppedCanvas);
             },
             uploadImage: function (event) {
+                let croppedCanvas = this.cropper.getCroppedCanvas();
                 let croppedImageBase64 = croppedCanvas.toDataURL('image/jpeg');
-                let image = new Image();
-                image.src = croppedImageBase64;
-                this.eUploadImage.appendChild(image);
+                axios.post(URI_API.image + URI_CONFIG.store, {
+                    'image_base64': croppedImageBase64
+                }).then(function (response) {
+                    if (response.data.status === STATUS.success) {
+
+                    }
+                });
             }
         }
     });

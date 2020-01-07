@@ -83,8 +83,6 @@
                             thisVue.avatar = $responseData.avatar;
                         }
                     }
-                }).catch(function (error) {
-                    console.error(error.response);
                 });
             },
             logout: function () {
@@ -92,8 +90,6 @@
                     if (response.data.status === STATUS_SUCCESS) {
                         window.location.reload();
                     }
-                }).catch(function (error) {
-                    console.error(error.response);
                 });
             }
         }

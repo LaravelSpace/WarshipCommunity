@@ -70,8 +70,6 @@
                         thisVue.simplemde.value(articleItem.body);
                         thisVue.vifShow = true;
                     }
-                }).catch(function (error) {
-                    console.error(error.response);
                 });
             },
             submit: function () {
@@ -85,8 +83,6 @@
                         if (articleId !== null && articleId !== '') {
                             window.location.href = URI_WEB.article + '/' + articleId;
                         }
-                    }).catch(function (error) {
-                        console.error(error.response);
                     });
                 } else if (thisVue.classification === 'edit') {
                     axios.put(thisVue.uriSubmit, {
@@ -98,8 +94,6 @@
                         if (articleId !== null && articleId !== '') {
                             window.location.href = URI_WEB.article + '/' + articleId;
                         }
-                    }).catch(function (error) {
-                        console.error(error.response);
                     });
                 }
             }

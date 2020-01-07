@@ -2,12 +2,10 @@
 
 @section('css')
     <link href="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/cropperjs/1.5.6/cropper.min.css" rel="stylesheet">
 @endsection
 
 @section('js')
     <script src="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js"></script>
-    <script src="https://cdn.bootcss.com/cropperjs/1.5.6/cropper.min.js"></script>
 @endsection
 
 @section('body')
@@ -28,10 +26,7 @@
                     <comment-data v-bind:article_id="articleId"></comment-data>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div id="vue-cropper">
-                    <vue-cropper v-bind:article_id="articleId"></vue-cropper>
-                </div>
+            <div class="col-md-3">show
             </div>
         </div>
     </template>
@@ -53,5 +48,4 @@
     @include('community.article.article-item')
     @include('community.comment.comment-list')
     @include('community.comment.comment-data')
-    @include('common.cropper')
 @endsection

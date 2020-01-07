@@ -129,8 +129,6 @@
                         if (thisVue.roleList.length > 0) {
                             thisVue.vifShow = true;
                         }
-                    }).catch(function (error) {
-                        console.error(error.response);
                     });
                 },
                 getPermissionList: function () {
@@ -141,8 +139,6 @@
                         if (thisVue.permissionList.length > 0) {
                             thisVue.vifShow = true;
                         }
-                    }).catch(function (error) {
-                        console.error(error.response);
                     });
                 },
                 roleSubmit: function () {

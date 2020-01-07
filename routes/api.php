@@ -43,4 +43,8 @@ Route::namespace('V1\Api')->middleware('request_log')->group(function () {
         Route::put('{id}/update', 'CommentController@update')->where('id', '[1-9]+\d*');
         Route::delete('{id}/destroy', 'CommentController@destroy')->where('id', '[1-9]+\d*');
     });
+
+    Route::prefix('image')->group(function () {
+        Route::post('store', 'ImageController@store');
+    });
 });

@@ -39,8 +39,6 @@
                     if (thisVue.article !== null && thisVue.article !== '') {
                         thisVue.vifArticleShow = true;
                     }
-                }).catch(function (error) {
-                    console.error(error.response);
                 });
             }
         }

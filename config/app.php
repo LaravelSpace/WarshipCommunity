@@ -176,8 +176,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        // tymon/jwt-auth
+        // [jwt-auth](http://jwt-auth.readthedocs.io)
         // Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
+        // [Intervention Image](http://image.intervention.io)
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -231,6 +234,9 @@ return [
         // tymon/jwt-auth
         // 'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         // 'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+
+        // intervention/image
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

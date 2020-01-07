@@ -51,6 +51,7 @@
         },
         'article': '/api/article',
         'comment': '/api/comment',
+        'image':'/api/image',
     };
     const URI_CONFIG = {
         'store': '/store',

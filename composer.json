@@ -12,6 +12,7 @@
         "ext-json": "*",
         "erusev/parsedown": "^1.7",
         "fideloper/proxy": "^4.0",
+        "intervention/image": "^2.5",
         "laravel/framework": "6.0.*",
         "laravel/tinker": "^1.0",
         "predis/predis": "^1.1",
@@ -66,5 +67,11 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }
