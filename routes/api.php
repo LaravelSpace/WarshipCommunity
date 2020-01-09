@@ -46,5 +46,6 @@ Route::namespace('V1\Api')->middleware('request_log')->group(function () {
 
     Route::prefix('image')->group(function () {
         Route::post('store', 'ImageController@store');
+        Route::post('user', 'ImageController@listUserImage');
     });
 });

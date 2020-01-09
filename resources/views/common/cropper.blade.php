@@ -1,6 +1,9 @@
 <template id="template-vue-cropper">
     <div class="card border-primary">
         <div class="card-body">
+            <div>
+
+            </div>
             <div class="modal fade" id="image-cropper" tabindex="-1" role="dialog"
                  aria-labelledby="image-cropper-label" aria-hidden="true">
                 <div class="modal-dialog modal-lg" style="max-width:1200px" role="document">
@@ -14,15 +17,13 @@
                         <div class="modal-body row">
                             <div class=col-md-6>
                                 <input id='input-image' type="file" accept="image/jpg,image/jpeg,image/png" hidden/>
-                                <div style="max-width:500px; max-height:500px">
+                                <div style="width:500px; height:500px">
                                     <img id="cropper-image" src="">
                                 </div>
                             </div>
                             <div class=col-md-6>
-                                <div id="result-image" style="max-width:500px; max-height:500px"></div>
+                                <div id="result-image" style="width:500px; height:500px"></div>
                             </div>
-                            {{--<p>CropperData: <span id="cropper-data"></span></p>--}}
-                            {{--<p>CropperCropBoxData: <span id="cropper-box-data"></span></p>--}}
                         </div>
                         <div class="modal-footer">
                             <button id="btn-choose-image" type="button" class="btn btn-primary">点击选择图片</button>
@@ -52,7 +53,15 @@
                 eBtnUploadImage: Object,
                 croppedCanvas: Object,
                 cropper: Object,
+                imageList:[],
             }
+        },
+        created:function(){
+            axios.post('/api/image/user', {'user_id': 4}).then(function (response) {
+                if (response.data.status === STATUS.success) {
+
+                }
+            });
         },
         methods: {
             showModal: function () {
@@ -73,14 +82,12 @@
                 this.eInputImage.onchange = this.inputImageChanged;
 
                 let thisVue = this;
-                this.cropper = new Cropper(thisVue.eCropperImage, {
+                this.cropper = new Cropper(
+                    thisVue.eCropperImage,
+                    {
                     viewMode: 1,
                     aspectRatio: 1,
                     crop: function (event) {
-                        // let tempCropperData = thisVue.cropper.getData();
-                        // let tempCropperBoxData = thisVue.cropper.getCropBoxData();
-                        // thisVue.eCropperData.textContent = JSON.stringify(tempCropperData);
-                        // thisVue.eCropperBoxData.textContent = JSON.stringify(tempCropperBoxData);
                         thisVue.cropImage();
                     },
                 });
@@ -110,7 +117,7 @@
                     'image_base64': croppedImageBase64
                 }).then(function (response) {
                     if (response.data.status === STATUS.success) {
-
+                        $('#image-cropper').modal('close');
                     }
                 });
             }

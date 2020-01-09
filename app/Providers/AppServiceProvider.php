@@ -18,8 +18,8 @@ class AppServiceProvider extends ServiceProvider
     {
         if (env('APP_ENV') !== 'production') {
             \DB::listen(function ($query) {
+                // 监听查询
                 try {
-                    // 监听查询
                     // 格式化查询的参数
                     foreach ($query->bindings as $i => $binding) {
                         if ($binding instanceof \DateTime) {

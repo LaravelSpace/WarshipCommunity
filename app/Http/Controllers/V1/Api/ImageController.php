@@ -16,6 +16,15 @@ class ImageController extends ApiControllerAbstract
 
         $result = (new ImageService())->createImageBase64($user, $imageBase64);
 
-        return $this->response(['article_id' => $result]);
+        return $this->response($result);
+    }
+
+    public function listUserImage(Request $request){
+        $userId = $request->input('user_id');
+        $user = ['id' => $userId];
+
+        $result = (new ImageService())->listImage($user);
+
+        return $this->response($result);
     }
 }

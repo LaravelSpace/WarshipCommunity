@@ -1,8 +1,8 @@
 <script>
     const STATUS = {
-        'success': 'success',
-        'fail': 'fail',
-        'error': 'error'
+        'success': 200,
+        'fail': 400,
+        'error': 500,
     };
 
     // 昵称校验正则，2~16 位的中文字符，英文字符，数字以及下划线
@@ -46,12 +46,12 @@
     };
     const URI_API = {
         'user': {
-            'register': 'api/user/register',
-            'login': 'api/user/login'
+            'register': '/api/user/register',
+            'login': '/api/user/login'
         },
         'article': '/api/article',
         'comment': '/api/comment',
-        'image':'/api/image',
+        'image': '/api/image',
     };
     const URI_CONFIG = {
         'store': '/store',
