@@ -39,6 +39,11 @@ return [
         'comment'   => '/wsc/comment/',
     ],
 
+    'image_path' => [
+        'storage' => '/storage/image/upload/',
+        'public'  => '/app/public/image/upload/',
+    ],
+
     'classification' => [
         'user'    => 'user',
         'article' => 'article',

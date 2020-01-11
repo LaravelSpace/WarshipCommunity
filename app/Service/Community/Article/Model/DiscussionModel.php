@@ -3,24 +3,22 @@
 namespace App\Service\Community\Article\Model;
 
 
-use App\Service\User\Model\User;
+use App\Service\User\Model\UserModel;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Comment extends Model
+class DiscussionModel
 {
     use SoftDeletes;
 
     protected $connection = 'mysql';
 
-    protected $table = 'comment';
+    protected $table = 'discussion';
 
     protected $fillable = [
         'body',
         'user_id',
-        'article_id',
-        'article_floor',
+        'comment_id',
         'examine',
         'blacklist',
         'star_num',
@@ -36,13 +34,13 @@ class Comment extends Model
         $query->where('blacklist', '=', false); // 不在黑名单中
     }
 
-    public function article()
+    public function comment()
     {
-        return $this->belongsTo(Article::class);
+        return $this->belongsTo(CommentModel::class);
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(UserModel::class);
     }
 }

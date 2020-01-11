@@ -4,7 +4,7 @@ namespace App\Service\Community\Article\Handler;
 
 
 use App\Events\Community\ArticleSensitiveEvent;
-use App\Service\Community\Article\Model\Article;
+use App\Service\Community\Article\Model\ArticleModel;
 use Parsedown;
 
 class ArticleHandler
@@ -14,7 +14,7 @@ class ArticleHandler
         $key = makeUniqueKey32();
         $this->saveToFile($user['id'], $key, $body);
         $createField = ['title' => $title, 'body' => $key, 'user_id' => $user['id'], 'examine' => 1];
-        $dbArticle = Article::create($createField);
+        $dbArticle = ArticleModel::create($createField);
         $classification = config('constant.classification.article');
         event(new ArticleSensitiveEvent($classification, $dbArticle->id));
 
@@ -27,14 +27,14 @@ class ArticleHandler
             'article_list' => [],
             'paginate'     => [],
         ];
-        $dbPaginate = Article::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate($perPage);
+        $dbPaginate = ArticleModel::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate($perPage);
         if ($dbPaginate->count() > 0) {
             $dbPaginate = $dbPaginate->toArray();
             // 计算分页
             $prevMinPage = $dbPaginate['current_page'] - 3;
             $nextMaxPage = $dbPaginate['current_page'] + 4;
             $pageList = [];
-            $count = Article::query()->passExamine()->notInBlacklist()->count();
+            $count = ArticleModel::query()->passExamine()->notInBlacklist()->count();
             $maxPage = (int)($count / $perPage) + 2;
             for ($i = $prevMinPage; $i < $nextMaxPage; $i++) {
                 if ($i > 0 && $i < $maxPage) {
@@ -61,7 +61,7 @@ class ArticleHandler
     public function getArticle(int $id, bool $markdown)
     {
         try {
-            $dbArticle = Article::findOrFail($id)->toArray();
+            $dbArticle = ArticleModel::findOrFail($id)->toArray();
             $body = $this->getFromFile($dbArticle['user_id'], $dbArticle['body']);
             if ($markdown) {
                 $dbArticle['body'] = (new Parsedown())->text($body);
@@ -78,7 +78,7 @@ class ArticleHandler
     public function updateArticle(int $id, string $title, string $body)
     {
         $updateField = ['title' => $title, 'body' => $body, 'examine' => 1];
-        $rows = Article::where('id', '=', $id)->update($updateField);
+        $rows = ArticleModel::where('id', '=', $id)->update($updateField);
         if ($rows > 0) {
             event(new ArticleSensitiveEvent('article', $id));
         }

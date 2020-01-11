@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class UserModel extends Authenticatable
 {
     /* ##### tymon/jwt-auth #####
     /* class User extends Authenticatable implements JWTSubject */

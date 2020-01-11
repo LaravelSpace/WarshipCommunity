@@ -1,8 +1,8 @@
 <?php
 
-use App\Service\Community\Article\Model\Article;
-use App\Service\Community\Article\Model\Comment;
-use App\Service\User\Model\User;
+use App\Service\Community\Article\Model\ArticleModel;
+use App\Service\Community\Article\Model\CommentModel;
+use App\Service\User\Model\UserModel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -19,8 +19,8 @@ class CommentTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $commentList = [];
         $bodyList = [];
-        $userIdList = User::pluck('id');
-        $articleIdList = Article::pluck('id');
+        $userIdList = UserModel::pluck('id');
+        $articleIdList = ArticleModel::pluck('id');
 
         $length = 1000;
         $articleFloorList = [];
@@ -34,7 +34,7 @@ class CommentTableSeeder extends Seeder
                 $articleFloor = $articleFloorList[$listKey];
             } else {
                 $whereField = ['article_id' => $articleId];
-                $articleFloorList[$listKey] = Comment::query()->where($whereField)->count();
+                $articleFloorList[$listKey] = CommentModel::query()->where($whereField)->count();
                 $articleFloorList[$listKey] += 1;
                 $articleFloor = $articleFloorList[$listKey];
             }

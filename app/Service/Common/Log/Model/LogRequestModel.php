@@ -5,7 +5,7 @@ namespace App\Service\Common\Log\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LogRequest extends Model
+class LogRequestModel extends Model
 {
     protected $connection = 'mysql';
 

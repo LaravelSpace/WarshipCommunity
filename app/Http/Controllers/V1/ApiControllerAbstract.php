@@ -7,5 +7,5 @@ use App\Http\Controllers\Controller;
 
 abstract class ApiControllerAbstract extends Controller
 {
-    use ResponseTrait;
+    use ActionTrait;
 }

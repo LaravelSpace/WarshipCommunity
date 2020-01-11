@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\V1;
 
 
-class ActionTrait
+use App\Exceptions\ServiceException;
+
+trait ActionTrait
 {
     use ResponseTrait;
 
@@ -19,10 +21,12 @@ class ActionTrait
             }
 
             return $return;
+        } catch (ServiceException $e) {
+            return $this->response([], config('constant.error'), 400, $e->getMessage());
         } catch (\Exception $e) {
             $trace = $e->getTrace();
 
-            return $this->response(['trace' => $trace[0]], 500, $e->getMessage());
+            return $this->response(['trace' => $trace[0]], config('constant.error'), 500, $e->getMessage());
         }
     }
 }

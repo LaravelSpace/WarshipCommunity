@@ -3,13 +3,13 @@
 namespace App\Service\User\Handler;
 
 
-use App\Service\User\Model\Permission;
+use App\Service\User\Model\PermissionModel;
 
 class PermissionHandler
 {
     public function permissionList(array $inputData)
     {
-        $permissionList = Permission::get();
+        $permissionList = PermissionModel::get();
         if ($permissionList->count() > 0) {
             $permissionList = $permissionList->toArray();
         } else {
@@ -29,7 +29,7 @@ class PermissionHandler
             'name'     => $inputData['name'],
             'describe' => $inputData['describe']
         ];
-        $permission = Permission::create($permissionData);
+        $permission = PermissionModel::create($permissionData);
         $returnData = [
             'status' => config('constant.success'),
             'data'   => $permission->toArray()

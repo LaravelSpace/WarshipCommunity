@@ -5,7 +5,7 @@ namespace App\Service\User\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class RoleModel extends Model
 {
     protected $connection = 'mysql';
 

@@ -3,8 +3,8 @@
 namespace App\Service\User\Handler;
 
 
-use App\Service\User\Model\Token;
-use App\Service\User\Model\User;
+use App\Service\User\Model\TokenModel;
+use App\Service\User\Model\UserModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -31,7 +31,7 @@ class RegisterHandler
             $userInfo['phone'] = $identity;
             $userInfo['email'] = $name;
         }
-        $dbUser = User::create($userInfo);
+        $dbUser = UserModel::create($userInfo);
         if ($dbUser !== null && $dbUser !== '') {
             $result = [
                 'status' => config('constant.success'),
@@ -56,7 +56,7 @@ class RegisterHandler
         } else {
             $orWhereField = ['phone' => $identity];
         }
-        $dbUserList = User::where(['name' => $name])->orWhere($orWhereField)->get();
+        $dbUserList = UserModel::where(['name' => $name])->orWhere($orWhereField)->get();
         if (count($dbUserList) > 0) {
             $message = '';
             foreach ($dbUserList as $itemUser) {
@@ -87,7 +87,7 @@ class RegisterHandler
             $checkField['phone'] = $identity;
         }
 
-        $user = User::where($checkField)->first();
+        $user = UserModel::where($checkField)->first();
         $checkResult = Hash::check($password, $user->password);
         if ($checkResult) {
             $result = [

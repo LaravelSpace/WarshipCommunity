@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Test;
 
-use App\Service\Common\Image\Model\Image;
-use App\Service\Community\Article\Model\Article;
+use App\Service\Common\Image\Model\ImageModel;
+use App\Service\Community\Article\Model\ArticleModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

@@ -9,17 +9,24 @@ use Illuminate\Http\Request;
 
 class ImageController extends ApiControllerAbstract
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ValidateException
+     */
     public function store(Request $request)
     {
-        $imageBase64 = $request->input('image_base64');
+        $imageFile = $request->input('image_file');
+        $imageType = $request->input('image_type');
         $user = ['id' => 4];
 
-        $result = (new ImageService())->createImageBase64($user, $imageBase64);
+        $result = (new ImageService())->createImage($user, $imageFile, $imageType);
 
         return $this->response($result);
     }
 
-    public function listUserImage(Request $request){
+    public function listUserImage(Request $request)
+    {
         $userId = $request->input('user_id');
         $user = ['id' => $userId];
 

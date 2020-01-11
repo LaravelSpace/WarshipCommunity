@@ -65,6 +65,25 @@ if (!function_exists('dateTimeCreate')) {
     }
 }
 
+if (!function_exists('renderValidateException')) {
+    /**
+     * 抛出效验异常
+     *
+     * @param string $message
+     * @param int    $code
+     * @param string $attachment
+     * @throws \App\Exceptions\ValidateException
+     */
+    function renderValidateException($message = "", $code = 0, $attachment = "")
+    {
+        $messageValue = config('message.' . $message);
+        if (empty($messageValue)) {
+            $messageValue = $message;
+        }
+        throw new \App\Exceptions\ValidateException($messageValue, $code, $attachment);
+    }
+}
+
 if (!function_exists('renderServiceException')) {
     /**
      * 抛出业务异常
@@ -76,6 +95,10 @@ if (!function_exists('renderServiceException')) {
      */
     function renderServiceException($message = "", $code = 0, $attachment = "")
     {
-        throw new \App\Exceptions\ServiceException($message, $code, $attachment);
+        $messageValue = config('message.' . $message);
+        if (empty($messageValue)) {
+            $messageValue = $message;
+        }
+        throw new \App\Exceptions\ServiceException($messageValue, $code, $attachment);
     }
 }

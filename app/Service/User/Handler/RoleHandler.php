@@ -3,13 +3,13 @@
 namespace App\Service\User\Handler;
 
 
-use App\Service\User\Model\Role;
+use App\Service\User\Model\RoleModel;
 
 class RoleHandler
 {
     public function roleList(array $inputData)
     {
-        $roleList = Role::get();
+        $roleList = RoleModel::get();
         if ($roleList->count() > 0) {
             $roleList = $roleList->toArray();
         } else {
@@ -29,7 +29,7 @@ class RoleHandler
             'name'     => $inputData['name'],
             'describe' => $inputData['describe']
         ];
-        $role = Role::create($roleData);
+        $role = RoleModel::create($roleData);
         $returnData = [
             'status' => config('constant.success'),
             'data'   => $role->toArray()

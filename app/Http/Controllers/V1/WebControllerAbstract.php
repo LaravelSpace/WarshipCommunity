@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 abstract class WebControllerAbstract extends Controller
 {
-    use ResponseTrait;
+    use ActionTrait;
 }
 
 //                                   ,\`.

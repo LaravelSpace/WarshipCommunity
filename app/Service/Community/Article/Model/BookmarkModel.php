@@ -5,7 +5,7 @@ namespace App\Service\Community\Article\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Bookmark extends Model
+class BookmarkModel extends Model
 {
     protected $connection = 'mysql';
 

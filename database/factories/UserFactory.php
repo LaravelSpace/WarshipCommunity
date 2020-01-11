@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(App\Service\User\Model\User::class, function (Faker $faker) {
+$factory->define(App\Service\User\Model\UserModel::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,

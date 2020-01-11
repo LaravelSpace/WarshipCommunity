@@ -5,7 +5,7 @@ namespace App\Listeners\Community;
 use App\Events\Community\ArticleSensitiveEvent;
 use App\Service\Common\SensitiveWord\Model\SensitiveResult;
 use App\Service\Common\SensitiveWord\SensitiveWordService;
-use App\Service\Community\Article\Model\Article;
+use App\Service\Community\Article\Model\ArticleModel;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -46,7 +46,7 @@ class ArticleSensitiveListener
         $text = '';
         switch ($classification) {
             case 'article':
-                $dbModel = Article::find($id);
+                $dbModel = ArticleModel::find($id);
                 if (!is_null($dbModel)) {
                     $text = $dbModel->body;
                 }
@@ -71,7 +71,7 @@ class ArticleSensitiveListener
         $updateField = ['examine' => $examine];
         switch ($classification) {
             case 'article':
-                Article::where($whereField)->update($updateField);
+                ArticleModel::where($whereField)->update($updateField);
                 break;
         }
     }

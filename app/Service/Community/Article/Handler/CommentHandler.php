@@ -4,7 +4,7 @@ namespace App\Service\Community\Article\Handler;
 
 
 use App\Events\Community\ArticleSensitiveEvent;
-use App\Service\Community\Article\Model\Comment;
+use App\Service\Community\Article\Model\CommentModel;
 
 class CommentHandler
 {
@@ -13,7 +13,7 @@ class CommentHandler
         $key = makeUniqueKey32();
         $this->saveToFile($user['id'], $key, $body);
         $whereField = ['article_id' => $articleId];
-        $dbCount = Comment::where($whereField)->count();
+        $dbCount = CommentModel::where($whereField)->count();
         $createField = [
             'body'          => $key,
             'article_id'    => $articleId,
@@ -21,7 +21,7 @@ class CommentHandler
             'user_id'       => $user['id'],
             'examine'       => 1,
         ];
-        $dbComment = Comment::create($createField);
+        $dbComment = CommentModel::create($createField);
         $classification = config('constant.classification.comment');
         event(new ArticleSensitiveEvent($classification, $dbComment->id));
 
@@ -36,7 +36,7 @@ class CommentHandler
         if ($classification === 'user') {
             $whereField = ['user_id' => $id];
         }
-        $dbPaginate = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->with('user')->simplePaginate($perPage);
+        $dbPaginate = CommentModel::query()->where($whereField)->passExamine()->notInBlacklist()->with('user')->simplePaginate($perPage);
         if ($dbPaginate->count() > 0) {
             $dbPaginate = $dbPaginate->toArray();
             // 获取内容
@@ -50,7 +50,7 @@ class CommentHandler
             $prevMinPage = $dbPaginate['current_page'] - 3;
             $nextMaxPage = $dbPaginate['current_page'] + 4;
             $pageList = [];
-            $dbCount = Comment::query()->where($whereField)->passExamine()->notInBlacklist()->count();
+            $dbCount = CommentModel::query()->where($whereField)->passExamine()->notInBlacklist()->count();
             $maxPage = (int)($dbCount / $perPage) + 2;
             $lastPageNum = $dbCount % $perPage;
             for ($i = $prevMinPage; $i < $nextMaxPage; $i++) {

@@ -5,7 +5,7 @@ namespace App\Service\Common\Image\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class ImageModel extends Model
 {
     protected $connection = 'mysql';
 

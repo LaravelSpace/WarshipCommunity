@@ -5,7 +5,7 @@ namespace App\Service\User\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Token extends Model
+class TokenModel extends Model
 {
     protected $connection = 'mysql';
 

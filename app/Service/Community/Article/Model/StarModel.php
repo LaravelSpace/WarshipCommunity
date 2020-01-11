@@ -5,7 +5,7 @@ namespace App\Service\Community\Article\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Star extends Model
+class StarModel extends Model
 {
     protected $connection = 'mysql';
 

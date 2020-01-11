@@ -1,6 +1,6 @@
 <?php
 
-use App\Service\User\Model\User;
+use App\Service\User\Model\UserModel;
 
 ;
 
@@ -20,7 +20,7 @@ class ArticleTableSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $articleList = [];
         $bodyList = [];
-        $userIdList = User::pluck('id');
+        $userIdList = UserModel::pluck('id');
 
         $length = 50;
         for ($i = 0; $i < $length; $i++) {

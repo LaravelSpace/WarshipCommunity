@@ -3,7 +3,7 @@
 namespace App\Service\User\Handler;
 
 
-use App\Service\User\Model\Token;
+use App\Service\User\Model\TokenModel;
 use Illuminate\Support\Str;
 
 class OAuthHandler
@@ -21,7 +21,7 @@ class OAuthHandler
 
     public function exchangeLocal(int $userId)
     {
-        $dbToken = Token::where(['client' => 'web_user', 'client_id' => $userId])->first();
+        $dbToken = TokenModel::where(['client' => 'web_user', 'client_id' => $userId])->first();
         if ($dbToken === null) {
             $createField = [
                 'client'        => 'web_user',
@@ -30,7 +30,7 @@ class OAuthHandler
                 'expires_at'    => dateTimeCreate(time() + 3600 * 12),
                 'refresh_token' => Str::random(32)
             ];
-            $dbToken = Token::create($createField);
+            $dbToken = TokenModel::create($createField);
         }
         $time = time();
         if ($dbToken->expires_at->lt(dateTimeCreate($time))) {

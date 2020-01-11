@@ -3,34 +3,46 @@
 namespace App\Service\Common\Image;
 
 
-use App\Service\Common\Image\Model\Image;
+use App\Service\Common\Image\Handler\ImageHandler;
+use App\Service\Common\Image\Model\ImageModel;
 
 class ImageService
 {
+    /**
+     * 获取图片列表
+     *
+     * @param array $user
+     * @return array
+     */
     public function listImage(array $user)
     {
-        $dbImageList = Image::query()->where(['user_id' => $user['id'],'image_type' => 'upload'])->get();
+        $dbImageList = ImageModel::query()->where(['user_id' => $user['id'], 'image_type' => 'upload'])->get();
         $imageList = [];
-        foreach ($dbImageList as $item){
+        foreach ($dbImageList as $item) {
             $imageList[] = [
-                'image_url' => '/storage/image/upload/' . $item->name
+                'id'  => $item->id,
+                'url' => '/storage/image/upload/' . $item->name
             ];
         }
-
         return $imageList;
     }
 
-    public function createImageBase64(array $user, $imageBase64)
+    /**
+     * 生成图片
+     *
+     * @param array  $user
+     * @param        $imageFile
+     * @param string $imageType
+     * @return array
+     * @throws \App\Exceptions\ValidateException
+     */
+    public function createImage(array $user, $imageFile, string $imageType)
     {
-        $image = str_replace('data:image/jpeg;base64,', '', $imageBase64);
-        $imageName = makeUniqueKey32() . '-' . $user['id'] . '.jpeg';
-        $dirPath = storage_path() . '/app/public/image/upload/';
-        if (!is_dir($dirPath)) {
-            mkdir($dirPath, 0755, true);
+        if ($imageType === 'base64') {
+            return (new ImageHandler())->createImageBase64($user, $imageFile);
+        } else {
+            renderValidateException('image_type_not_exist');
         }
-        file_put_contents($dirPath . $imageName, base64_decode($image));
-        Image::query()->create(['name' => $imageName, 'image_type' => 'upload', 'user_id' => $user['id']]);
-
-        return ['image_url' => '/storage/image/upload/' . $imageName];
+        return [];
     }
 }

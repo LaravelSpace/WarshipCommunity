@@ -4,7 +4,7 @@ namespace App\Listeners\Common;
 
 use App\Events\Common\RequestLogEvent;
 use App\Service\Common\Log\LogService;
-use App\Service\Common\Log\Model\LogRequest;
+use App\Service\Common\Log\Model\LogRequestModel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Mockery\Exception;
@@ -46,7 +46,7 @@ class RequestLogListener
                 'request'    => $logKey,
                 'created_at' => $logData['time']
             ];
-            LogRequest::create($createField);
+            LogRequestModel::create($createField);
             $this->saveToFile($logKey, $logData);
         } else if (isset($logData['response'])) {
             $whereField = ['request' => $logKey];
@@ -55,7 +55,7 @@ class RequestLogListener
                 'consumption' => $logData['consumption'],
                 'updated_at'  => $logData['time']
             ];
-            LogRequest::where($whereField)->update($updateField);
+            LogRequestModel::where($whereField)->update($updateField);
             $this->saveToFile($logKey, $logData);
         }
     }

@@ -3,12 +3,12 @@
 namespace App\Service\Community\Article\Model;
 
 
-use App\Service\User\Model\User;
+use App\Service\User\Model\UserModel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Article extends Model
+class ArticleModel extends Model
 {
     use SoftDeletes;
 
@@ -39,6 +39,6 @@ class Article extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(UserModel::class);
     }
 }

@@ -2,14 +2,17 @@
     <div class="card border-primary">
         <div class="card-body">
             <div>
-
+                <div style="max-width:30%;margin:0 1.66%;float:left" v-for="image in imageList">
+                    <img style="max-width:100%;" src="" :src="image.image_url"
+                         data-toggle="popover" title="图片路径" data-content="" :data-content="image.image_url">
+                </div>
             </div>
-            <div class="modal fade" id="image-cropper" tabindex="-1" role="dialog"
+            <div id="image-cropper" role="dialog" class="modal fade" tabindex="-1"
                  aria-labelledby="image-cropper-label" aria-hidden="true">
-                <div class="modal-dialog modal-lg" style="max-width:1200px" role="document">
+                <div role="document" class="modal-dialog modal-lg" style="max-width:1200px">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="image-cropper-label">图片裁剪</h5>
+                            <h5 id="image-cropper-label" class="modal-title">图片裁剪</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -53,13 +56,14 @@
                 eBtnUploadImage: Object,
                 croppedCanvas: Object,
                 cropper: Object,
-                imageList:[],
+                imageList: [],
             }
         },
-        created:function(){
+        created: function () {
+            let thisVue = this;
             axios.post('/api/image/user', {'user_id': 4}).then(function (response) {
                 if (response.data.status === STATUS.success) {
-
+                    thisVue.imageList = response.data.data;
                 }
             });
         },
@@ -82,9 +86,7 @@
                 this.eInputImage.onchange = this.inputImageChanged;
 
                 let thisVue = this;
-                this.cropper = new Cropper(
-                    thisVue.eCropperImage,
-                    {
+                this.cropper = new Cropper(thisVue.eCropperImage, {
                     viewMode: 1,
                     aspectRatio: 1,
                     crop: function (event) {
@@ -114,14 +116,22 @@
                 let croppedCanvas = this.cropper.getCroppedCanvas();
                 let croppedImageBase64 = croppedCanvas.toDataURL('image/jpeg');
                 axios.post(URI_API.image + URI_CONFIG.store, {
-                    'image_base64': croppedImageBase64
+                    'image_type': 'base64',
+                    'image_file': croppedImageBase64
                 }).then(function (response) {
                     if (response.data.status === STATUS.success) {
                         $('#image-cropper').modal('close');
                     }
                 });
             }
-        }
+        },
+        watch: {
+            imageList: function () {
+                this.$nextTick(function () {
+                    $('[data-toggle="popover"]').popover();
+                })
+            }
+        },
     });
     new Vue({el: "#vue-cropper"});
 </script>
