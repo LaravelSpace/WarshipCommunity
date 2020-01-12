@@ -11,15 +11,8 @@ class RequestLog
     public function handle(Request $request, Closure $next)
     {
         $logKey = makeUniqueKey32();
-
-        // 从 header 获取认证信息
-        $client = 'web_user';
-        $clientId = 998;
-        $authorization = $request->header('Authorization', null);
-        if ($authorization !== null && is_string($authorization)) {
-            list($clientStr, $authStr) = explode(':', $authorization);
-            list($classfication, $clientId) = explode(' ', $clientStr);
-        }
+        $client = config('client');
+        $clientId = config('client_id');
 
         // 记录请求
         $startTime = microtime(true) * 1000;

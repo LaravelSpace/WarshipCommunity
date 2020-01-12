@@ -1,27 +1,34 @@
 <script>
-    // 这段代码为所有的 Ajax 和 Axios 请求添加 CSRF-TOKEN，因此需要在所有的请求发起之前执行
-    // 别放在 $(document).ready(function () {}) 里面，也别放在页面底部
+    // 为所有的 Axios 请求添加 headers
+    let axiosHeaders = {};
     let csrfToken = document.head.querySelector('meta[name="csrf-token"]');
-    let apiToken = document.head.querySelector('meta[name="api-token"]');
-    if (csrfToken !== null && csrfToken !== '' && apiToken !== null && apiToken !== '') {
-        // $.ajaxSetup({
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //         'Authorization': $('meta[name="api-token"]').attr('content')
-        //     }
-        // });
-        window.jQuery.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': csrfToken.content,
-                'Authorization': apiToken.content
-            }
-        });
-        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken.content;
+    if (csrfToken !== null && csrfToken !== "") {
+        axiosHeaders["X-CSRF-TOKEN"] = csrfToken.content;
     } else {
-        if (csrfToken === null && csrfToken !== '') {
-            console.error('CSRF token not found');
-        } else if (apiToken === null && apiToken !== '') {
-            console.error('API token not found');
-        }
+        console.error("CSRF token not found");
     }
+
+    axios.interceptors.request.use(function (config) {
+        // 在发送请求之前做些什么
+        let wscToken = localStorage.getItem("wsc_token");
+        if (wscToken !== null && wscToken !== "") {
+            axiosHeaders["Authorization"] = wscToken
+        }
+        config.headers = axiosHeaders;
+
+        return config;
+    }, function (error) {
+        // 对请求错误做些什么
+        return Promise.reject(error);
+    });
+
+    axios.interceptors.response.use(function (response) {
+        // 对响应数据做点什么
+        return response;
+    }, function (error) {
+        // 对响应错误做点什么
+        alert(error.response.data.message);
+
+        return Promise.reject(error);
+    });
 </script>

@@ -35,6 +35,7 @@ class UserModel extends Authenticatable
         'avatar',
         'api_token',
         'remember_token',
+        'banned_at',
     ];
 
     /**

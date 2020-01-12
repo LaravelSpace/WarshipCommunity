@@ -12,25 +12,47 @@ class RequestThrottle
     public function handle(Request $request, Closure $next)
     {
         // 从 header 获取认证信息
+        $client = 'web_user';
+        $clientId = 998;
         $authorization = $request->header('Authorization', null);
         if ($authorization !== null && is_string($authorization)) {
             list($clientStr, $authStr) = explode(':', $authorization);
-            list($classfication, $clientId) = explode(' ', $clientStr);
+            list($client, $clientId) = explode(' ', $clientStr);
+        }
+        config(['client' => $client]);
+        config(['client_id' => (int)$clientId]);
+
+        $ip = $request->ip();
+        $checkResult = $this->iCheckThrottle($ip, $clientId);
+        if ($checkResult) {
+            $response = $next($request);
+        } else {
+            $returnData = ['status' => 408, 'message' => '达到请求限制次数', 'data' => []];
+            $response = response()->json($returnData, 408);
         }
 
+        return $response;
+    }
+
+    /**
+     * 检查 client 或者 ip 有没有达到频率限制
+     *
+     * @param string $ip
+     * @param int    $clientId
+     * @return bool
+     */
+    public function iCheckThrottle(string $ip, int $clientId)
+    {
         $routeThrottle = config('constant.route_throttle');
         $limitField = $routeThrottle['field'];
         $limitTime = $routeThrottle['time'];
-        if (isset($clientId) && is_string($clientId)) {
+        if (isset($clientId) && is_numeric($clientId) && $clientId !== 988) {
             $limitKey = $clientId;
             $limitGroup = $routeThrottle['client'];
         } else {
-            $ip = $request->ip();
             $limitKey = md5($ip);
             $limitGroup = $routeThrottle['ip'];
         }
-
-        // 检查 client 或者 ip 有没有达到频率限制
         $checkResult = true;
         foreach ($limitField as $item) {
             $cacheKey = $limitKey . '_' . $item;
@@ -46,13 +68,6 @@ class RequestThrottle
             $checkResult = false;
         }
 
-        if ($checkResult) {
-            $response = $next($request);
-        } else {
-            $returnData = ['status' => 408, 'message' => '达到请求限制次数', 'data' => []];
-            $response = response()->json($returnData, 408);
-        }
-
-        return $response;
+        return $checkResult;
     }
 }

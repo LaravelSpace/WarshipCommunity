@@ -61,7 +61,7 @@
         },
         created: function () {
             let thisVue = this;
-            axios.post('/api/image/user', {'user_id': 4}).then(function (response) {
+            axios.post("/api/image/user", {"user_id": 4}).then(function (response) {
                 if (response.data.status === STATUS.success) {
                     thisVue.imageList = response.data.data;
                 }
@@ -69,18 +69,18 @@
         },
         methods: {
             showModal: function () {
-                $('#image-cropper').modal('show');
+                $("#image-cropper").modal("show");
                 this.initModal();
             },
             initModal: function () {
-                this.eBtnChooseImage = document.getElementById('btn-choose-image');
-                this.eInputImage = document.getElementById('input-image');
-                this.eCropperImage = document.getElementById('cropper-image');
-                this.eCropperData = document.getElementById('cropper-data');
-                this.eCropperBoxData = document.getElementById('cropper-box-data');
-                this.eResultImage = document.getElementById('result-image');
-                this.eBtnUploadImage = document.getElementById('btn-upload-image');
-                this.croppedCanvas = document.createElement('canvas');
+                this.eBtnChooseImage = document.getElementById("btn-choose-image");
+                this.eInputImage = document.getElementById("input-image");
+                this.eCropperImage = document.getElementById("cropper-image");
+                this.eCropperData = document.getElementById("cropper-data");
+                this.eCropperBoxData = document.getElementById("cropper-box-data");
+                this.eResultImage = document.getElementById("result-image");
+                this.eBtnUploadImage = document.getElementById("btn-upload-image");
+                this.croppedCanvas = document.createElement("canvas");
 
                 this.eBtnChooseImage.onclick = this.chooseImage;
                 this.eInputImage.onchange = this.inputImageChanged;
@@ -107,20 +107,20 @@
             },
             cropImage: function (event) {
                 let croppedCanvas = this.cropper.getCroppedCanvas();
-                croppedCanvas.style.width = '500px';
-                croppedCanvas.style.height = '500px';
-                this.eResultImage.innerHTML = '';
+                croppedCanvas.style.width = "500px";
+                croppedCanvas.style.height = "500px";
+                this.eResultImage.innerHTML = "";
                 this.eResultImage.appendChild(croppedCanvas);
             },
             uploadImage: function (event) {
                 let croppedCanvas = this.cropper.getCroppedCanvas();
-                let croppedImageBase64 = croppedCanvas.toDataURL('image/jpeg');
+                let croppedImageBase64 = croppedCanvas.toDataURL("image/jpeg");
                 axios.post(URI_API.image + URI_CONFIG.store, {
-                    'image_type': 'base64',
-                    'image_file': croppedImageBase64
+                    "image_type": "base64",
+                    "image_file": croppedImageBase64
                 }).then(function (response) {
                     if (response.data.status === STATUS.success) {
-                        $('#image-cropper').modal('close');
+                        $('#image-cropper').modal("close");
                     }
                 });
             }
@@ -129,7 +129,7 @@
             imageList: function () {
                 this.$nextTick(function () {
                     $('[data-toggle="popover"]').popover();
-                })
+                });
             }
         },
     });

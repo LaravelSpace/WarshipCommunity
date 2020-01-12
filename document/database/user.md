@@ -14,6 +14,7 @@
 | avatar            | varchar(128) | not null         | 头像图片 uri                                    |
 | api_token         | varchar(64)  | not null         | 用于授权                                        |
 | remember_token    | varchar(64)  | not null         | 用于记住我                                      |
+| banned_at         | datetime     | null             | 用于封禁用户                                    |
 | created_at        | datetime     | not null         | default current_timestamp                       |
 | updated_at        | datetime     | null             | on update current_timestamp                     |
 
@@ -37,6 +38,7 @@ create table `user` (
 `avatar` varchar(128) not null,
 `api_token` varchar(64) not null,
 `remember_token` varchar(64) not null,
+`banned_at` datetime null,
 `created_at` datetime not null default current_timestamp,
 `updated_at` datetime null on update current_timestamp
 ) default character set utf8mb4 collate 'utf8mb4_unicode_ci' engine=innodb auto_increment=1000;

@@ -3,7 +3,6 @@
 namespace App\Service\User\Handler;
 
 
-use App\Service\User\Model\TokenModel;
 use App\Service\User\Model\UserModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -22,7 +21,7 @@ class RegisterHandler
             'password'       => $password,
             'avatar'         => '/images/avatar/default_avatar.jpg',
             'api_token'      => Str::random(32),
-            'remember_token' => Str::random(32)
+            'remember_token' => Str::random(32),
         ];
         if ($isEmail) {
             $userInfo['email'] = $identity;
@@ -35,12 +34,12 @@ class RegisterHandler
         if ($dbUser !== null && $dbUser !== '') {
             $result = [
                 'status' => config('constant.success'),
-                'data'   => ['user_id' => $dbUser->id]
+                'data'   => ['user_id' => $dbUser->id],
             ];
         } else {
             $result = [
                 'status'  => config('constant.fail'),
-                'message' => '用户创建失败'
+                'message' => '用户创建失败',
             ];
         }
 
@@ -64,15 +63,15 @@ class RegisterHandler
                     $message .= "昵称\"{$name}\"，已被使用;";
                 }
                 if ($itemUser->email == $identity) {
-                    $message .= "邮箱地址\"{$name}\"，已被使用;";
+                    $message .= "邮箱地址\"{$identity}\"，已被使用;";
                 }
                 if ($itemUser->phone == $identity) {
-                    $message .= "手机号码\"{$name}\"，已被使用;";
+                    $message .= "手机号码\"{$identity}\"，已被使用;";
                 }
             }
             $result = [
                 'status'  => config('constant.fail'),
-                'message' => $message
+                'message' => $message,
             ];
         }
 
@@ -98,7 +97,7 @@ class RegisterHandler
             $result = [
                 'status'      => config('constant.fail'),
                 'status_code' => 403,
-                'message'     => '登录信息错误'
+                'message'     => '登录信息错误',
             ];
         }
 

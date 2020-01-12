@@ -18,8 +18,8 @@
             <div class="form-group">
                 <label for="register-name">昵称：</label>
                 <div class="input-group mb-3">
-                    <input type="text" id="register-name" class="form-control" :class="nameValid"
-                           placeholder="昵称" v-model="name">
+                    <input id="register-name" type="text" class="form-control" placeholder="昵称"
+                           :class="nameValid" v-model="name">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
                                 data-container="body" data-toggle="popover" data-placement="right"
@@ -33,7 +33,7 @@
             </div>
             <div class="form-group" v-if="isEmail">
                 <label for="register-identity">登录身份(邮箱)：
-                    <a href="#" @click="changeIdentity()">切换</a>
+                    <button type="button" class="btn btn-link" @click="changeIdentity()">切换</button>
                 </label>
                 <div class="input-group mb-3">
                     <input type="text" id="register-identity" class="form-control" placeholder="邮箱地址"
@@ -51,7 +51,7 @@
             </div>
             <div class="form-group" v-else="isEmail">
                 <label for="register-identity">登录身份(手机)：
-                    <a href="#" @click="changeIdentity()">切换</a>
+                    <button type="button" class="btn btn-link" @click="changeIdentity()">切换</button>
                 </label>
                 <div class="input-group mb-3">
                     <input type="text" id="register-identity" class="form-control" placeholder="手机号码"
@@ -112,15 +112,15 @@
             },
             created: function () {
                 // 初始化 BootStrap 弹出框
-                $(document).ready(function () {
+                this.$nextTick(function () {
                     $('[data-toggle="popover"]').popover();
-                })
+                });
             },
             methods: {
                 changeIdentity: function () {
                     this.isEmail = !this.isEmail;
                     // 切换之后要重新初始化
-                    $(document).ready(function () {
+                    this.$nextTick(function () {
                         $('[data-toggle="popover"]').popover();
                     });
                 },
@@ -132,7 +132,9 @@
                         "is_email": thisVue.isEmail,
                         "password": thisVue.password
                     }).then(function (response) {
-                        console.debug(response.data);
+                        if (response.data.data.user_id !== undefined) {
+                            alert("user_id=" + response.data.data.user_id);
+                        }
                     });
                 },
                 reset: function () {

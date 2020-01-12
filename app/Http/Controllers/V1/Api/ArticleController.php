@@ -15,7 +15,7 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
     {
         $title = $request->input('title');
         $body = $request->input('body');
-        $user = ['id' => 4];
+        $user = ['id' => config('client_id')];
 
         $result = (new ArticleService())->createArticle($user, $title, $body);
 
@@ -25,7 +25,6 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
     public function index(Request $request)
     {
         $page = (int)$request->input('page', 1);
-
         $result = (new ArticleService())->listArticle($page);
 
         return $this->response($result);

@@ -1,18 +1,9 @@
 <script>
     const STATUS = {
-        'success': 200,
-        'fail': 400,
-        'error': 500,
+        'success': 'success',
+        'fail': 'fail',
+        'error': 'error',
     };
-
-    // 昵称校验正则，2~16 位的中文字符，英文字符，数字以及下划线
-    // const REG_NAME = new RegExp(/^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9_-]){2,16}$/);
-    // 邮箱地址校验正则
-    // const REG_EMAIL = new RegExp(/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/);
-    // 手机号码效验正则
-    // const REG_PHONE = new RegExp(/^1[3456789]\d{9}$/);
-    // 密码强度正则，6~32 位的英文字符，特殊字符，数字以及下划线
-    // const REG_PASSWORD = new RegExp(/^([a-zA-Z0-9_-]|[!@#$%^&*? ]){6,32}$/);
 
     // 正则校验规则
     const REG = {
