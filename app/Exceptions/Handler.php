@@ -55,12 +55,12 @@ class Handler extends ExceptionHandler
 
         // 业务报错，返回 400
         if ($exception instanceof ServiceException) {
-            return $this->response(['trace' => $trace[0]], $status, 400, $exception->getMessage());
+            return $this->response(['trace' => $trace[0]], $status, $exception->getCode(), $exception->getMessage());
         }
 
         // 异常报错，返回 500
         if ($exception instanceof Exception) {
-            return $this->response(['trace' => $trace[0]], $status, 500, $exception->getMessage());
+            return $this->response(['trace' => $trace[0]], $status, $exception->getCode(), $exception->getMessage());
         }
 
         // 访问不存在的路由方法，将返回 404

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="api-token" content="{{ Auth::check() ? 'Bearer' . Auth::user()->api_token : 'Bearer' }}">
+    {{--<meta name="api-token" content="{{ Auth::check() ? 'Bearer' . Auth::user()->api_token : 'Bearer' }}">--}}
     <title>@yield('title','WarshipCommunity')</title>
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">

@@ -40,8 +40,9 @@ return [
     ],
 
     'image_path' => [
-        'storage' => '/storage/image/upload/',
-        'public'  => '/app/public/image/upload/',
+        'storage'        => '/app/public/image/upload/',
+        'public'         => '/storage/image/upload/',
+        'default_avatar' => '/storage/image/avatar/default_avatar.jpg',
     ],
 
     'classification' => [

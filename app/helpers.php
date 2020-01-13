@@ -76,8 +76,10 @@ if (!function_exists('renderValidateException')) {
      */
     function renderValidateException($message = "", $code = 0, $attachment = "")
     {
-        $messageValue = config('message.' . $message);
-        if (empty($messageValue)) {
+        $messageConfig = config('message');
+        if (array_key_exists($message, $messageConfig)) {
+            $messageValue = $messageConfig[$message];
+        } else {
             $messageValue = $message;
         }
         throw new \App\Exceptions\ValidateException($messageValue, $code, $attachment);
@@ -95,8 +97,10 @@ if (!function_exists('renderServiceException')) {
      */
     function renderServiceException($message = "", $code = 0, $attachment = "")
     {
-        $messageValue = config('message.' . $message);
-        if (empty($messageValue)) {
+        $messageConfig = config('message');
+        if (array_key_exists($message, $messageConfig)) {
+            $messageValue = $messageConfig[$message];
+        } else {
             $messageValue = $message;
         }
         throw new \App\Exceptions\ServiceException($messageValue, $code, $attachment);

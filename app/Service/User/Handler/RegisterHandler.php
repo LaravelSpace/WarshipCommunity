@@ -9,17 +9,22 @@ use Illuminate\Support\Str;
 
 class RegisterHandler
 {
-    public function register(string $name, string $identity, bool $isEmail, string $password)
+    /**
+     * @param string $name
+     * @param string $identity
+     * @param string $password
+     * @param bool   $isEmail
+     * @return array
+     * @throws \App\Exceptions\ServiceException
+     */
+    public function register(string $name, string $identity, string $password, bool $isEmail)
     {
-        $checkResult = $this->checkExistUser($name, $identity, $isEmail);
-        if ($checkResult['status'] !== config('constant.success')) {
-            return $checkResult;
-        }
+        $this->checkExistUser($name, $identity, $isEmail);
 
         $userInfo = [
             'name'           => $name,
             'password'       => $password,
-            'avatar'         => '/images/avatar/default_avatar.jpg',
+            'avatar'         => config('constant.image_path.default_avatar'),
             'api_token'      => Str::random(32),
             'remember_token' => Str::random(32),
         ];
@@ -31,25 +36,21 @@ class RegisterHandler
             $userInfo['email'] = $name;
         }
         $dbUser = UserModel::create($userInfo);
-        if ($dbUser !== null && $dbUser !== '') {
-            $result = [
-                'status' => config('constant.success'),
-                'data'   => ['user_id' => $dbUser->id],
-            ];
-        } else {
-            $result = [
-                'status'  => config('constant.fail'),
-                'message' => '用户创建失败',
-            ];
+        if (empty($dbUser)) {
+            renderServiceException('user_create_failed');
         }
 
-        return $result;
+        return ['user_id' => $dbUser->id];
     }
 
+    /**
+     * @param string $name
+     * @param string $identity
+     * @param bool   $isEmail
+     * @throws \App\Exceptions\ServiceException
+     */
     public function checkExistUser(string $name, string $identity, bool $isEmail)
     {
-        $result = ['status' => config('constant.success')];
-
         if ($isEmail) {
             $orWhereField = ['email' => $identity];
         } else {
@@ -69,39 +70,35 @@ class RegisterHandler
                     $message .= "手机号码\"{$identity}\"，已被使用;";
                 }
             }
-            $result = [
-                'status'  => config('constant.fail'),
-                'message' => $message,
-            ];
+            renderServiceException($message);
         }
-
-        return $result;
     }
 
-    public function login(string $identity, bool $isEmail, string $password)
+    /**
+     * @param string $identity
+     * @param string $password
+     * @param bool   $isEmail
+     * @return array
+     * @throws \App\Exceptions\ServiceException
+     */
+    public function login(string $identity, string $password, bool $isEmail)
     {
         if ($isEmail) {
             $checkField['email'] = $identity;
         } else {
             $checkField['phone'] = $identity;
         }
-
-        $user = UserModel::where($checkField)->first();
-        $checkResult = Hash::check($password, $user->password);
-        if ($checkResult) {
-            $result = [
-                'status' => config('constant.success'),
-                'data'   => (new OAuthHandler())->exchangeLocal($user->id)
-            ];
-        } else {
-            $result = [
-                'status'      => config('constant.fail'),
-                'status_code' => 403,
-                'message'     => '登录信息错误',
-            ];
+        $dbUser = UserModel::where($checkField)->first();
+        if (empty($dbUser)) {
+            renderServiceException('user_not_exist');
         }
 
-        return $result;
+        $checkResult = Hash::check($password, $dbUser->password);
+        if (!$checkResult) {
+            renderServiceException('password_incorrect', 403);
+        }
+
+        return (new OAuthHandler())->exchangeLocal($dbUser->id);
     }
 
     public function logout()

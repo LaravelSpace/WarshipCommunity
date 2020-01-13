@@ -11,11 +11,16 @@ trait ResponseTrait
             'status'  => $status,
             'data'    => isset($data) ? $data : [],
             'message' => $message,
-
         ];
         $httpStatusCode = config('constant.http.status_code');
         if (in_array($code, $httpStatusCode) && $code !== 200) {
             return response()->json($result, $code);
+        }
+        if (400 <= $code && $code < 500) {
+            return response()->json($result, 400);
+        }
+        if (500 <= $code && $code < 600) {
+            return response()->json($result, 500);
         }
         return response()->json($result);
     }

@@ -27,7 +27,8 @@
         return response;
     }, function (error) {
         // 对响应错误做点什么
-        alert(error.response.data.message);
+        console.debug(error);
+        // alert(error.response.data.message);
 
         return Promise.reject(error);
     });

@@ -9,33 +9,57 @@ use Illuminate\Http\Request;
 
 class UserController extends ApiControllerAbstract
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ServiceException
+     */
     public function register(Request $request)
     {
         $input = $request->input();
         $name = $input['name'];
         $identity = $input['identity'];
-        $isEmail = (bool)$input['is_email'];
         $password = $input['password'];
+        $isEmail = (bool)$input['is_email'];
 
-        $result = (new UserService())->register($name, $identity, $isEmail, $password);
+        $result = (new UserService())->register($name, $identity, $password, $isEmail);
 
-        return $this->responseTrans($result);
+        return $this->response($result);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ServiceException
+     */
     public function login(Request $request)
     {
         $input = $request->input();
         $identity = $input['identity'];
-        $isEmail = (bool)$input['is_email'];
         $password = $input['password'];
+        $isEmail = (bool)$input['is_email'];
 
-        $result = (new UserService())->login($identity, $isEmail, $password);
+        $result = (new UserService())->login($identity, $password, $isEmail);
 
-        return $this->responseTrans($result);
+        return $this->response($result);
     }
 
     public function logout(Request $request)
     {
 
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ServiceException
+     */
+    public function loginCheck(Request $request)
+    {
+        $authorization = $request->header('Authorization', '');
+
+        $result = (new UserService())->tokenCheck($authorization);
+
+        return $this->response($result);
     }
 }

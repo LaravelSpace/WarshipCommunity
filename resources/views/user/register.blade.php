@@ -129,8 +129,8 @@
                     axios.post(URI_API.user.register, {
                         "name": thisVue.name,
                         "identity": thisVue.identity,
-                        "is_email": thisVue.isEmail,
-                        "password": thisVue.password
+                        "password": thisVue.password,
+                        "is_email": thisVue.isEmail
                     }).then(function (response) {
                         if (response.data.data.user_id !== undefined) {
                             alert("user_id=" + response.data.data.user_id);

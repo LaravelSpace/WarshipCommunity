@@ -110,8 +110,8 @@
                     let thisVue = this;
                     axios.post(URI_API.user.login, {
                         "identity": thisVue.identity,
-                        "is_email": thisVue.isEmail,
-                        "password": thisVue.password
+                        "password": thisVue.password,
+                        "is_email": thisVue.isEmail
                     }).then(function (response) {
                         if (response.data.status === STATUS.success) {
                             localStorage.setItem("user_id", response.data.data.user_id);

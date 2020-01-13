@@ -29,7 +29,7 @@
     const URI_WEB = {
         'user': {
             'register': '/user/register',
-            'login': '/user/login'
+            'login': '/user/login',
         },
         'role': '/role',
         'permission': '/permission',
@@ -38,7 +38,8 @@
     const URI_API = {
         'user': {
             'register': '/api/user/register',
-            'login': '/api/user/login'
+            'login': '/api/user/login',
+            'login_check': '/api/user/login_check',
         },
         'article': '/api/article',
         'comment': '/api/comment',

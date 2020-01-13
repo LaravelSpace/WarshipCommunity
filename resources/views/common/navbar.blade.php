@@ -9,27 +9,27 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav col-md-6 mr-5">
-                <li class="nav-item active">
+            <ul class="navbar-nav col-md-6">
+                <li class="nav-item mx-md-1">
                     <a class="nav-link" href="/article">帖子</a>
                 </li>
             </ul>
-            <ul class="navbar-nav col-md-3 mr-5">
+            <ul class="navbar-nav col-md-3">
                 <li class="nav-item">
                     <div class="form-inline">
-                        <input class="form-control mr-md-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">
+                        <input class="form-control mx-md-1" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success mx-md-1" type="submit">
                             <i class="fa fa-search"></i> 搜索
                         </button>
                     </div>
                 </li>
             </ul>
-            <ul class="navbar-nav col-md-2" v-if="notLogin">
-                <li class="nav-item mr-md-2">
+            <ul class="navbar-nav col-md-3 justify-content-end" v-if="notLogin">
+                <li class="nav-item mx-md-1">
                     <a type="button" class="btn btn-outline-primary"
                        href="/user/login">登录</a>
                 </li>
-                <li class="nav-item mr-md-2">
+                <li class="nav-item mx-md-1">
                     <a type="button" class="btn btn-outline-primary"
                        href="/user/register">注册</a>
                 </li>
@@ -54,8 +54,8 @@
     </nav>
 </template>
 <script>
-    Vue.component('vue-navbar', {
-        template: '#template-vue-navbar',
+    Vue.component("vue-navbar", {
+        template: "#template-vue-navbar",
         data: function () {
             return {
                 notLogin: true,
@@ -65,34 +65,25 @@
             }
         },
         created: function () {
-            // this.login();
+            let thisVue = this;
+            axios.post('/api/user/login_check').then(function (response) {
+                if (response.data.status === STATUS.success) {
+                    thisVue.notLogin = false;
+                    thisVue.userId = response.data.data.user_id;
+                    thisVue.name = response.data.data.name;
+                    thisVue.avatar = response.data.data.avatar;
+                }
+            });
         },
         methods: {
-            login: function () {
-                let thisVue = this;
-                axios.get(COMMUNITY_URL.users_sign_check).then(function (response) {
-                    if (response.data.status === STATUS_SUCCESS) {
-                        let $responseData = response.data.data;
-                        if ($responseData.identity_id !== null
-                            && $responseData.identity_id !== 0
-                            && $responseData.identity_id !== '0'
-                        ) {
-                            thisVue.notSignIn = false;
-                            thisVue.userId = $responseData.identity_id;
-                            thisVue.name = $responseData.name;
-                            thisVue.avatar = $responseData.avatar;
-                        }
-                    }
-                });
-            },
             logout: function () {
-                axios.get(COMMUNITY_URL.users_sign_out).then(function (response) {
-                    if (response.data.status === STATUS_SUCCESS) {
-                        window.location.reload();
-                    }
-                });
+                // axios.get(COMMUNITY_URL.users_sign_out).then(function (response) {
+                //     if (response.data.status === STATUS_SUCCESS) {
+                //         window.location.reload();
+                //     }
+                // });
             }
         }
     });
-    new Vue({el: '#vue-navbar'});
+    new Vue({el: "#vue-navbar"});
 </script>
