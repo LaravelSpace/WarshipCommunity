@@ -15,6 +15,7 @@ class ImageModel extends Model
         'name',
         'image_type',
         'user_id',
+        'created_at',
     ];
 
     public $timestamps = false;

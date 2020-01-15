@@ -9,18 +9,6 @@ use Parsedown;
 
 class ArticleHandler
 {
-    public function createArticle(array $user, string $title, string $body)
-    {
-        $key = makeUniqueKey32();
-        $this->saveToFile($user['id'], $key, $body);
-        $createField = ['title' => $title, 'body' => $key, 'user_id' => $user['id'], 'examine' => 1];
-        $dbArticle = ArticleModel::create($createField);
-        $classification = config('constant.classification.article');
-        event(new ArticleSensitiveEvent($classification, $dbArticle->id));
-
-        return $dbArticle->id;
-    }
-
     public function listArticle(int $page, int $perPage)
     {
         $articleData = [
@@ -56,6 +44,18 @@ class ArticleHandler
         }
 
         return $articleData;
+    }
+
+    public function createArticle(array $user, string $title, string $body)
+    {
+        $key = makeUniqueKey32();
+        $this->saveToFile($user['id'], $key, $body);
+        $createField = ['title' => $title, 'body' => $key, 'user_id' => $user['id'], 'examine' => 1];
+        $dbArticle = ArticleModel::create($createField);
+        $classification = config('constant.classification.article');
+        event(new ArticleSensitiveEvent($classification, $dbArticle->id));
+
+        return $dbArticle->id;
     }
 
     public function getArticle(int $id, bool $markdown)

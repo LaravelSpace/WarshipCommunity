@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class ArticleController extends ApiControllerAbstract implements ApiResourceInterface
 {
+    public function index(Request $request)
+    {
+        $page = (int)$request->input('page', 1);
+        $result = (new ArticleService())->listArticle($page);
+
+        return $this->response($result);
+    }
+
     public function store(Request $request)
     {
         $title = $request->input('title');
@@ -20,14 +28,6 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
         $result = (new ArticleService())->createArticle($user, $title, $body);
 
         return $this->response(['article_id' => $result]);
-    }
-
-    public function index(Request $request)
-    {
-        $page = (int)$request->input('page', 1);
-        $result = (new ArticleService())->listArticle($page);
-
-        return $this->response($result);
     }
 
     public function show(Request $request, $id)

@@ -24,13 +24,15 @@ class CreateLogRequestTable extends Migration
             $table->string('ip', 32);
             $table->string('client', 32);
             $table->unsignedInteger('client_id');
-            $table->string('uri', 64)->index();
+            $table->string('controller', 64);
+            $table->string('action', 64);
             $table->string('request', 64);
             $table->string('response', 64)->nullable()->default('');
             $table->unsignedInteger('consumption')->nullable()->default(0);
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->nullable();
-            $table->index(['client', 'client_id', 'uri']);
+            $table->index(['controller', 'action']);
+            $table->index(['client', 'client_id', 'controller', 'action']);
         });
         // \Log::debug(\DB::getQueryLog());
     }

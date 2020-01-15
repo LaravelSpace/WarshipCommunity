@@ -7,14 +7,14 @@ use App\Service\Community\Article\Handler\ArticleHandler;
 
 class ArticleService
 {
+    public function listArticle(int $page = 1, int $perPage = 10)
+    {
+        return (new ArticleHandler())->listArticle($page, $perPage);
+    }
+
     public function createArticle(array $user, string $title, string $body)
     {
         return (new ArticleHandler())->createArticle($user, $title, $body);
-    }
-
-    public function listArticle(int $page = 1, int $perPage = 5)
-    {
-        return (new ArticleHandler())->listArticle($page, $perPage);
     }
 
     public function getArticle(int $id, bool $markdown = false)
@@ -32,12 +32,12 @@ class ArticleService
         return (new ArticleHandler())->deleteArticle($id);
     }
 
-    public function createBookmark(array $user, int $id)
+    public function listBookmark(array $user, int $page = 1)
     {
 
     }
 
-    public function listBookmark(array $user, int $page = 1)
+    public function createBookmark(array $user, int $id)
     {
 
     }

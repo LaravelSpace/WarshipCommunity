@@ -57,9 +57,10 @@ class ArticleSensitiveListener
 
     private function iHandleResult(string $classification, int $id, array $result)
     {
-        $examine = 2;
+        $examine = 'approve';
+        $examineTrans = config('field_transform.examine');
         if (count($result) > 0) {
-            $examine = 3;
+            $examine = 'reject';
             $createField = [
                 'classification' => $classification,
                 'target_id'      => $id,
@@ -68,7 +69,7 @@ class ArticleSensitiveListener
             SensitiveResult::create($createField);
         }
         $whereField = ['id' => $id];
-        $updateField = ['examine' => $examine];
+        $updateField = ['examine' => $examineTrans[$examine]];
         switch ($classification) {
             case 'article':
                 ArticleModel::where($whereField)->update($updateField);

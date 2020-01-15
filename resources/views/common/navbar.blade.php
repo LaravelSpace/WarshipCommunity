@@ -34,12 +34,13 @@
                        href="/user/register">注册</a>
                 </li>
             </ul>
-            <ul class="navbar-nav col-md-2" v-else="notLogin">
+            <ul class="navbar-nav col-md-3 justify-content-end" v-else="notLogin">
                 <li class="nav-item mr-md-2">
                     <img src="" :src="avatar" class="rounded" style="width: 40px;height: 40px" alt="40x40">
                 </li>
-                <li class="nav-item dropdown mr-md-2">
-                    <button class="nav-link btn btn-outline-primary dropdown-toggle" id="navbarDropdown" role="button"
+                <li class="nav-item dropdown mr-md-2 btn-group">
+                    <button id="navbarDropdown" role="button" class="nav-link btn btn-outline-primary dropdown-toggle"
+                            style="width: 150px;overflow: hidden"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @{{ name }}
                     </button>

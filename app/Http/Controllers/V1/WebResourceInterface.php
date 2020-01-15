@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 interface WebResourceInterface
 {
-    public function store(Request $request);
+    public function create(Request $request);
 
     public function index(Request $request);
 

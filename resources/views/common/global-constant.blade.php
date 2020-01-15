@@ -46,9 +46,11 @@
         'image': '/api/image',
     };
     const URI_CONFIG = {
+        'create': '/create',
         'store': '/store',
         'edit': '/edit',
         'update': '/update',
+        'delete': '/delete',
         'destroy': '/destroy',
         'comment': '/comment',
     };

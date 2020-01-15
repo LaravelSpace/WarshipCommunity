@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class ArticleController extends WebControllerAbstract implements WebResourceInterface
 {
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        return view('community.article.store');
+        return view('community.article.create');
     }
 
     public function index(Request $request)

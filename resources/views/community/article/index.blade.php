@@ -9,7 +9,7 @@
             <div class="col-md-3">
                 <div class="card text-center">
                     <div class="card-body">
-                        <a class="btn btn-lg btn-outline-success" href="/article/store">创建帖子</a>
+                        <a class="btn btn-lg btn-outline-success" href="/article/create">创建帖子</a>
                     </div>
                 </div>
             </div>

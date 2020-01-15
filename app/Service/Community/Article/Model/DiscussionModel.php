@@ -26,7 +26,7 @@ class DiscussionModel
 
     public function scopePassExamine(Builder $query)
     {
-        $query->where('examine', '=', 2); // 通过敏感词审核
+        $query->where('examine', '=', 1); // 通过敏感词审核
     }
 
     public function scopeNotInBlacklist(Builder $query)

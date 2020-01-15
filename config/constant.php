@@ -5,9 +5,16 @@ return [
     'fail'    => 'fail',
     'error'   => 'error',
 
+    'classification' => [
+        'user'    => 'user',
+        'article' => 'article',
+        'comment' => 'comment',
+    ],
+
     'http' => [
         'method'      => ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
         'status_code' => [200, 400, 403, 404, 418, 422, 500],
+        'get'         => 'GET',
     ],
 
     'route_throttle' => [
@@ -43,11 +50,5 @@ return [
         'storage'        => '/app/public/image/upload/',
         'public'         => '/storage/image/upload/',
         'default_avatar' => '/storage/image/avatar/default_avatar.jpg',
-    ],
-
-    'classification' => [
-        'user'    => 'user',
-        'article' => 'article',
-        'comment' => 'comment',
     ],
 ];

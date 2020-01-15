@@ -15,16 +15,21 @@
 //    return view('welcome');
 //});
 
-Route::namespace('V1\Web')->group(function(){
+Route::namespace('V1\Web')->group(function () {
+    // 根目录
     Route::get('/', 'IndexController@index');
 
-    Route::get('user/register', 'UserController@register');
-    Route::get('user/login', 'UserController@login');
+    Route::prefix('user')->group(function () {
+        Route::get('register', 'UserController@register');
+        Route::get('login', 'UserController@login');
+    });
 
-    Route::get('article', 'ArticleController@index');
-    Route::get('article/store', 'ArticleController@store');
-    Route::get('article/{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
-    Route::get('article/{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
+    Route::prefix('article')->group(function () {
+        Route::get('/', 'ArticleController@index');
+        Route::get('create', 'ArticleController@create');
+        Route::get('{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
+        Route::get('{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
+    });
 });
 
 if (env('APP_DEBUG')) {

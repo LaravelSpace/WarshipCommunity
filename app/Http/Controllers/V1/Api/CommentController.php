@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class CommentController extends ApiControllerAbstract implements ApiResourceInterface
 {
+    public function index(Request $request)
+    {
+        // TODO: Implement index() method.
+    }
+
     public function store(Request $request)
     {
         $articleId = $request->input('article_id');
@@ -19,11 +24,6 @@ class CommentController extends ApiControllerAbstract implements ApiResourceInte
         $result = (new CommentService())->createComment($user, $articleId, $body);
 
         return $this->response(['comment_id' => $result]);
-    }
-
-    public function index(Request $request)
-    {
-        // TODO: Implement index() method.
     }
 
     public function show(Request $request, $id)
