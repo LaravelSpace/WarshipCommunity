@@ -42,7 +42,8 @@ class RequestLogListener
                 'ip'         => $logData['ip'],
                 'client'     => $logData['client'],
                 'client_id'  => $logData['client_id'],
-                'uri'        => $logData['uri'],
+                'controller' => $logData['controller'],
+                'action'     => $logData['action'],
                 'request'    => $logKey,
                 'created_at' => $logData['time']
             ];
@@ -69,7 +70,7 @@ class RequestLogListener
     public function saveToFile(string $logKey, array $logData)
     {
         $dateToday = dateNow();
-        $dirPath = config('constant.file_path.request') . $dateToday . '/';
+        $dirPath = config('constant.file_path.log_request') . $dateToday . '/';
         (new LogService())->saveToFile($dirPath, $logKey, $logData);
     }
 }

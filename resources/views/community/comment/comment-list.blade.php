@@ -57,7 +57,7 @@
                     uri += '?page=' + page;
                 }
                 axios.get(uri).then(function (response) {
-                    thisVue.commentList = response.data.data.comment_list;
+                    thisVue.commentList = response.data.data.list;
                     if (thisVue.commentList.length > 0) {
                         thisVue.vifCommentShow = true;
                     }

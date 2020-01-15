@@ -54,7 +54,7 @@
                     uri += '?page=' + page;
                 }
                 axios.get(uri).then(function (response) {
-                    thisVue.articleList = response.data.data.article_list;
+                    thisVue.articleList = response.data.data.list;
                     if (thisVue.articleList.length > 0) {
                         thisVue.vifArticleShow = true;
                     }

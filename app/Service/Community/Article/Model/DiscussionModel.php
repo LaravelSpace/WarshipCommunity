@@ -5,9 +5,10 @@ namespace App\Service\Community\Article\Model;
 
 use App\Service\User\Model\UserModel;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DiscussionModel
+class DiscussionModel extends Model
 {
     use SoftDeletes;
 
@@ -26,21 +27,23 @@ class DiscussionModel
 
     public function scopePassExamine(Builder $query)
     {
-        $query->where('examine', '=', 1); // 通过敏感词审核
+        // 通过敏感词审核
+        $query->where('examine', '=', 1);
     }
 
     public function scopeNotInBlacklist(Builder $query)
     {
-        $query->where('blacklist', '=', false); // 不在黑名单中
-    }
-
-    public function comment()
-    {
-        return $this->belongsTo(CommentModel::class);
+        // 不在黑名单中
+        $query->where('blacklist', '=', false);
     }
 
     public function user()
     {
         return $this->belongsTo(UserModel::class);
+    }
+
+    public function comment()
+    {
+        return $this->belongsTo(CommentModel::class);
     }
 }

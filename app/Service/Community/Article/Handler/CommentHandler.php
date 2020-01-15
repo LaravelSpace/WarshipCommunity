@@ -8,69 +8,49 @@ use App\Service\Community\Article\Model\CommentModel;
 
 class CommentHandler
 {
-    public function createComment(array $user, string $articleId, string $body)
+    use PaginateTrait;
+
+    public function listComment(string $classification, int $id, int $page, int $perPage)
+    {
+        $whereField = ['article_id' => $id];
+        if ($classification === config('constant.classification.user')) {
+            $whereField = ['user_id' => $id];
+        }
+        $dbPaginate = CommentModel::query()->where($whereField)->passExamine()->notInBlacklist()
+            ->latest()->with('user:id,avatar')->simplePaginate($perPage);
+
+        $resultData = $this->makePaginate(new CommentModel(), $dbPaginate, $perPage, $whereField);
+
+        // 获取内容
+        $listData = [];
+        foreach ($resultData['list'] as $item) {
+            $body = $this->getFromFile($item['user_id'], $item['body']);
+            $item['body'] = $body;
+            $listData[] = $item;
+        }
+        $resultData['list'] = $listData;
+
+        return $resultData;
+    }
+
+    public function createComment(int $userId, string $articleId, string $body)
     {
         $key = makeUniqueKey32();
-        $this->saveToFile($user['id'], $key, $body);
+        $this->saveToFile($userId, $key, $body);
         $whereField = ['article_id' => $articleId];
         $dbCount = CommentModel::where($whereField)->count();
         $createField = [
             'body'          => $key,
             'article_id'    => $articleId,
             'article_floor' => $dbCount + 1,
-            'user_id'       => $user['id'],
-            'examine'       => 1,
+            'user_id'       => $userId,
+            'examine'       => config('field_transform.examine.wait'),
         ];
         $dbComment = CommentModel::create($createField);
         $classification = config('constant.classification.comment');
         event(new ArticleSensitiveEvent($classification, $dbComment->id));
 
         return $dbComment->id;
-    }
-
-    public function listComment(string $classification, int $id, int $page, int $perPage)
-    {
-        $returnData = ['comment_list' => [], 'paginate' => []];
-
-        $whereField = ['article_id' => $id];
-        if ($classification === 'user') {
-            $whereField = ['user_id' => $id];
-        }
-        $dbPaginate = CommentModel::query()->where($whereField)->passExamine()->notInBlacklist()->with('user')->simplePaginate($perPage);
-        if ($dbPaginate->count() > 0) {
-            $dbPaginate = $dbPaginate->toArray();
-            // 获取内容
-            $commentList = [];
-            foreach ($dbPaginate['data'] as $item) {
-                $body = $this->getFromFile($item['user_id'], $item['body']);
-                $item['body'] = $body;
-                $commentList[] = $item;
-            }
-            // 计算分页
-            $prevMinPage = $dbPaginate['current_page'] - 3;
-            $nextMaxPage = $dbPaginate['current_page'] + 4;
-            $pageList = [];
-            $dbCount = CommentModel::query()->where($whereField)->passExamine()->notInBlacklist()->count();
-            $maxPage = (int)($dbCount / $perPage) + 2;
-            $lastPageNum = $dbCount % $perPage;
-            for ($i = $prevMinPage; $i < $nextMaxPage; $i++) {
-                if ($i > 0 && $i < $maxPage) {
-                    $pageList[] = $i;
-                }
-            }
-            $prevPage = ($dbPaginate['current_page'] - 1) > 0 ? $dbPaginate['current_page'] - 1 : '';
-            $nextPage = ($dbPaginate['current_page'] + 1) < $maxPage ? $dbPaginate['current_page'] + 1 : '';
-            $paginate = [
-                'prev_page'     => $prevPage,
-                'current_page'  => $dbPaginate['current_page'],
-                'next_page'     => $nextPage,
-                'page_list'     => $pageList,
-                'last_page_num' => $lastPageNum,
-            ];
-            $returnData = ['comment_list' => $commentList, 'paginate' => $paginate];
-        }
-
-        return $returnData;
     }
 
     /**

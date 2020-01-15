@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'blacklist' => [
         'off' => 0,
         'on'  => 1,

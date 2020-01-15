@@ -12,9 +12,9 @@ class ArticleService
         return (new ArticleHandler())->listArticle($page, $perPage);
     }
 
-    public function createArticle(array $user, string $title, string $body)
+    public function createArticle(int $userId, string $title, string $body)
     {
-        return (new ArticleHandler())->createArticle($user, $title, $body);
+        return (new ArticleHandler())->createArticle($userId, $title, $body);
     }
 
     public function getArticle(int $id, bool $markdown = false)

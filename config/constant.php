@@ -41,7 +41,7 @@ return [
 
     'file_path' => [
         'exception' => '/wsc/temp/log/exception/',
-        'request'   => '/wsc/temp/log/request/',
+        'log_request'   => '/wsc/temp/log/request/',
         'article'   => '/wsc/article/',
         'comment'   => '/wsc/comment/',
     ],

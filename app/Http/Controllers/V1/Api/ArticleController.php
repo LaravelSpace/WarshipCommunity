@@ -23,9 +23,9 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
     {
         $title = $request->input('title');
         $body = $request->input('body');
-        $user = ['id' => config('client_id')];
+        $userId = config('client_id');
 
-        $result = (new ArticleService())->createArticle($user, $title, $body);
+        $result = (new ArticleService())->createArticle($userId, $title, $body);
 
         return $this->response(['article_id' => $result]);
     }
@@ -64,8 +64,9 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
     public function comment(Request $request, $id)
     {
         $page = (int)$request->input('page', 1);
+        $classification = config('constant.classification.article');
 
-        $result = (new CommentService())->listComment('article', $id, $page);
+        $result = (new CommentService())->listComment($classification, $id, $page);
 
         return $this->response($result);
     }

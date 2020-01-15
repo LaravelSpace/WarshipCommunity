@@ -28,21 +28,23 @@ class CommentModel extends Model
 
     public function scopePassExamine(Builder $query)
     {
-        $query->where('examine', '=', 1); // 通过敏感词审核
+        // 通过敏感词审核
+        $query->where('examine', '=', 1);
     }
 
     public function scopeNotInBlacklist(Builder $query)
     {
-        $query->where('blacklist', '=', false); // 不在黑名单中
-    }
-
-    public function article()
-    {
-        return $this->belongsTo(ArticleModel::class);
+        // 不在黑名单中
+        $query->where('blacklist', '=', false);
     }
 
     public function user()
     {
         return $this->belongsTo(UserModel::class);
+    }
+
+    public function article()
+    {
+        return $this->belongsTo(ArticleModel::class);
     }
 }

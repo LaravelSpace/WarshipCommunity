@@ -9,48 +9,26 @@ use Parsedown;
 
 class ArticleHandler
 {
+    use PaginateTrait;
+
     public function listArticle(int $page, int $perPage)
     {
-        $articleData = [
-            'article_list' => [],
-            'paginate'     => [],
-        ];
-        $dbPaginate = ArticleModel::query()->passExamine()->notInBlacklist()->with('user')->simplePaginate($perPage);
-        if ($dbPaginate->count() > 0) {
-            $dbPaginate = $dbPaginate->toArray();
-            // 计算分页
-            $prevMinPage = $dbPaginate['current_page'] - 3;
-            $nextMaxPage = $dbPaginate['current_page'] + 4;
-            $pageList = [];
-            $count = ArticleModel::query()->passExamine()->notInBlacklist()->count();
-            $maxPage = (int)($count / $perPage) + 2;
-            for ($i = $prevMinPage; $i < $nextMaxPage; $i++) {
-                if ($i > 0 && $i < $maxPage) {
-                    $pageList[] = $i;
-                }
-            }
-            $prevPage = ($dbPaginate['current_page'] - 1) > 0 ? $dbPaginate['current_page'] - 1 : '';
-            $nextPage = ($dbPaginate['current_page'] + 1) < $maxPage ? $dbPaginate['current_page'] + 1 : '';
-            $paginate = [
-                'prev_page'    => $prevPage,
-                'current_page' => $dbPaginate['current_page'],
-                'next_page'    => $nextPage,
-                'page_list'    => $pageList,
-            ];
-            $articleData = [
-                'article_list' => $dbPaginate['data'],
-                'paginate'     => $paginate,
-            ];
-        }
+        $dbPaginate = ArticleModel::query()->passExamine()->notInBlacklist()->latest()
+            ->with('user:id,avatar')->simplePaginate($perPage);
 
-        return $articleData;
+        return $this->makePaginate(new ArticleModel(), $dbPaginate, $perPage);
     }
 
-    public function createArticle(array $user, string $title, string $body)
+    public function createArticle(int $userId, string $title, string $body)
     {
         $key = makeUniqueKey32();
-        $this->saveToFile($user['id'], $key, $body);
-        $createField = ['title' => $title, 'body' => $key, 'user_id' => $user['id'], 'examine' => 1];
+        $this->saveToFile($userId, $key, $body);
+        $createField = [
+            'title'   => $title,
+            'body'    => $key,
+            'user_id' => $userId,
+            'examine' => config('field_transform.examine.wait'),
+        ];
         $dbArticle = ArticleModel::create($createField);
         $classification = config('constant.classification.article');
         event(new ArticleSensitiveEvent($classification, $dbArticle->id));
