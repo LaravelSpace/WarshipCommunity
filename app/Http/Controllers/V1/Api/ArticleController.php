@@ -19,6 +19,11 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
         return $this->response($result);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ServiceException
+     */
     public function store(Request $request)
     {
         $title = $request->input('title');
@@ -30,6 +35,12 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
         return $this->response(['article_id' => $result]);
     }
 
+    /**
+     * @param Request $request
+     * @param         $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ServiceException
+     */
     public function show(Request $request, $id)
     {
         $result = (new ArticleService())->getArticle($id, true);
@@ -37,6 +48,12 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
         return $this->response($result);
     }
 
+    /**
+     * @param Request $request
+     * @param         $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ServiceException
+     */
     public function edit(Request $request, $id)
     {
         $result = (new ArticleService())->getArticle($id);

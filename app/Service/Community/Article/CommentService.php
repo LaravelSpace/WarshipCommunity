@@ -12,6 +12,13 @@ class CommentService
         return (new CommentHandler())->listComment($classification, $id, $page, $perPage);
     }
 
+    /**
+     * @param int    $userId
+     * @param string $articleId
+     * @param string $body
+     * @return int|mixed
+     * @throws \App\Exceptions\ServiceException
+     */
     public function createComment(int $userId, string $articleId, string $body)
     {
         return (new CommentHandler())->createComment($userId, $articleId, $body);

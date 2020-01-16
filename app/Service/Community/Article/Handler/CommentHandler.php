@@ -8,8 +8,15 @@ use App\Service\Community\Article\Model\CommentModel;
 
 class CommentHandler
 {
-    use PaginateTrait;
+    use PaginateTrait, FileStorageTrait;
 
+    /**
+     * @param string $classification
+     * @param int    $id
+     * @param int    $page
+     * @param int    $perPage
+     * @return array
+     */
     public function listComment(string $classification, int $id, int $page, int $perPage)
     {
         $whereField = ['article_id' => $id];
@@ -23,20 +30,34 @@ class CommentHandler
 
         // 获取内容
         $listData = [];
+        $commentPath = config('constant.file_path.comment');
         foreach ($resultData['list'] as $item) {
-            $body = $this->getFromFile($item['user_id'], $item['body']);
-            $item['body'] = $body;
-            $listData[] = $item;
+            try {
+                $dirPath = $commentPath . $item['user_id'] . '/';
+                $body = $this->getFromFile($dirPath, $item['body']);
+                $item['body'] = $body;
+                $listData[] = $item;
+            } catch (\Exception $e) {
+                \Log::warning($e->getTraceAsString());
+            }
         }
         $resultData['list'] = $listData;
 
         return $resultData;
     }
 
+    /**
+     * @param int    $userId
+     * @param string $articleId
+     * @param string $body
+     * @return int|mixed
+     * @throws \App\Exceptions\ServiceException
+     */
     public function createComment(int $userId, string $articleId, string $body)
     {
         $key = makeUniqueKey32();
-        $this->saveToFile($userId, $key, $body);
+        $dirPath = config('constant.file_path.comment') . $userId . '/';
+        $this->saveToFile($dirPath, $key, $body);
         $whereField = ['article_id' => $articleId];
         $dbCount = CommentModel::where($whereField)->count();
         $createField = [
@@ -51,49 +72,5 @@ class CommentHandler
         event(new ArticleSensitiveEvent($classification, $dbComment->id));
 
         return $dbComment->id;
-    }
-
-    /**
-     * @param int    $userId
-     * @param string $key
-     * @param string $body
-     */
-    public function saveToFile(int $userId, string $key, string $body)
-    {
-        $fileName = $key . '.txt';
-        // 创建目录
-        try {
-            $dirPath = config('constant.file_path.comment') . $userId . '/';
-            if (!is_dir($dirPath)) {
-                mkdir($dirPath, 0755, true);
-            }
-            // 记录文本
-            $filePath = $dirPath . $fileName;
-            try {
-                file_put_contents($filePath, $body);
-            } catch (\Exception $e) {
-                $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
-                $text = "\nTIME IS:" . dateTimeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
-                file_put_contents($filePath, $text);
-            }
-        } catch (\Exception $e) {
-            $filePath = config('constant.file_path.exception') . $fileName . '.log';
-            $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
-            $text = "\nTIME IS:" . dateTimeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
-            file_put_contents($filePath, $text);
-        }
-    }
-
-    public function getFromFile(int $userId, string $key)
-    {
-        $filePath = config('constant.file_path.comment') . $userId . '/' . $key . '.txt';
-        try {
-            $body = file_get_contents($filePath);
-        } catch (\Exception $e) {
-            $eText = 'ECode=' . $e->getCode() . ',EMessage=' . $e->getMessage();
-            $body = "\nTIME IS:" . dateTimeNow() . "\n{$eText}\n" . $e->getTraceAsString() . "\n";
-        }
-
-        return $body;
     }
 }

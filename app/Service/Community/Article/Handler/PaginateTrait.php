@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 trait PaginateTrait
 {
+    /**
+     * @param Model     $model
+     * @param Paginator $dbPaginate
+     * @param int       $perPage
+     * @param array     $whereField
+     * @return array
+     */
     public function makePaginate(Model $model, Paginator $dbPaginate, int $perPage, array $whereField = [])
     {
         $paginateData = [

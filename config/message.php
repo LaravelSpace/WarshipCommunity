@@ -12,4 +12,8 @@ return [
 
     /* ##### image ##### */
     'image_type_not_exist'  => '不存在该图片类型',
+
+    /* ##### file ##### */
+    'get_from_file_failed'  => '读取失败',
+    'save_to_file_failed'   => '保存失败',
 ];

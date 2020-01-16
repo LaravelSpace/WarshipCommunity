@@ -12,11 +12,24 @@ class ArticleService
         return (new ArticleHandler())->listArticle($page, $perPage);
     }
 
+    /**
+     * @param int    $userId
+     * @param string $title
+     * @param string $body
+     * @return int|mixed
+     * @throws \App\Exceptions\ServiceException
+     */
     public function createArticle(int $userId, string $title, string $body)
     {
         return (new ArticleHandler())->createArticle($userId, $title, $body);
     }
 
+    /**
+     * @param int  $id
+     * @param bool $markdown
+     * @return array
+     * @throws \App\Exceptions\ServiceException
+     */
     public function getArticle(int $id, bool $markdown = false)
     {
         return (new ArticleHandler())->getArticle($id, $markdown);

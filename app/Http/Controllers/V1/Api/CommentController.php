@@ -15,13 +15,18 @@ class CommentController extends ApiControllerAbstract implements ApiResourceInte
         // TODO: Implement index() method.
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ServiceException
+     */
     public function store(Request $request)
     {
         $articleId = $request->input('article_id');
         $body = $request->input('body');
-        $user = ['id' => 4];
+        $userId = config('client_id');
 
-        $result = (new CommentService())->createComment($user, $articleId, $body);
+        $result = (new CommentService())->createComment($userId, $articleId, $body);
 
         return $this->response(['comment_id' => $result]);
     }
