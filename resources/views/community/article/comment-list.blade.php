@@ -11,10 +11,10 @@
                 </h6>
             </div>
             <div class="card-body">
-                <div>@{{ comment.body }}</div>
+                <div v-html="comment.body"></div>
             </div>
         </div>
-        <nav aria-label="article paginate navigation">
+        <nav aria-label="article paginate navigation" v-if="vifPaginateShow">
             <ul class="pagination pagination-lg justify-content-center">
                 <li class="page-item" :class="prevPage">
                     <button class="page-link" aria-label="Previous" @click="getCommentList(paginate.prev_page)">
@@ -62,7 +62,7 @@
                         thisVue.vifCommentShow = true;
                     }
                     thisVue.paginate = response.data.data.paginate;
-                    if (thisVue.paginate.page_list.length > 0) {
+                    if (thisVue.paginate.length > 0 && thisVue.paginate.page_list.length > 0) {
                         thisVue.vifPaginateShow = true;
                     }
                 });

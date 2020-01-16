@@ -5,6 +5,7 @@ namespace App\Service\Community\Article\Handler;
 
 use App\Events\Community\ArticleSensitiveEvent;
 use App\Service\Community\Article\Model\CommentModel;
+use Parsedown;
 
 class CommentHandler
 {
@@ -35,7 +36,7 @@ class CommentHandler
             try {
                 $dirPath = $commentPath . $item['user_id'] . '/';
                 $body = $this->getFromFile($dirPath, $item['body']);
-                $item['body'] = $body;
+                $item['body'] = (new Parsedown())->text($body);;
                 $listData[] = $item;
             } catch (\Exception $e) {
                 \Log::warning($e->getTraceAsString());

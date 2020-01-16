@@ -26,5 +26,5 @@
         </div>
     </div>
     @include('community.article.article-data')
-    @include('common.cropper')
+    @include('community.article.cropper')
 @endsection
