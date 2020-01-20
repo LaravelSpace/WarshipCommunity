@@ -45,12 +45,12 @@ class ArticleService
         return (new ArticleHandler())->deleteArticle($id);
     }
 
-    public function createStar()
+    public function createStar(array $user, int $id)
     {
 
     }
 
-    public function deleteStar()
+    public function deleteStar(array $user, int $id)
     {
 
     }
@@ -58,6 +58,10 @@ class ArticleService
     public function listBookmark(array $user, int $page = 1)
     {
 
+    }
+
+    public function getBookmark()
+    {
     }
 
     public function createBookmark(array $user, int $id)

@@ -3,12 +3,12 @@
         <hr class="my-4">
         <div class="card border-info" style="margin: 10px 0" v-for="comment in commentList">
             <div class="card-header">
-                <h6>
+                <h5>
                     <img class="rounded-circle mr-3" style="width: 30px; height: 30px"
                          src="" :src="comment.user.avatar" alt="" :alt="comment.user.name">
                     @{{ comment.user.name }}
                     <span class="badge badge-light"># @{{ comment.article_floor }}</span>
-                </h6>
+                </h5>
             </div>
             <div class="card-body">
                 <div v-html="comment.body"></div>

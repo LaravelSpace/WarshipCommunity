@@ -2,9 +2,9 @@
     <div class="card border-primary">
         <div class="card-body">
             <div>
-                <div style="max-width:30%;margin:0 1.66%;float:left" v-for="image in imageList">
-                    <img style="max-width:100%;" src="" :src="image.url"
-                         data-toggle="popover" title="图片路径" data-content="" :data-content="image.url">
+                <div style="max-width:30%;margin:5px 1.66%;float:left" v-for="image in imageList">
+                    <img style="max-width:100%;" src="" :src="image.url" data-toggle="popover"
+                         title="图片路径" data-content="" :data-content="image.url">
                 </div>
             </div>
             <div id="image-cropper" role="dialog" class="modal fade" tabindex="-1"
