@@ -18,6 +18,6 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        return redirect('/');
+        dd(1);
     }
 }

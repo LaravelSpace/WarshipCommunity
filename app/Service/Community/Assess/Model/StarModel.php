@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Service\Community\Article\Model;
+namespace App\Service\Community\Assess\Model;
 
 
 use Illuminate\Database\Eloquent\Model;
 
-class BookmarkModel extends Model
+class StarModel extends Model
 {
     protected $connection = 'mysql';
 
-    protected $table = 'bookmark';
+    protected $table = 'star';
 
     protected $fillable = [
         'user_id',

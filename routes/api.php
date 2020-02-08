@@ -44,6 +44,10 @@ Route::namespace('V1\Api')->group(function () {
         Route::delete('{id}/destroy', 'ArticleController@destroy')->where('id', '[1-9]+\d*');
         // 获取帖子的评论列表
         Route::get('{id}/comment', 'ArticleController@comment')->where('id', '[1-9]+\d*');
+        // 对帖子添加或者移除星标
+        Route::post('{id}/star', 'ArticleController@star')->where('id', '[1-9]+\d*');
+        // 对帖子添加或者移除收藏
+        Route::post('{id}/bookmark', 'ArticleController@bookmark')->where('id', '[1-9]+\d*');
     });
 
     Route::prefix('comment')->group(function () {
@@ -62,7 +66,7 @@ Route::namespace('V1\Api')->group(function () {
     });
 
     Route::prefix('image')->group(function () {
-        // 获取图片列表
+        // 获取用户图片列表
         Route::post('user', 'ImageController@listUserImage');
         // 上传图片
         Route::post('store', 'ImageController@store');

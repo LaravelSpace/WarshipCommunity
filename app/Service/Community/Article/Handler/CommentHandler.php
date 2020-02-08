@@ -25,7 +25,7 @@ class CommentHandler
             $whereField = ['user_id' => $id];
         }
         $dbPaginate = CommentModel::query()->where($whereField)->passExamine()->notInBlacklist()
-            ->latest()->with('user:id,name,avatar')->simplePaginate($perPage);
+            ->with('user:id,name,avatar')->simplePaginate($perPage);
 
         $resultData = $this->makePaginate(new CommentModel(), $dbPaginate, $perPage, $whereField);
 

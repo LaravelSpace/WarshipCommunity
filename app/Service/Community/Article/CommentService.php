@@ -7,7 +7,7 @@ use App\Service\Community\Article\Handler\CommentHandler;
 
 class CommentService
 {
-    public function listComment(string $classification, int $id, int $page = 1, int $perPage = 5)
+    public function listComment(string $classification, int $id, int $page = 1, int $perPage = 10)
     {
         return (new CommentHandler())->listComment($classification, $id, $page, $perPage);
     }

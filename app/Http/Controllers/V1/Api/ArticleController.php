@@ -83,8 +83,12 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
         $page = (int)$request->input('page', 1);
         $classification = config('constant.classification.article');
 
-        $result = (new CommentService())->listComment($classification, $id, $page, true);
+        $result = (new CommentService())->listComment($classification, $id, $page);
 
         return $this->response($result);
+    }
+
+    public function star(Request $request, $id){
+
     }
 }

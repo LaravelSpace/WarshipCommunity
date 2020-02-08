@@ -5,6 +5,8 @@ namespace App\Service\User\Handler;
 
 class JWTHandler
 {
+    // 未使用 JWT
+
     /**
      * @param int $userId
      * @return string

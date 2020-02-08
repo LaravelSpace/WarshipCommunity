@@ -44,33 +44,4 @@ class ArticleService
     {
         return (new ArticleHandler())->deleteArticle($id);
     }
-
-    public function createStar(array $user, int $id)
-    {
-
-    }
-
-    public function deleteStar(array $user, int $id)
-    {
-
-    }
-
-    public function listBookmark(array $user, int $page = 1)
-    {
-
-    }
-
-    public function getBookmark()
-    {
-    }
-
-    public function createBookmark(array $user, int $id)
-    {
-
-    }
-
-    public function deleteBookmark(array $user, int $id)
-    {
-
-    }
 }

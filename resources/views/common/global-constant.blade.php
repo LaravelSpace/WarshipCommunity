@@ -43,6 +43,7 @@
         },
         'article': '/api/article',
         'comment': '/api/comment',
+        'star':'/api/star',
         'image': '/api/image',
     };
     const URI_CONFIG = {
