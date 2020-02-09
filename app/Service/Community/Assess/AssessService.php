@@ -47,6 +47,17 @@ class AssessService
         return ['star' => false];
     }
 
+    public function updateTargetStar(string $classification, int $targetId, bool $isCreate)
+    {
+        if ($classification === config('constant.classification.article')) {
+            if ($isCreate) {
+                ArticleModel::where('id', '=', $targetId)->increment('star_num', 1);
+            } else {
+                ArticleModel::where('id', '=', $targetId)->decrement('star_num', 1);
+            }
+        }
+    }
+
     public function bookmarkToggle($userId, $classification, $id)
     {
         $classificationArr = config('constant.classification');
@@ -65,17 +76,6 @@ class AssessService
         $this->updateTargetBookmark($classification, $id, false);
 
         return ['bookmark' => false];
-    }
-
-    public function updateTargetStar(string $classification, int $targetId, bool $isCreate)
-    {
-        if ($classification === config('constant.classification.article')) {
-            if ($isCreate) {
-                ArticleModel::where('id', '=', $targetId)->increment('star_num', 1);
-            } else {
-                ArticleModel::where('id', '=', $targetId)->decrement('star_num', 1);
-            }
-        }
     }
 
     public function updateTargetBookmark(string $classification, int $targetId, bool $isCreate)

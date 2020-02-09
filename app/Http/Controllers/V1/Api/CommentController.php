@@ -8,7 +8,7 @@ use App\Http\Controllers\V1\ApiResourceInterface;
 use App\Service\Community\Article\CommentService;
 use Illuminate\Http\Request;
 
-class CommentController extends ApiControllerAbstract implements ApiResourceInterface
+class CommentController extends ApiControllerAbstract
 {
     public function index(Request $request)
     {

@@ -43,6 +43,7 @@
         },
         'article': '/api/article',
         'comment': '/api/comment',
+        'discussion': '/api/discussion',
         'image': '/api/image',
         'assess': '/api/assess',
     };

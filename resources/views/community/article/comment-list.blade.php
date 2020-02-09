@@ -13,6 +13,12 @@
             <div class="card-body">
                 <div v-html="comment.body"></div>
             </div>
+            <div class="card-footer">
+                <div class="form-inline">
+                    <input :id="'discussion-'+comment.id" class="form-control" placeholder="最大输入 128 字">
+                    <button class="btn btn-outline-success" @click="discussionCreate(comment.id)">评论</button>
+                </div>
+            </div>
         </div>
         <nav aria-label="article paginate navigation" v-if="vifPaginateShow">
             <ul class="pagination pagination-lg justify-content-center">
@@ -38,12 +44,15 @@
 <script>
     Vue.component("comment-list", {
         template: "#template-comment-list",
-        props: ['article_id'],
+        props: ["article_id"],
         data: function () {
             return {
                 articleId: this.article_id,
-                commentList: [], vifCommentShow: false,
-                paginate: [], vifPaginateShow: false
+                commentList: [],
+                vifCommentShow: false,
+                paginate: [],
+                vifPaginateShow: false,
+                discussionList: []
             }
         },
         created: function () {
@@ -60,12 +69,29 @@
                     thisVue.commentList = response.data.data.list;
                     if (thisVue.commentList.length > 0) {
                         thisVue.vifCommentShow = true;
+                        thisVue.getDiscussionList();
                     }
                     thisVue.paginate = response.data.data.paginate;
                     if (thisVue.paginate.length > 0 && thisVue.paginate.page_list.length > 0) {
                         thisVue.vifPaginateShow = true;
                     }
                 });
+            },
+            discussionCreate: function (commentId) {
+                let thisVue = this;
+                let eDiscussion = document.getElementById('discussion-' + commentId);
+                let discussionText = eDiscussion.value;
+                let uri = URI_API.discussion + URI_CONFIG.create;
+                axios.post(uri, {'body': discussionText, 'comment_id': commentId}).then(function (response) {
+
+                });
+            },
+            getDiscussionList: function () {
+                let commentIdStr = '';
+                for (let i = 0; i < this.commentList.length - 1; i++) {
+                    commentIdStr += this.commentList[i].id + ','
+                }
+                commentIdStr += this.commentList[this.commentList.length - 1].id;
             }
         },
         computed: {

@@ -76,4 +76,8 @@ Route::namespace('V1\Api')->group(function () {
         // 收藏状态切换
         Route::post('/bookmark/toggle', 'AssessController@bookmarkToggle');
     });
+
+    Route::prefix('discussion')->group(function () {
+        Route::post('/create', 'DiscussionController@create');
+    });
 });
