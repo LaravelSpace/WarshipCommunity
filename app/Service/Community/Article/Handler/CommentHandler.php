@@ -24,7 +24,7 @@ class CommentHandler
         if ($classification === config('constant.classification.user')) {
             $whereField = ['user_id' => $id];
         }
-        $dbPaginate = CommentModel::query()->where($whereField)->passExamine()->notInBlacklist()
+        $dbPaginate = CommentModel::where($whereField)->passExamine()->notInBlacklist()
             ->with('user:id,name,avatar')->simplePaginate($perPage);
 
         $resultData = $this->makePaginate(new CommentModel(), $dbPaginate, $perPage, $whereField);

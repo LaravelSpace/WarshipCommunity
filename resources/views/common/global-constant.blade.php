@@ -43,8 +43,8 @@
         },
         'article': '/api/article',
         'comment': '/api/comment',
-        'star':'/api/star',
         'image': '/api/image',
+        'assess': '/api/assess',
     };
     const URI_CONFIG = {
         'create': '/create',
@@ -54,5 +54,8 @@
         'delete': '/delete',
         'destroy': '/destroy',
         'comment': '/comment',
+        'star': '/star',
+        'bookmark': '/bookmark',
+        'toggle': '/toggle',
     };
 </script>

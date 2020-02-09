@@ -7,6 +7,7 @@ use App\Http\Controllers\V1\ApiControllerAbstract;
 use App\Http\Controllers\V1\ApiResourceInterface;
 use App\Service\Community\Article\ArticleService;
 use App\Service\Community\Article\CommentService;
+use App\Service\Community\Assess\StarService;
 use Illuminate\Http\Request;
 
 class ArticleController extends ApiControllerAbstract implements ApiResourceInterface
@@ -86,9 +87,5 @@ class ArticleController extends ApiControllerAbstract implements ApiResourceInte
         $result = (new CommentService())->listComment($classification, $id, $page);
 
         return $this->response($result);
-    }
-
-    public function star(Request $request, $id){
-
     }
 }

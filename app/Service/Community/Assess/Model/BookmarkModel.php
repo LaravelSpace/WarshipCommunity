@@ -16,4 +16,6 @@ class BookmarkModel extends Model
         'classification',
         'target_id',
     ];
+
+    public $timestamps = false;
 }

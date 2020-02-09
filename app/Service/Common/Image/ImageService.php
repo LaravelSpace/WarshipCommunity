@@ -16,7 +16,7 @@ class ImageService
      */
     public function listImage(array $user)
     {
-        $dbImageList = ImageModel::query()->where(['user_id' => $user['id'], 'image_type' => 'upload'])->get();
+        $dbImageList = ImageModel::where(['user_id' => $user['id'], 'image_type' => 'upload'])->get();
         $imageList = [];
         foreach ($dbImageList as $item) {
             $imageList[] = [

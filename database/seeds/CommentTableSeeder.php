@@ -34,7 +34,7 @@ class CommentTableSeeder extends Seeder
                 $articleFloor = $articleFloorList[$listKey];
             } else {
                 $whereField = ['article_id' => $articleId];
-                $articleFloorList[$listKey] = CommentModel::query()->where($whereField)->count();
+                $articleFloorList[$listKey] = CommentModel::where($whereField)->count();
                 $articleFloorList[$listKey] += 1;
                 $articleFloor = $articleFloorList[$listKey];
             }

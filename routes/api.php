@@ -44,10 +44,6 @@ Route::namespace('V1\Api')->group(function () {
         Route::delete('{id}/destroy', 'ArticleController@destroy')->where('id', '[1-9]+\d*');
         // 获取帖子的评论列表
         Route::get('{id}/comment', 'ArticleController@comment')->where('id', '[1-9]+\d*');
-        // 对帖子添加或者移除星标
-        Route::post('{id}/star', 'ArticleController@star')->where('id', '[1-9]+\d*');
-        // 对帖子添加或者移除收藏
-        Route::post('{id}/bookmark', 'ArticleController@bookmark')->where('id', '[1-9]+\d*');
     });
 
     Route::prefix('comment')->group(function () {
@@ -70,5 +66,14 @@ Route::namespace('V1\Api')->group(function () {
         Route::post('user', 'ImageController@listUserImage');
         // 上传图片
         Route::post('store', 'ImageController@store');
+    });
+
+    Route::prefix('assess')->group(function () {
+        // 获取用户星标和收藏状态
+        Route::get('/', 'AssessController@getAssess');
+        // 星标状态切换
+        Route::post('/star/toggle', 'AssessController@starToggle');
+        // 收藏状态切换
+        Route::post('/bookmark/toggle', 'AssessController@bookmarkToggle');
     });
 });

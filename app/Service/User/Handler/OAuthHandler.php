@@ -62,7 +62,7 @@ class OAuthHandler
             renderServiceException('access_token_invalid', 403);
         }
 
-        $dbUser = UserModel::query()->where('id', '=', $clientId)->first();
+        $dbUser = UserModel::where('id', '=', $clientId)->first();
         if ($dbUser === null) {
             renderServiceException('user_not_exist');
         }

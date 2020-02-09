@@ -24,7 +24,7 @@ class ImageHandler
         }
         file_put_contents($dirPath . $imageName, base64_decode($image));
         $createField = ['name' => $imageName, 'image_type' => 'upload', 'user_id' => $user['id']];
-        $dbImage = ImageModel::query()->create($createField);
+        $dbImage = ImageModel::create($createField);
 
         return [
             'id'  => $dbImage->id,

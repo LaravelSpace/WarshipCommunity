@@ -13,7 +13,7 @@ class ArticleHandler
 
     public function listArticle(int $page, int $perPage)
     {
-        $dbPaginate = ArticleModel::query()->passExamine()->notInBlacklist()->latest()
+        $dbPaginate = ArticleModel::passExamine()->notInBlacklist()->latest()
             ->with('user:id,avatar')->simplePaginate($perPage);
 
         return $this->makePaginate(new ArticleModel(), $dbPaginate, $perPage);

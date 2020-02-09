@@ -16,4 +16,6 @@ class StarModel extends Model
         'classification',
         'target_id',
     ];
+
+    public $timestamps = false;
 }

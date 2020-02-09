@@ -13,14 +13,14 @@
             <div v-html="articleItem.body"></div>
         </div>
         <div class="card-footer">
-            <button class="btn btn-primary" @click="articleStar()">星标</button>
-            <button class="btn btn-primary">收藏</button>
+            <button class="" :class="starClass" @click="articleStar()">星标</button>
+            <button class="" :class="bookmarkClass" @click="articleBookmark()">收藏</button>
         </div>
     </div>
 </template>
 <script>
     Vue.component("article-item", {
-        props: ['article_id'],
+        props: ["article_id"],
         template: "#template-article-item",
         data: function () {
             return {
@@ -29,12 +29,17 @@
                 editUrl: 'javascript:void(0);',
                 deleteUrl: 'javascript:void(0);',
                 vifArticleShow: false,
+                isStar: false,
+                isBookmark: false,
             }
         },
         created: function () {
             this.getArticleItem();
             this.editUrl = URI_WEB.article + '/' + this.articleId + URI_CONFIG.edit;
             this.deleteUrl = URI_API.article + '/' + this.articleId + URI_CONFIG.destroy;
+            if (getUserId()) {
+                this.getAssess('article', this.articleId);
+            }
         },
         methods: {
             getArticleItem: function () {
@@ -47,13 +52,52 @@
                     }
                 });
             },
-            articleStar:function(){
-                axios.post(uri).then(function (response) {
-                    thisVue.articleItem = response.data.data;
-                    if (thisVue.articleItem !== null && thisVue.articleItem !== '') {
-                        thisVue.vifArticleShow = true;
+            getAssess: function (classification, idStr) {
+                let thisVue = this;
+                let uri = URI_API.assess;
+                axios.get(uri, {
+                    'params': {
+                        'classification': classification,
+                        'id_str': idStr
                     }
+                }).then(function (response) {
+                    thisVue.isStar = response.data.data.star;
+                    thisVue.isBookmark = response.data.data.bookmark;
                 });
+            },
+            articleStar: function () {
+                let thisVue = this;
+                let uri = URI_API.assess + URI_CONFIG.star + URI_CONFIG.toggle;
+                axios.post(uri, {
+                    'classification': 'article',
+                    'id': this.articleId
+                }).then(function (response) {
+                    thisVue.isStar = response.data.data.star;
+                });
+            },
+            articleBookmark: function () {
+                let thisVue = this;
+                let uri = URI_API.assess + URI_CONFIG.bookmark + URI_CONFIG.toggle;
+                axios.post(uri, {
+                    'classification': 'article',
+                    'id': this.articleId
+                }).then(function (response) {
+                    thisVue.isBookmark = response.data.data.bookmark;
+                });
+            }
+        },
+        computed: {
+            starClass: function () {
+                if (this.isStar) {
+                    return "btn btn-success";
+                }
+                return "btn btn-primary";
+            },
+            bookmarkClass: function () {
+                if (this.isBookmark) {
+                    return "btn btn-success";
+                }
+                return "btn btn-primary";
             }
         }
     });

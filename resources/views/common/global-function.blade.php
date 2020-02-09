@@ -21,4 +21,13 @@
         }
         return '';
     }
+
+    // 获取用户 ID
+    function getUserId() {
+        let userId = localStorage.getItem("user_id");
+        if (userId !== null && userId !== "") {
+            return userId;
+        }
+        return false;
+    }
 </script>
