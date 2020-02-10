@@ -1,6 +1,6 @@
 <script>
     // 为所有的 Axios 请求添加 headers
-    let axiosHeaders = {};
+    let axiosHeaders = [];
     let csrfToken = document.head.querySelector('meta[name="csrf-token"]');
     if (csrfToken !== null && csrfToken !== "") {
         axiosHeaders["X-CSRF-TOKEN"] = csrfToken.content;
@@ -8,10 +8,11 @@
         console.error("CSRF token not found");
     }
 
+    // Axios 拦截器
     axios.interceptors.request.use(function (config) {
         // 在发送请求之前做些什么
-        let wscToken = localStorage.getItem("wsc_token");
-        if (wscToken !== null && wscToken !== "") {
+        let wscToken = gGetWscToken();
+        if (wscToken !== "") {
             axiosHeaders["Authorization"] = wscToken
         }
         config.headers = axiosHeaders;
@@ -19,6 +20,8 @@
         return config;
     }, function (error) {
         // 对请求错误做些什么
+        console.error(error);
+
         return Promise.reject(error);
     });
 
@@ -27,8 +30,7 @@
         return response;
     }, function (error) {
         // 对响应错误做点什么
-        console.debug(error);
-        // alert(error.response.data.message);
+        console.error(error);
 
         return Promise.reject(error);
     });

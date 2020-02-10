@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class ArticleController extends ApiControllerAbstract
 {
-    public function index(Request $request)
+    public function listArticle(Request $request)
     {
         $page = (int)$request->input('page', 1);
         $result = (new ArticleService())->listArticle($page);
@@ -24,7 +24,7 @@ class ArticleController extends ApiControllerAbstract
      * @return \Illuminate\Http\JsonResponse
      * @throws \App\Exceptions\ServiceException
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $title = $request->input('title');
         $body = $request->input('body');
@@ -71,20 +71,10 @@ class ArticleController extends ApiControllerAbstract
         return $this->response(['article_id' => $result]);
     }
 
-    public function destroy(Request $request, $id)
+    public function delete(Request $request, $id)
     {
         $result = (new ArticleService())->deleteArticle($id);
 
         return $this->response(['article_id' => $result]);
-    }
-
-    public function comment(Request $request, $id)
-    {
-        $page = (int)$request->input('page', 1);
-        $classification = config('constant.classification.article');
-
-        $result = (new CommentService())->listComment($classification, $id, $page);
-
-        return $this->response($result);
     }
 }

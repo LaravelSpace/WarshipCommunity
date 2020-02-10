@@ -1,12 +1,12 @@
 <script>
-    const STATUS = {
+    const STATUS_WSC = {
         'success': 'success',
         'fail': 'fail',
         'error': 'error',
     };
 
     // 正则校验规则
-    const REG = {
+    const REG_WSC = {
         // 昵称，2~16 位的中文字符，英文字符，数字以及下划线
         'name': new RegExp(/^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9_-]){2,16}$/),
         // 邮箱地址
@@ -31,8 +31,6 @@
             'register': '/user/register',
             'login': '/user/login',
         },
-        'role': '/role',
-        'permission': '/permission',
         'article': '/article',
     };
     const URI_API = {
@@ -49,14 +47,17 @@
     };
     const URI_CONFIG = {
         'create': '/create',
-        'store': '/store',
         'edit': '/edit',
         'update': '/update',
         'delete': '/delete',
-        'destroy': '/destroy',
-        'comment': '/comment',
+        'user': '/user',
         'star': '/star',
         'bookmark': '/bookmark',
         'toggle': '/toggle',
     };
+
+    const CLASSIFICATION_WSC = {
+        'create': 'create',
+        'update': 'update',
+    }
 </script>

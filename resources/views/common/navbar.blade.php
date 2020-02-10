@@ -60,15 +60,15 @@
         data: function () {
             return {
                 notLogin: true,
-                userId: '',
-                name: '',
-                avatar: '',
+                userId: 0,
+                name: "",
+                avatar: "",
             }
         },
         created: function () {
             let thisVue = this;
-            axios.post('/api/user/login_check').then(function (response) {
-                if (response.data.status === STATUS.success) {
+            axios.post(URI_API.user.login_check).then(function (response) {
+                if (response.data.status === STATUS_WSC.success) {
                     thisVue.notLogin = false;
                     thisVue.userId = response.data.data.user_id;
                     thisVue.name = response.data.data.name;
@@ -78,11 +78,6 @@
         },
         methods: {
             logout: function () {
-                // axios.get(COMMUNITY_URL.users_sign_out).then(function (response) {
-                //     if (response.data.status === STATUS_SUCCESS) {
-                //         window.location.reload();
-                //     }
-                // });
             }
         }
     });

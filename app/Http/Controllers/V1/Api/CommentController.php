@@ -10,9 +10,15 @@ use Illuminate\Http\Request;
 
 class CommentController extends ApiControllerAbstract
 {
-    public function index(Request $request)
+    public function listComment(Request $request)
     {
-        // TODO: Implement index() method.
+        $classification = $request->input('$classification');
+        $targetId = $request->input('target_id');
+        $page = (int)$request->input('page', 1);
+
+        $result = (new CommentService())->listComment($classification, $targetId, $page);
+
+        return $this->response($result);
     }
 
     /**
@@ -20,7 +26,7 @@ class CommentController extends ApiControllerAbstract
      * @return \Illuminate\Http\JsonResponse
      * @throws \App\Exceptions\ServiceException
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $articleId = $request->input('article_id');
         $body = $request->input('body');
@@ -46,7 +52,7 @@ class CommentController extends ApiControllerAbstract
         // TODO: Implement update() method.
     }
 
-    public function destroy(Request $request, $id)
+    public function delete(Request $request, $id)
     {
         // TODO: Implement destroy() method.
     }

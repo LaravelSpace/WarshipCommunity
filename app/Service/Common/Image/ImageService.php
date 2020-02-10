@@ -11,12 +11,12 @@ class ImageService
     /**
      * 获取图片列表
      *
-     * @param array $user
+     * @param int $userId
      * @return array
      */
-    public function listImage(array $user)
+    public function listImage(int $userId)
     {
-        $dbImageList = ImageModel::where(['user_id' => $user['id'], 'image_type' => 'upload'])->get();
+        $dbImageList = ImageModel::where(['user_id' => $userId, 'image_type' => 'upload'])->get();
         $imageList = [];
         foreach ($dbImageList as $item) {
             $imageList[] = [
@@ -30,16 +30,16 @@ class ImageService
     /**
      * 生成图片
      *
-     * @param array  $user
+     * @param int    $userId
      * @param        $imageFile
      * @param string $imageType
      * @return array
      * @throws \App\Exceptions\ValidateException
      */
-    public function createImage(array $user, $imageFile, string $imageType)
+    public function createImage(int $userId, $imageFile, string $imageType)
     {
         if ($imageType === 'base64') {
-            return (new ImageHandler())->createImageBase64($user, $imageFile);
+            return (new ImageHandler())->createImageBase64($userId, $imageFile);
         } else {
             renderValidateException('image_type_not_exist');
         }

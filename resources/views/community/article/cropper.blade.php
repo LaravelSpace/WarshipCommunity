@@ -61,11 +61,14 @@
         },
         created: function () {
             let thisVue = this;
-            axios.post("/api/image/user", {"user_id": 4}).then(function (response) {
-                if (response.data.status === STATUS.success) {
-                    thisVue.imageList = response.data.data;
-                }
-            });
+            let userId = gGetUserId();
+            if (userId !== 0) {
+                axios.post(URI_API.image + URI_CONFIG.user).then(function (response) {
+                    if (response.data.status === STATUS_WSC.success) {
+                        thisVue.imageList = response.data.data;
+                    }
+                });
+            }
         },
         methods: {
             showModal: function () {
@@ -73,6 +76,8 @@
                 this.initModal();
             },
             initModal: function () {
+                let thisVue = this;
+
                 this.eBtnChooseImage = document.getElementById("btn-choose-image");
                 this.eInputImage = document.getElementById("input-image");
                 this.eCropperImage = document.getElementById("cropper-image");
@@ -85,10 +90,8 @@
                 this.eBtnChooseImage.onclick = this.chooseImage;
                 this.eInputImage.onchange = this.inputImageChanged;
 
-                let thisVue = this;
                 this.cropper = new Cropper(thisVue.eCropperImage, {
                     viewMode: 1,
-                    aspectRatio: 1,
                     crop: function (event) {
                         thisVue.cropImage();
                     },
@@ -115,11 +118,11 @@
             uploadImage: function (event) {
                 let croppedCanvas = this.cropper.getCroppedCanvas();
                 let croppedImageBase64 = croppedCanvas.toDataURL("image/jpeg");
-                axios.post(URI_API.image + URI_CONFIG.store, {
+                axios.post(URI_API.image + URI_CONFIG.create, {
                     "image_type": "base64",
                     "image_file": croppedImageBase64
                 }).then(function (response) {
-                    if (response.data.status === STATUS.success) {
+                    if (response.data.status === STATUS_WSC.success) {
                         $('#image-cropper').modal("close");
                     }
                 });

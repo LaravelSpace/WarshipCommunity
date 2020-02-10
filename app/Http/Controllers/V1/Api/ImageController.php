@@ -14,23 +14,22 @@ class ImageController extends ApiControllerAbstract
      * @return \Illuminate\Http\JsonResponse
      * @throws \App\Exceptions\ValidateException
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $imageFile = $request->input('image_file');
         $imageType = $request->input('image_type');
-        $user = ['id' => 4];
+        $userId = config('client_id');
 
-        $result = (new ImageService())->createImage($user, $imageFile, $imageType);
+        $result = (new ImageService())->createImage($userId, $imageFile, $imageType);
 
         return $this->response($result);
     }
 
     public function listUserImage(Request $request)
     {
-        $userId = $request->input('user_id');
-        $user = ['id' => $userId];
+        $userId = config('client_id');
 
-        $result = (new ImageService())->listImage($user);
+        $result = (new ImageService())->listImage($userId);
 
         return $this->response($result);
     }

@@ -27,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
                         } else {
                             if (is_string($binding)) {
                                 $query->bindings[$i] = "'$binding'";
+                            } else if ($binding === false) {
+                                $query->bindings[$i] = "false";
                             }
                         }
                     }
