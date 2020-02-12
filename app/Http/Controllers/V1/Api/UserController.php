@@ -56,7 +56,7 @@ class UserController extends ApiControllerAbstract
      */
     public function loginCheck(Request $request)
     {
-        $authorization = $request->header('Authorization', '');
+        $authorization = $request->header('authorization', '');
 
         $result = (new UserService())->tokenCheck($authorization);
 

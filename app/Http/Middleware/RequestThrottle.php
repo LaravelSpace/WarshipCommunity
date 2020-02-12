@@ -14,8 +14,8 @@ class RequestThrottle
         // 从 header 获取认证信息
         $client = 'web_user';
         $clientId = 998;
-        $authorization = $request->header('Authorization', '');
-        if ($authorization !== '' && is_string($authorization)) {
+        $authorization = $request->header('authorization', '');
+        if (is_string($authorization && $authorization !== '')) {
             list($clientStr, $authStr) = explode(':', $authorization);
             list($client, $clientId) = explode(' ', $clientStr);
         }

@@ -17,8 +17,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         if (env('APP_ENV') !== 'production') {
+            // 监听查询
             \DB::listen(function ($query) {
-                // 监听查询
                 try {
                     // 格式化查询的参数
                     foreach ($query->bindings as $i => $binding) {
@@ -35,7 +35,6 @@ class AppServiceProvider extends ServiceProvider
                     // 将参数拼装到 SQL 语句
                     $sqlStr = str_replace(['%', '?'], ['%%', '%s'], $query->sql);
                     $sqlStr = vsprintf($sqlStr, $query->bindings);
-
                     // 记录日志
                     // 用日期分割日志
                     $logFileName = 'sql_' . date('Y-m-d') . '.log';
@@ -70,6 +69,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // 非生产环境加载 IdeHelper
         if (env('APP_ENV') !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }

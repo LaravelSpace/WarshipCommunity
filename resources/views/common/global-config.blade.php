@@ -1,11 +1,15 @@
 <script>
     // 为所有的 Axios 请求添加 headers
-    let axiosHeaders = [];
-    let csrfToken = document.head.querySelector('meta[name="csrf-token"]');
-    if (csrfToken !== null && csrfToken !== "") {
-        axiosHeaders["X-CSRF-TOKEN"] = csrfToken.content;
+    // 这里要定义成对象(axios.config.headers)
+    let axiosHeaders = {};
+
+    // 获取 X-CSRF-TOKEN
+    let eCsrfToken = document.head.querySelector('meta[name="csrf-token"]');
+    let csrfToken = eCsrfToken.content;
+    if (!gIsEmpty(csrfToken)) {
+        axiosHeaders["X-CSRF-TOKEN"] = csrfToken;
     } else {
-        console.error("CSRF token not found");
+        console.error("CSRF-TOKEN not found");
     }
 
     // Axios 拦截器
