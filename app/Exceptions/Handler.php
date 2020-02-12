@@ -6,6 +6,7 @@ use App\Http\Controllers\V1\ResponseTrait;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -58,14 +59,19 @@ class Handler extends ExceptionHandler
             return $this->response(['trace' => $trace[0]], $status, $exception->getCode(), $exception->getMessage());
         }
 
+        // 访问不存在的路由，将返回 404
+        if ($exception instanceof NotFoundHttpException) {
+            return $this->response(['trace' => $trace[0]], $status, 404, $exception->getMessage());
+        }
+
+        // 访问路由不存在的方法(GET,POST...)，将返回 404
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return $this->response(['trace' => $trace[0]], $status, 404, $exception->getMessage());
+        }
+
         // 异常报错，返回 500
         if ($exception instanceof Exception) {
             return $this->response(['trace' => $trace[0]], $status, $exception->getCode(), $exception->getMessage());
-        }
-
-        // 访问不存在的路由方法，将返回 404
-        if ($exception instanceof MethodNotAllowedHttpException) {
-            return $this->response(['trace' => $trace[0]], $status, 404, $exception->getMessage());
         }
 
         return parent::render($request, $exception);

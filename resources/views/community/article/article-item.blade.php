@@ -36,8 +36,8 @@
         created: function () {
             this.getArticleItem();
             this.editUrl = URI_WEB.article + '/' + this.articleId + URI_CONFIG.edit;
-            this.deleteUrl = URI_API.article + '/' + this.articleId + URI_CONFIG.destroy;
-            if (getUserId()) {
+            this.deleteUrl = URI_API.article + '/' + this.articleId + URI_CONFIG.delete;
+            if (gGetUserId()) {
                 this.getAssess('article', this.articleId);
             }
         },

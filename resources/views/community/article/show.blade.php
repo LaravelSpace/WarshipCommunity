@@ -33,7 +33,7 @@
             },
             created: function () {
                 let thisVue = this;
-                let uriArr = gGetUrI(window.location.href);
+                let uriArr = gGetUrIArr(window.location.href);
                 thisVue.articleId = uriArr[uriArr.length - 1];
             }
         });
