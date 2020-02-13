@@ -12,7 +12,7 @@ class ImageController extends ApiControllerAbstract
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
-     * @throws \App\Exceptions\ValidateException
+     * @throws \App\Exceptions\ValidationException
      */
     public function create(Request $request)
     {

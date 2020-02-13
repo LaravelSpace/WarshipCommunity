@@ -15,31 +15,6 @@ if (!function_exists('makeUniqueKey32')) {
     }
 }
 
-if (!function_exists('dateNow')) {
-    /**
-     * 返回当前日期 Y-m-d
-     *
-     * @return false|string
-     */
-    function dateNow()
-    {
-        return date('Y-m-d', time());
-    }
-}
-
-if (!function_exists('dateCreate')) {
-    /**
-     * 使用 time 创建当前日期 Y-m-d
-     *
-     * @param int $time
-     * @return false|string
-     */
-    function dateCreate(int $time)
-    {
-        return date('Y-m-d', $time);
-    }
-}
-
 if (!function_exists('dateTimeNow')) {
     /**
      * 返回当前时间 Y-m-d H:i:s
@@ -65,37 +40,41 @@ if (!function_exists('dateTimeCreate')) {
     }
 }
 
-if (!function_exists('renderValidateException')) {
+if (!function_exists('dateNow')) {
     /**
-     * 抛出效验异常
+     * 返回当前日期 Y-m-d
      *
-     * @param string $message
-     * @param int    $code
-     * @param string $attachment
-     * @throws \App\Exceptions\ValidateException
+     * @return false|string
      */
-    function renderValidateException($message = "", $code = 0, $attachment = "")
+    function dateNow()
     {
-        $messageConfig = config('message');
-        if (array_key_exists($message, $messageConfig)) {
-            $messageValue = $messageConfig[$message];
-        } else {
-            $messageValue = $message;
-        }
-        throw new \App\Exceptions\ValidateException($messageValue, $code, $attachment);
+        return date('Y-m-d', time());
+    }
+}
+
+if (!function_exists('dateCreate')) {
+    /**
+     * 使用 time 创建当前日期 Y-m-d
+     *
+     * @param int $time
+     * @return false|string
+     */
+    function dateCreate(int $time)
+    {
+        return date('Y-m-d', $time);
     }
 }
 
 if (!function_exists('renderServiceException')) {
     /**
-     * 抛出业务异常
+     * 抛出业务异常，默认错误码 400
      *
      * @param string $message
      * @param int    $code
      * @param string $attachment
      * @throws \App\Exceptions\ServiceException
      */
-    function renderServiceException($message = "", $code = 0, $attachment = "")
+    function renderServiceException($message = "", $code = 400, $attachment = "")
     {
         $messageConfig = config('message');
         if (array_key_exists($message, $messageConfig)) {
@@ -104,5 +83,26 @@ if (!function_exists('renderServiceException')) {
             $messageValue = $message;
         }
         throw new \App\Exceptions\ServiceException($messageValue, $code, $attachment);
+    }
+}
+
+if (!function_exists('renderValidationException')) {
+    /**
+     * 抛出效验异常，默认错误码 422
+     *
+     * @param string $message
+     * @param int    $code
+     * @param string $attachment
+     * @throws \App\Exceptions\ValidationException
+     */
+    function renderValidationException($message = "", $code = 422, $attachment = "")
+    {
+        $messageConfig = config('message');
+        if (array_key_exists($message, $messageConfig)) {
+            $messageValue = $messageConfig[$message];
+        } else {
+            $messageValue = $message;
+        }
+        throw new \App\Exceptions\ValidationException($messageValue, $code, $attachment);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Exceptions;
 
 use Throwable;
 
-class ValidateException extends CommonException
+class ValidationException extends CommonException
 {
     public const SWITCH_NON_EXISTENT_CASE = '[SWITCH 结构不存在该 CASE]>>';
 

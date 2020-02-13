@@ -3,7 +3,7 @@
 namespace App\Service\User;
 
 
-use App\Exceptions\ValidateException;
+use App\Exceptions\ValidationException;
 use App\Service\User\Handler\PermissionHandler;
 use App\Service\User\Handler\RoleHandler;
 
@@ -13,7 +13,7 @@ class PermissionService
      * @param array  $inputData
      * @param string $classification
      * @return mixed
-     * @throws ValidateException
+     * @throws ValidationException
      */
     public function dataHandler(array $inputData, string $classification)
     {
@@ -35,8 +35,8 @@ class PermissionService
                 $resultData = $handler->roleStore($inputData);
                 break;
             default:
-                $message = ValidateException::SWITCH_NON_EXISTENT_CASE . 'CASE=' . $classification;
-                throw new ValidateException($message, config('constant.http_code_500'));
+                $message = ValidationException::SWITCH_NON_EXISTENT_CASE . 'CASE=' . $classification;
+                throw new ValidationException($message, config('constant.http_code_500'));
         }
         return $resultData;
     }

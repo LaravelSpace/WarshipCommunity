@@ -34,7 +34,7 @@ class ImageService
      * @param        $imageFile
      * @param string $imageType
      * @return array
-     * @throws \App\Exceptions\ValidateException
+     * @throws \App\Exceptions\ValidationException
      */
     public function createImage(int $userId, $imageFile, string $imageType)
     {
