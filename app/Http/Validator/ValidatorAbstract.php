@@ -22,7 +22,8 @@ abstract class ValidatorAbstract
     // 通用的检测规则的提示文案
     protected $commonMessage;
 
-    // 通用的检测规则的提示文案中需要替换的 :attribute
+    // 通用的检测规则的提示文案中需要替换的 `:attribute`
+    // 如果需要使用参考 `Validator::make()` 方法的第四个参数。
     protected $commonAttributes;
 
     // 私有的（由具体实例使用）检测字段和规则
@@ -31,7 +32,7 @@ abstract class ValidatorAbstract
     // 私有的（由具体实例使用）检测规则的提示文案
     protected $selfMessage;
 
-    // 私有的（由具体实例使用）检测规则的提示文案中需要替换的 :attribute
+    // 私有的（由具体实例使用）检测规则的提示文案中需要替换的 `:attribute`
     protected $selfAttributes;
 
     // 私有的（由具体实例使用）不需要检测的字段
@@ -85,7 +86,9 @@ abstract class ValidatorAbstract
             $errors = $validator->errors()->messages();
             $resultMessage = '';
             foreach ($errors as $itemError) {
-                $resultMessage .= $itemError;
+                foreach ($itemError as $itemMessage) {
+                    $resultMessage .= $itemMessage;
+                }
             }
             renderValidationException($resultMessage);
         }

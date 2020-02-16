@@ -31,6 +31,7 @@ class RequestValidate
                 $this->validator = new $validatorName($methodName);
                 $this->validator->validate($validateData);
             } catch (ValidationException $e) {
+                return response()->json(['status' => 422, 'message' => $e->getMessage(), 'data' => []]);
             }
         }
 
