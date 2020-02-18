@@ -126,7 +126,7 @@
             computed: {
                 identityValid: function () {
                     if (this.isEmail && this.identity !== null && this.identity !== "") {
-                        if (REG.email.test(this.identity)) {
+                        if (REG_WSC.email.test(this.identity)) {
                             this.identityMsg = "";
                             this.identityTag = true;
                             return "is-valid";
@@ -136,7 +136,7 @@
                             return "is-invalid";
                         }
                     } else if (!this.isEmail && this.identity !== null && this.identity !== "") {
-                        if (REG.phone.test(this.identity)) {
+                        if (REG_WSC.phone.test(this.identity)) {
                             this.identityMsg = "";
                             this.identityTag = true;
                             return "is-valid";
@@ -151,7 +151,7 @@
                 },
                 passwordValid: function () {
                     if (this.password !== null && this.password !== "") {
-                        if (REG.password.test(this.password) && this.password.length <= 16) {
+                        if (REG_WSC.password.test(this.password) && this.password.length <= 16) {
                             this.passwordMsg = "";
                             this.passwordTag = true;
                             return "is-valid";

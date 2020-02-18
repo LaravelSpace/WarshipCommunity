@@ -24,7 +24,7 @@
         return config;
     }, function (error) {
         // 对请求错误做些什么
-        console.error(error);
+        console.error(error.response);
 
         return Promise.reject(error);
     });
@@ -34,7 +34,7 @@
         return response;
     }, function (error) {
         // 对响应错误做点什么
-        console.error(error);
+        console.error(error.response);
 
         return Promise.reject(error);
     });

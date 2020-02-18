@@ -19,7 +19,7 @@
                 <label for="register-name">昵称：</label>
                 <div class="input-group mb-3">
                     <input id="register-name" type="text" class="form-control" placeholder="昵称"
-                           :class="nameValid" v-model="name">
+                           :class="nameValid" v-model="nameReg">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
                                 data-container="body" data-toggle="popover" data-placement="right"
@@ -37,7 +37,7 @@
                 </label>
                 <div class="input-group mb-3">
                     <input type="text" id="register-identity" class="form-control" placeholder="邮箱地址"
-                           :class="identityValid" v-model="identity">
+                           :class="identityValid" v-model="identityReg">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
                                 data-container="body" data-toggle="popover" data-placement="right"
@@ -55,7 +55,7 @@
                 </label>
                 <div class="input-group mb-3">
                     <input type="text" id="register-identity" class="form-control" placeholder="手机号码"
-                           :class="identityValid" v-model="identity">
+                           :class="identityValid" v-model="identityReg">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
                                 data-container="body" data-toggle="popover" data-placement="right"
@@ -71,7 +71,7 @@
                 <label for="register-password">登录密码：</label>
                 <div class="input-group mb-3">
                     <input type="password" id="register-password" class="form-control" placeholder="登录密码"
-                           :class="passwordValid" v-model="password">
+                           :class="passwordValid" v-model="passwordReg">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" tabindex="0" data-trigger="focus"
                                 data-container="body" data-toggle="popover" data-placement="right"
@@ -104,24 +104,28 @@
             template: "#template-register",
             data: function () {
                 return {
-                    name: "", nameMsg: "", nameTag: false,
-                    identity: "", identityMsg: "", identityTag: false,
+                    nameReg: "",
+                    nameMsg: "",
+                    nameTag: false,
                     isEmail: true,
-                    password: "", passwordMsg: "", passwordTag: false
+                    identityReg: "",
+                    identityMsg: "",
+                    identityTag: false,
+                    passwordReg: "",
+                    passwordMsg: "",
+                    passwordTag: false
                 }
             },
             created: function () {
-                // 初始化 BootStrap 弹出框
                 this.$nextTick(function () {
-                    $('[data-toggle="popover"]').popover();
+                    $('[data-toggle="popover"]').popover(); // 初始化 BootStrap 弹出框
                 });
             },
             methods: {
                 changeIdentity: function () {
                     this.isEmail = !this.isEmail;
-                    // 切换之后要重新初始化
                     this.$nextTick(function () {
-                        $('[data-toggle="popover"]').popover();
+                        $('[data-toggle="popover"]').popover(); // 切换之后要重新初始化
                     });
                 },
                 register: function () {
@@ -138,88 +142,81 @@
                     });
                 },
                 reset: function () {
-                    this.name = "";
+                    this.nameReg = "";
                     this.nameMsg = "";
                     this.nameTag = false;
-                    this.identity = "";
+                    this.identityReg = "";
                     this.identityMsg = "";
                     this.identityTag = false;
-                    this.password = "";
+                    this.passwordReg = "";
                     this.passwordMsg = "";
                     this.passwordTag = false;
                 }
             },
             computed: {
                 nameValid: function () {
-                    if (this.name !== null && this.name !== "") {
-                        if (REG.name.test(this.name)) {
-                            this.nameMsg = "";
-                            this.nameTag = true;
-
-                            return "is-valid";
-                        } else {
-                            this.nameMsg = REG_MESSAGE.name;
-                            this.nameTag = false;
-
-                            return "is-invalid";
-                        }
-                    } else {
+                    if (gIsEmpty(this.nameReg)) {
                         this.nameTag = false;
+                        return "";
+                    }
+                    if (REG_WSC.name.test(this.nameReg)) {
+                        this.nameMsg = "";
+                        this.nameTag = true;
+                        return "is-valid";
+                    } else {
+                        this.nameMsg = REG_MESSAGE.name;
+                        this.nameTag = false;
+                        return "is-invalid";
                     }
                 },
                 identityValid: function () {
-                    if (this.identity !== null && this.identity !== "") {
-                        if (this.isEmail) {
-                            if (REG.email.test(this.identity)) {
-                                this.identityMsg = "";
-                                this.identityTag = true;
-
-                                return "is-valid";
-                            } else {
-                                this.identityMsg = REG_MESSAGE.email;
-                                this.identityTag = false;
-
-                                return "is-invalid";
-                            }
-                        } else {
-                            if (REG.phone.test(this.identity)) {
-                                this.identityMsg = "";
-                                this.identityTag = true;
-
-                                return "is-valid";
-                            } else {
-                                this.identityMsg = REG_MESSAGE.phone;
-                                this.identityTag = false;
-
-                                return "is-invalid";
-                            }
-                        }
-                    } else {
+                    if (gIsEmpty(this.identityReg)) {
                         this.identityTag = false;
+                        return "";
                     }
-                },
-                passwordValid: function () {
-                    if (this.password !== null && this.password !== "") {
-                        if (REG.password.test(this.password) && this.password.length <= 16) {
-                            this.passwordMsg = "";
-                            this.passwordTag = true;
-
+                    if (this.isEmail) {
+                        if (REG_WSC.email.test(this.identityReg)) {
+                            this.identityMsg = "";
+                            this.identityTag = true;
                             return "is-valid";
                         } else {
-                            this.passwordMsg = REG_MESSAGE.password;
-                            this.passwordTag = false;
-
+                            this.identityMsg = REG_MESSAGE.email;
+                            this.identityTag = false;
                             return "is-invalid";
                         }
                     } else {
+                        if (REG_WSC.phone.test(this.identityReg)) {
+                            this.identityMsg = "";
+                            this.identityTag = true;
+                            return "is-valid";
+                        } else {
+                            this.identityMsg = REG_MESSAGE.phone;
+                            this.identityTag = false;
+                            return "is-invalid";
+                        }
+                    }
+                },
+                passwordValid: function () {
+                    if (gIsEmpty(this.passwordReg)) {
                         this.passwordTag = false;
+                        return "";
+                    }
+                    if (this.passwordReg.length <= 16 && REG_WSC.password.test(this.passwordReg)) {
+                        this.passwordMsg = "";
+                        this.passwordTag = true;
+                        return "is-valid";
+                    } else {
+                        this.passwordMsg = REG_MESSAGE.password;
+                        this.passwordTag = false;
+                        return "is-invalid";
                     }
                 },
                 registerValid: function () {
                     return this.nameTag && this.identityTag && this.passwordTag;
                 }
             },
-        });
+        })
+        ;
         new Vue({el: "#vue-register"});
     </script>
 @endsection
