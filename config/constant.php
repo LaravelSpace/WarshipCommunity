@@ -40,15 +40,12 @@ return [
     ],
 
     'file_path' => [
-        'exception' => '/wsc/temp/log/exception/',
-        'log_request'   => '/wsc/temp/log/request/',
-        'article'   => '/wsc/article/',
-        'comment'   => '/wsc/comment/',
-    ],
-
-    'image_path' => [
-        'storage'        => '/app/public/image/upload/',
-        'public'         => '/storage/image/upload/',
-        'default_avatar' => '/storage/image/avatar/default_avatar.jpg',
+        'log_exception'   => 'logs/exception/',
+        'log_request'     => 'logs/request/',
+        'article_storage' => 'app/article/',
+        'comment_storage' => 'app/comment/',
+        'image_storage'   => 'app/public/image/upload/',
+        'image_public'    => 'storage/image/upload/',
+        'default_avatar'  => 'storage/image/avatar/default_avatar.jpg',
     ],
 ];

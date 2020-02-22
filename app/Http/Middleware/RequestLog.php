@@ -17,7 +17,7 @@ class RequestLog
             return $next($request);
         }
 
-        $logKey = makeUniqueKey32();
+        $logKey = gMakeUniqueKey32();
         $client = config('client');
         $clientId = config('client_id');
         $actionName = $request->route()->getActionName();
@@ -34,7 +34,7 @@ class RequestLog
             'action'     => $action,
             'header'     => $request->header(),
             'request'    => $request->all(),
-            'time'       => dateTimeNow()
+            'time'       => gDateTimeNow()
         ];
         event(new RequestLogEvent($logKey, $logData));
 
@@ -45,7 +45,7 @@ class RequestLog
         $logData = [
             'response'    => $response->getContent(),
             'consumption' => (int)$endTime - (int)$startTime,
-            'time'        => dateTimeNow()
+            'time'        => gDateTimeNow()
         ];
         event(new RequestLogEvent($logKey, $logData));
 

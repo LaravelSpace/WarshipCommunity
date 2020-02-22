@@ -6,9 +6,9 @@ namespace App\Service\Community\Article\Handler;
 trait FileStorageTrait
 {
     /**
-     * @param string $dirPath
-     * @param string $key
-     * @param string $body
+     * @param string $dirPath [存储目录]
+     * @param string $key     [文件标识]
+     * @param string $body    [文件内容]
      * @return bool|int
      * @throws \App\Exceptions\ServiceException
      */
@@ -22,21 +22,16 @@ trait FileStorageTrait
             // 记录文本
             return file_put_contents($dirPath . $key . '.txt', $body);
         } catch (\Exception $e) {
-            $filePath = config('constant.file_path.exception') . $key . '.log';
-            $timeText = PHP_EOL . 'TIME IS:' . dateTimeNow() . PHP_EOL;
-            $eText = 'ECode=' . $e->getCode() . PHP_EOL . 'EMessage=' . $e->getMessage() . PHP_EOL;
-            $eTrace = $e->getTraceAsString() . PHP_EOL;
-            $text = $timeText . $eText . $eTrace . $body . PHP_EOL;
-            file_put_contents($filePath, $text);
+            gSaveExceptionToFile($key, $e);
         }
-        renderServiceException('save_to_file_failed');
+        gRenderServiceException('save_to_file_failed');
 
         return false;
     }
 
     /**
-     * @param string $dirPath
-     * @param string $key
+     * @param string $dirPath [存储目录]
+     * @param string $key     [文件标识]
      * @return bool|string
      * @throws \App\Exceptions\ServiceException
      */
@@ -45,14 +40,9 @@ trait FileStorageTrait
         try {
             return file_get_contents($dirPath . $key . '.txt');
         } catch (\Exception $e) {
-            $filePath = config('constant.file_path.exception') . $key . '.log';
-            $timeText = PHP_EOL . 'TIME IS:' . dateTimeNow() . PHP_EOL;
-            $eText = 'ECode=' . $e->getCode() . PHP_EOL . 'EMessage=' . $e->getMessage() . PHP_EOL;
-            $eTrace = $e->getTraceAsString() . PHP_EOL;
-            $text = $timeText . $eText . $eTrace;
-            file_put_contents($filePath, $text);
+            gSaveExceptionToFile($key, $e);
         }
-        renderServiceException('get_from_file_failed');
+        gRenderServiceException('get_from_file_failed');
 
         return false;
     }

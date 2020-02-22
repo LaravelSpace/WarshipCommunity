@@ -24,7 +24,7 @@ class RegisterHandler
         $userInfo = [
             'name'           => $name,
             'password'       => $password,
-            'avatar'         => config('constant.image_path.default_avatar'),
+            'avatar'         => config('constant.file_path.default_avatar'),
             'api_token'      => Str::random(32),
             'remember_token' => Str::random(32),
         ];
@@ -37,7 +37,7 @@ class RegisterHandler
         }
         $dbUser = UserModel::create($userInfo);
         if (empty($dbUser)) {
-            renderServiceException('user_create_failed');
+            gRenderServiceException('user_create_failed');
         }
 
         return ['user_id' => $dbUser->id];
@@ -70,7 +70,7 @@ class RegisterHandler
                     $message .= "手机号码\"{$identity}\"，已被使用;";
                 }
             }
-            renderServiceException($message);
+            gRenderServiceException($message);
         }
     }
 
@@ -90,12 +90,12 @@ class RegisterHandler
         }
         $dbUser = UserModel::where($checkField)->first();
         if (empty($dbUser)) {
-            renderServiceException('user_not_exist');
+            gRenderServiceException('user_not_exist');
         }
 
         $checkResult = Hash::check($password, $dbUser->password);
         if (!$checkResult) {
-            renderServiceException('password_incorrect', 403);
+            gRenderServiceException('password_incorrect', 403);
         }
 
         return (new OAuthHandler())->exchangeLocal($dbUser->id);

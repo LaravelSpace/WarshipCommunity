@@ -1,12 +1,12 @@
 <?php
 
-if (!function_exists('makeUniqueKey32')) {
+if (!function_exists('gMakeUniqueKey32')) {
     /**
      * 生成 32 位唯一字符串 ID
      *
      * @return string
      */
-    function makeUniqueKey32()
+    function gMakeUniqueKey32()
     {
         return md5(uniqid(microtime(), true));
         // microtime() 返回当前 Unix 时间戳的微秒数
@@ -15,57 +15,57 @@ if (!function_exists('makeUniqueKey32')) {
     }
 }
 
-if (!function_exists('dateTimeNow')) {
+if (!function_exists('gDateTimeNow')) {
     /**
      * 返回当前时间 Y-m-d H:i:s
      *
      * @return false|string
      */
-    function dateTimeNow()
+    function gDateTimeNow()
     {
         return date('Y-m-d H:i:s', time());
     }
 }
 
-if (!function_exists('dateTimeCreate')) {
+if (!function_exists('gDateTimeCreate')) {
     /**
      * 使用 time 创建当前时间 Y-m-d H:i:s
      *
      * @param int $time
      * @return false|string
      */
-    function dateTimeCreate(int $time)
+    function gDateTimeCreate(int $time)
     {
         return date('Y-m-d H:i:s', $time);
     }
 }
 
-if (!function_exists('dateNow')) {
+if (!function_exists('gDateNow')) {
     /**
      * 返回当前日期 Y-m-d
      *
      * @return false|string
      */
-    function dateNow()
+    function gDateNow()
     {
         return date('Y-m-d', time());
     }
 }
 
-if (!function_exists('dateCreate')) {
+if (!function_exists('gDateCreate')) {
     /**
      * 使用 time 创建当前日期 Y-m-d
      *
      * @param int $time
      * @return false|string
      */
-    function dateCreate(int $time)
+    function gDateCreate(int $time)
     {
         return date('Y-m-d', $time);
     }
 }
 
-if (!function_exists('renderServiceException')) {
+if (!function_exists('gRenderServiceException')) {
     /**
      * 抛出业务异常，默认错误码 400
      *
@@ -74,7 +74,7 @@ if (!function_exists('renderServiceException')) {
      * @param string $attachment
      * @throws \App\Exceptions\ServiceException
      */
-    function renderServiceException($message = "", $code = 400, $attachment = "")
+    function gRenderServiceException($message = "", $code = 400, $attachment = "")
     {
         $messageConfig = config('message');
         if (array_key_exists($message, $messageConfig)) {
@@ -86,7 +86,7 @@ if (!function_exists('renderServiceException')) {
     }
 }
 
-if (!function_exists('renderValidationException')) {
+if (!function_exists('gRenderValidationException')) {
     /**
      * 抛出效验异常，默认错误码 422
      *
@@ -95,7 +95,7 @@ if (!function_exists('renderValidationException')) {
      * @param string $attachment
      * @throws \App\Exceptions\ValidationException
      */
-    function renderValidationException($message = "", $code = 422, $attachment = "")
+    function gRenderValidationException($message = "", $code = 422, $attachment = "")
     {
         $messageConfig = config('message');
         if (array_key_exists($message, $messageConfig)) {
@@ -104,5 +104,24 @@ if (!function_exists('renderValidationException')) {
             $messageValue = $message;
         }
         throw new \App\Exceptions\ValidationException($messageValue, $code, $attachment);
+    }
+}
+
+if (!function_exists('gSaveExceptionToFile')) {
+    /**
+     * 将异常存储到文件
+     *
+     * @param string    $fileName
+     * @param Exception $e
+     */
+    function gSaveExceptionToFile(string $fileName, Exception $e)
+    {
+        $filePath = config('constant.file_path.log_exception') . $fileName;
+        $filePath = storage_path($filePath);
+        $timeText = PHP_EOL . 'TIME IS:' . gDateTimeNow();
+        $eText = PHP_EOL . 'ECode=' . $e->getCode() . PHP_EOL . 'EMessage=' . $e->getMessage();
+        $eTrace = PHP_EOL . $e->getTraceAsString();
+        $text = $timeText . $eText . $eTrace;
+        file_put_contents($filePath, $text);
     }
 }

@@ -28,8 +28,8 @@ class ArticleHandler
      */
     public function createArticle(int $userId, string $title, string $body)
     {
-        $key = makeUniqueKey32();
-        $dirPath = config('constant.file_path.article') . $userId . '/';
+        $key = gMakeUniqueKey32();
+        $dirPath = config('constant.file_path.article_storage') . $userId . '/';
         $this->saveToFile($dirPath, $key, $body);
         $createField = [
             'title'   => $title,
@@ -53,7 +53,8 @@ class ArticleHandler
     public function getArticle(int $id, bool $markdown)
     {
         $dbArticle = ArticleModel::findOrFail($id)->toArray();
-        $dirPath = config('constant.file_path.article') . $dbArticle['user_id'] . '/';
+        $dirPath = config('constant.file_path.article_storage') . $dbArticle['user_id'] . '/';
+        $dirPath = storage_path($dirPath);
         $body = $this->getFromFile($dirPath, $dbArticle['body']);
         if ($markdown) {
             $dbArticle['body'] = (new Parsedown())->text($body);

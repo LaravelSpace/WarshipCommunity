@@ -31,7 +31,7 @@ class CommentHandler
 
         // 获取内容
         $listData = [];
-        $commentPath = config('constant.file_path.comment');
+        $commentPath = config('constant.file_path.comment_storage');
         foreach ($resultData['list'] as $item) {
             try {
                 $dirPath = $commentPath . $item['user_id'] . '/';
@@ -56,8 +56,8 @@ class CommentHandler
      */
     public function createComment(int $userId, string $articleId, string $body)
     {
-        $key = makeUniqueKey32();
-        $dirPath = config('constant.file_path.comment') . $userId . '/';
+        $key = gMakeUniqueKey32();
+        $dirPath = config('constant.file_path.comment_storage') . $userId . '/';
         $this->saveToFile($dirPath, $key, $body);
         $whereField = ['article_id' => $articleId];
         $dbCount = CommentModel::where($whereField)->count();

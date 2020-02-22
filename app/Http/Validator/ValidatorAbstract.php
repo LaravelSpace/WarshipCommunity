@@ -90,7 +90,7 @@ abstract class ValidatorAbstract
                     $resultMessage .= $itemMessage;
                 }
             }
-            renderValidationException($resultMessage);
+            gRenderValidationException($resultMessage);
         }
     }
 }

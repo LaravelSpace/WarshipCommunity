@@ -26,14 +26,14 @@ class OAuthHandler
                 'client'        => 'wsc',
                 'client_id'     => $userId,
                 'access_token'  => Str::random(32),
-                'expires_at'    => dateTimeCreate($time + 3600 * 12),
+                'expires_at'    => gDateTimeCreate($time + 3600 * 12),
                 'refresh_token' => Str::random(32)
             ];
             $dbToken = TokenModel::create($createField);
         } else {
-            if ($dbToken->expires_at->lt(dateTimeCreate($time))) {
+            if ($dbToken->expires_at->lt(gDateTimeCreate($time))) {
                 $dbToken->access_token = Str::random(32);
-                $dbToken->expires_at = dateTimeCreate($time + 3600 * 12);
+                $dbToken->expires_at = gDateTimeCreate($time + 3600 * 12);
                 $dbToken->save();
             }
         }
@@ -56,15 +56,15 @@ class OAuthHandler
         $client = strtolower($client);
         $dbToken = TokenModel::where(['client' => $client, 'client_id' => $clientId])->first();
         if ($dbToken === null) {
-            renderServiceException('user_not_exist');
+            gRenderServiceException('user_not_exist');
         }
         if ($accessToken !== $dbToken->access_token) {
-            renderServiceException('access_token_invalid', 403);
+            gRenderServiceException('access_token_invalid', 403);
         }
 
         $dbUser = UserModel::where('id', '=', $clientId)->first();
         if ($dbUser === null) {
-            renderServiceException('user_not_exist');
+            gRenderServiceException('user_not_exist');
         }
 
         return [

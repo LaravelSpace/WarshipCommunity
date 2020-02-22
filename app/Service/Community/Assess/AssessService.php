@@ -35,7 +35,7 @@ class AssessService
         $sqlField = ['user_id' => $userId, 'classification' => $classification, 'target_id' => $id];
         $dbStar = StarModel::where($sqlField)->first();
         if (empty($dbStar)) {
-            $sqlField['created_at'] = dateTimeNow();
+            $sqlField['created_at'] = gDateTimeNow();
             StarModel::create($sqlField);
             $this->updateTargetStar($classification, $id, true);
 
@@ -66,7 +66,7 @@ class AssessService
         $sqlField = ['user_id' => $userId, 'classification' => $classification, 'target_id' => $id];
         $dbStar = BookmarkModel::where($sqlField)->first();
         if (empty($dbStar)) {
-            $sqlField['created_at'] = dateTimeNow();
+            $sqlField['created_at'] = gDateTimeNow();
             BookmarkModel::create($sqlField);
             $this->updateTargetBookmark($classification, $id, true);
 

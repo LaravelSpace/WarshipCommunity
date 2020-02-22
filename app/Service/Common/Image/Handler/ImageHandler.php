@@ -17,8 +17,8 @@ class ImageHandler
     public function createImageBase64(int $userId, $imageFile)
     {
         $image = str_replace('data:image/jpeg;base64,', '', $imageFile);
-        $imageName = makeUniqueKey32() . "-{$userId}.jpeg";
-        $dirPath = storage_path() . config('constant.image_path.storage');
+        $imageName = gMakeUniqueKey32() . "-{$userId}.jpeg";
+        $dirPath = storage_path() . config('constant.file_path.image_storage');
         if (!is_dir($dirPath)) {
             mkdir($dirPath, 0755, true);
         }
@@ -28,7 +28,7 @@ class ImageHandler
 
         return [
             'id'  => $dbImage->id,
-            'url' => config('constant.image_path.public') . $imageName,
+            'url' => config('constant.file_path.image_public') . $imageName,
         ];
     }
 }

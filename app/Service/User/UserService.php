@@ -46,7 +46,7 @@ class UserService
     public function tokenCheck($authorization)
     {
         if (!is_string($authorization) || $authorization === '') {
-            renderServiceException('authorization_invalid');
+            gRenderServiceException('authorization_invalid');
         }
         list($clientStr, $authStr) = explode(':', $authorization);
         list($client, $clientId) = explode(' ', $clientStr);

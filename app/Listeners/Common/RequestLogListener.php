@@ -35,7 +35,6 @@ class RequestLogListener
     {
         $logKey = $event->logKey;
         $logData = $event->logData;
-
         // 通过 $logData 数组的元素判断是请求日志还是响应日志
         if (isset($logData['request'])) {
             $createField = [
@@ -69,8 +68,8 @@ class RequestLogListener
      */
     public function saveToFile(string $logKey, array $logData)
     {
-        $dateToday = dateNow();
-        $dirPath = config('constant.file_path.log_request') . $dateToday . '/';
+        $dirPath = config('constant.file_path.log_request') . gDateNow() . '/';
+        $dirPath = storage_path($dirPath);
         (new LogService())->saveToFile($dirPath, $logKey, $logData);
     }
 }
