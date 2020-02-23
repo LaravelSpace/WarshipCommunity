@@ -1,7 +1,7 @@
 <template id="template-comment-list">
     <div v-if="vifCommentShow">
         <hr class="my-4">
-        <div class="card border-info" style="margin: 10px 0" v-for="comment in commentList">
+        <div class="card border-info" style="margin: 10px 0" v-for="(comment,index) in commentList">
             <div class="card-header">
                 <h5>
                     <img class="rounded-circle mr-3" style="width: 30px; height: 30px"
@@ -12,11 +12,17 @@
             </div>
             <div class="card-body">
                 <div v-html="comment.body"></div>
+                <hr>
+                <div v-for="discussion in comment.discussion_list">
+                    <div class="alert alert-secondary" role="alert">
+                        @ @{{discussion.user.name}} : @{{discussion.body}}
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <div class="form-inline">
                     <input :id="'discussion-'+comment.id" class="form-control" placeholder="最大输入 128 字">
-                    <button class="btn btn-outline-success" @click="discussionCreate(comment.id)">评论</button>
+                    <button class="btn btn-outline-success" @click="discussionCreate(comment.id,index)">评论</button>
                 </div>
             </div>
         </div>
@@ -56,20 +62,23 @@
             }
         },
         created: function () {
-            this.getCommentList();
+            this.getCommentListWithDiscussion();
         },
         methods: {
-            getCommentList: function (page) {
+            getCommentListWithDiscussion: function (page) {
                 let thisVue = this;
-                let uri = URI_API.article + '/' + thisVue.articleId + URI_CONFIG.comment;
-                if (page !== null && page !== "" && page > 0) {
+                let uri = URI_API.comment
+                    + '?classification=' + CLASSIFICATION_WSC.article
+                    + '&target_id=' + thisVue.articleId
+                    + '&with_discussion=' + true;
+                if (!gIsEmpty(page) && page > 0) {
                     uri += '?page=' + page;
                 }
                 axios.get(uri).then(function (response) {
                     thisVue.commentList = response.data.data.list;
+                    console.debug(thisVue.commentList);
                     if (thisVue.commentList.length > 0) {
                         thisVue.vifCommentShow = true;
-                        thisVue.getDiscussionList();
                     }
                     thisVue.paginate = response.data.data.paginate;
                     if (thisVue.paginate.length > 0 && thisVue.paginate.page_list.length > 0) {
@@ -77,13 +86,16 @@
                     }
                 });
             },
-            discussionCreate: function (commentId) {
+            discussionCreate: function (commentId,index) {
                 let thisVue = this;
                 let eDiscussion = document.getElementById('discussion-' + commentId);
-                let discussionText = eDiscussion.value;
+                let discussionBody = eDiscussion.value;
                 let uri = URI_API.discussion + URI_CONFIG.create;
-                axios.post(uri, {'body': discussionText, 'comment_id': commentId}).then(function (response) {
-
+                axios.post(uri, {
+                    "comment_id": commentId,
+                    "body": discussionBody
+                }).then(function (response) {
+                    thisVue.commentList[index].discussion_list = response.data.data.list;
                 });
             },
             getDiscussionList: function () {
@@ -96,13 +108,13 @@
         },
         computed: {
             prevPage: function () {
-                if (this.paginate.prev_page === null || this.paginate.prev_page === "") {
+                if (gIsEmpty(this.paginate.prev_page)) {
                     return "disabled";
                 }
                 return "";
             },
             nextPage: function () {
-                if (this.paginate.next_page === null || this.paginate.next_page === "") {
+                if (gIsEmpty(this.paginate.next_page)) {
                     return "disabled";
                 }
                 return "";

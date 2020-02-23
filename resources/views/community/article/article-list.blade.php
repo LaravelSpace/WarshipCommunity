@@ -4,7 +4,7 @@
             <li class="media" v-for="article in articleList"
                 style="border:2px solid #007bff;border-radius: 25px 50px;margin: 10px 0; padding: 10px 30px">
                 <img class="rounded-circle mr-3" style="width: 50px; height: 50px"
-                     src="" :src="article.user.avatar" alt="" :alt="article.user_id">
+                     src="" :src="article.user.avatar" alt="" :alt="article.user.id">
                 <div class="media-body">
                     <a href="#" :href="['/article/'+article.id]">
                         <h5 class="mt-0 mb-1">@{{ article.title }}</h5>
@@ -39,8 +39,10 @@
         template: "#template-article-list",
         data: function () {
             return {
-                articleList: [], vifArticleShow: false,
-                paginate: [], vifPaginateShow: false
+                articleList: [],
+                vifArticleShow: false,
+                paginate: [],
+                vifPaginateShow: false
             }
         },
         created: function () {
@@ -50,7 +52,7 @@
             getArticleList: function (page) {
                 let thisVue = this;
                 let uri = URI_API.article;
-                if (page !== null && page !== "" && page > 0) {
+                if (!gIsEmpty(page) && page > 0) {
                     uri += '?page=' + page;
                 }
                 axios.get(uri).then(function (response) {
@@ -67,13 +69,13 @@
         },
         computed: {
             prevPage: function () {
-                if (this.paginate.prev_page === null || this.paginate.prev_page === "") {
+                if (gIsEmpty(this.paginate.prev_page)) {
                     return "disabled";
                 }
                 return "";
             },
             nextPage: function () {
-                if (this.paginate.next_page === null || this.paginate.next_page === "") {
+                if (gIsEmpty(this.paginate.next_page)) {
                     return "disabled";
                 }
                 return "";
@@ -128,25 +130,25 @@
         },
         computed: {
             prevPage: function () {
-                if (this.paginate.prev_page === null || this.paginate.prev_page === "") {
+                if (!gIsEmpty(this.paginate.prev_page)) {
                     return "disabled";
                 }
                 return "";
             },
             prevPageUrl: function () {
-                if (this.paginate.prev_page === null || this.paginate.prev_page === "") {
+                if (!gIsEmpty(this.paginate.prev_page)) {
                     return URI_WEB.article + '?page=' + this.paginate.prev_page;
                 }
                 return "";
             },
             nextPage: function () {
-                if (this.paginate.next_page === null || this.paginate.next_page === "") {
+                if (!gIsEmpty(this.paginate.next_page)) {
                     return "disabled";
                 }
                 return "";
             },
             nextPageUrl: function () {
-                if (this.paginate.next_page === null || this.paginate.next_page === "") {
+                if (!gIsEmpty(this.paginate.next_page)) {
                     return URI_WEB.article + '?page=' + this.paginate.next_page;
                 }
                 return "";

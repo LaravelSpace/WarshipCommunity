@@ -11,6 +11,11 @@ class ArticleHandler
 {
     use PaginateTrait, FileStorageTrait;
 
+    /**
+     * @param int $page
+     * @param int $perPage
+     * @return array
+     */
     public function listArticle(int $page, int $perPage)
     {
         $dbPaginate = ArticleModel::passExamine()->notInBlacklist()->latest()
@@ -21,19 +26,21 @@ class ArticleHandler
 
     /**
      * @param int    $userId
-     * @param string $title
-     * @param string $body
-     * @return int|mixed
+     * @param string $articleTitle
+     * @param string $articleBody
+     * @return ArticleModel
      * @throws \App\Exceptions\ServiceException
      */
-    public function createArticle(int $userId, string $title, string $body)
+    public function createArticle(int $userId, string $articleTitle, string $articleBody)
     {
-        $key = gMakeUniqueKey32();
+        $uniqueKey = gMakeUniqueKey32();
         $dirPath = config('constant.file_path.article_storage') . $userId . '/';
-        $this->saveToFile($dirPath, $key, $body);
+        $dirPath = storage_path($dirPath);
+        $fileName = $uniqueKey . '.txt';
+        $this->saveToFile($dirPath, $fileName, $articleBody);
         $createField = [
-            'title'   => $title,
-            'body'    => $key,
+            'title'   => $articleTitle,
+            'body'    => $uniqueKey,
             'user_id' => $userId,
             'examine' => config('field_transform.examine.wait'),
         ];
@@ -41,52 +48,57 @@ class ArticleHandler
         $classification = config('constant.classification.article');
         event(new ArticleSensitiveEvent($classification, $dbArticle->id));
 
-        return $dbArticle->id;
+        return $dbArticle;
     }
 
     /**
-     * @param int  $id
-     * @param bool $markdown
+     * @param int  $articleId
+     * @param bool $useMarkdown
      * @return array
      * @throws \App\Exceptions\ServiceException
      */
-    public function getArticle(int $id, bool $markdown)
+    public function getArticle(int $articleId, bool $useMarkdown)
     {
-        $dbArticle = ArticleModel::findOrFail($id)->toArray();
+        $dbArticle = ArticleModel::findOrFail($articleId)->toArray();
         $dirPath = config('constant.file_path.article_storage') . $dbArticle['user_id'] . '/';
         $dirPath = storage_path($dirPath);
-        $body = $this->getFromFile($dirPath, $dbArticle['body']);
-        if ($markdown) {
-            $dbArticle['body'] = (new Parsedown())->text($body);
+        $fileName = $dbArticle['body'] . '.txt';
+        $articleBody = $this->getFromFile($dirPath, $fileName);
+        if ($useMarkdown) {
+            $dbArticle['body'] = (new Parsedown())->text($articleBody);
         } else {
-            $dbArticle['body'] = $body;
+            $dbArticle['body'] = $articleBody;
         }
 
         return $dbArticle;
     }
 
     /**
-     * @param int    $id
-     * @param string $title
-     * @param string $body
+     * @param int    $articleId
+     * @param string $articleTitle
+     * @param string $articleBody
      * @return int
      */
-    public function updateArticle(int $id, string $title, string $body)
+    public function updateArticle(int $articleId, string $articleTitle, string $articleBody)
     {
-        $updateField = ['title' => $title, 'body' => $body, 'examine' => 1];
-        $rows = ArticleModel::where('id', '=', $id)->update($updateField);
+        $updateField = ['title' => $articleTitle, 'body' => $articleBody, 'examine' => 1];
+        $rows = ArticleModel::where('id', '=', $articleId)->update($updateField);
         if ($rows > 0) {
-            event(new ArticleSensitiveEvent('article', $id));
+            event(new ArticleSensitiveEvent('article', $articleId));
         }
 
-        return $id;
+        return $articleId;
     }
 
-    public function deleteArticle(int $id)
+    /**
+     * @param int $articleId
+     * @return int
+     */
+    public function deleteArticle(int $articleId)
     {
-        // $whereField = ['id' => $id];
-        // $rows = Article::where($whereField)->delete();
+        $whereField = ['id' => $articleId];
+        $rows = ArticleModel::where($whereField)->delete();
 
-        return $id;
+        return $articleId;
     }
 }

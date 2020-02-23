@@ -15,7 +15,7 @@ class RequestThrottle
         $client = 'web_user';
         $clientId = 998;
         $authorization = $request->header('authorization', '');
-        if (is_string($authorization && $authorization !== '')) {
+        if (is_string($authorization) && $authorization !== '') {
             list($clientStr, $authStr) = explode(':', $authorization);
             list($client, $clientId) = explode(' ', $clientStr);
         }
@@ -35,7 +35,7 @@ class RequestThrottle
     }
 
     /**
-     * 检查 client 或者 ip 有没有达到频率限制
+     * 检查 client_id 或者 ip 有没有达到频率限制
      *
      * @param string $ip
      * @param int    $clientId

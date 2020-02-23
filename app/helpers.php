@@ -110,18 +110,20 @@ if (!function_exists('gRenderValidationException')) {
 if (!function_exists('gSaveExceptionToFile')) {
     /**
      * 将异常存储到文件
+     * 文件名和原本应该产生的文件保持一致，方便查找
      *
-     * @param string    $fileName
-     * @param Exception $e
+     * @param string    $fileName [文件名]
+     * @param Exception $e        [异常实例]
      */
     function gSaveExceptionToFile(string $fileName, Exception $e)
     {
         $filePath = config('constant.file_path.log_exception') . $fileName;
         $filePath = storage_path($filePath);
+        dd($filePath);
         $timeText = PHP_EOL . 'TIME IS:' . gDateTimeNow();
         $eText = PHP_EOL . 'ECode=' . $e->getCode() . PHP_EOL . 'EMessage=' . $e->getMessage();
         $eTrace = PHP_EOL . $e->getTraceAsString();
         $text = $timeText . $eText . $eTrace;
-        file_put_contents($filePath, $text);
+        file_put_contents($filePath, $text, FILE_APPEND);
     }
 }

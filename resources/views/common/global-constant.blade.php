@@ -57,6 +57,7 @@
     };
 
     const CLASSIFICATION_WSC = {
+        'article': 'article',
         'create': 'create',
         'update': 'update',
     }

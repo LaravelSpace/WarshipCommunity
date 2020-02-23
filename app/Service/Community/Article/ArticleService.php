@@ -7,41 +7,66 @@ use App\Service\Community\Article\Handler\ArticleHandler;
 
 class ArticleService
 {
-    public function listArticle(int $page = 1, int $perPage = 10)
+    /**
+     * 获取帖子列表
+     *
+     * @param int $page    [当前页数]
+     * @param int $perPage [每页数量]
+     * @return array [帖子列表]
+     */
+    public function listModel(int $page = 1, int $perPage = 10)
     {
         return (new ArticleHandler())->listArticle($page, $perPage);
     }
 
     /**
-     * @param int    $userId
-     * @param string $title
-     * @param string $body
-     * @return int|mixed
+     * 创建帖子
+     *
+     * @param int    $userId       [用户 id]
+     * @param string $articleTitle [帖子标题]
+     * @param string $articleBody  [帖子内容]
+     * @return Model\ArticleModel [帖子实例]
      * @throws \App\Exceptions\ServiceException
      */
-    public function createArticle(int $userId, string $title, string $body)
+    public function createModel(int $userId, string $articleTitle, string $articleBody)
     {
-        return (new ArticleHandler())->createArticle($userId, $title, $body);
+        return (new ArticleHandler())->createArticle($userId, $articleTitle, $articleBody);
     }
 
     /**
-     * @param int  $id
-     * @param bool $markdown
-     * @return array
+     * 获取帖子
+     *
+     * @param int  $articleId   [帖子 id]
+     * @param bool $useMarkdown [是否使用 MarkDown 格式解析]
+     * @return array [帖子实例]
      * @throws \App\Exceptions\ServiceException
      */
-    public function getArticle(int $id, bool $markdown = false)
+    public function getModel(int $articleId, bool $useMarkdown = false)
     {
-        return (new ArticleHandler())->getArticle($id, $markdown);
+        return (new ArticleHandler())->getArticle($articleId, $useMarkdown);
     }
 
-    public function updateArticle(int $id, string $title, string $body)
+    /**
+     * 更新帖子
+     *
+     * @param int    $articleId    [帖子 id]
+     * @param string $articleTitle [帖子标题]
+     * @param string $articleBody  [帖子内容]
+     * @return int [帖子 id]
+     */
+    public function updateModel(int $articleId, string $articleTitle, string $articleBody)
     {
-        return (new ArticleHandler())->updateArticle($id, $title, $body);
+        return (new ArticleHandler())->updateArticle($articleId, $articleTitle, $articleBody);
     }
 
-    public function deleteArticle(int $id)
+    /**
+     * 删除帖子
+     *
+     * @param int $articleId [帖子 id]
+     * @return int [帖子 id]
+     */
+    public function deleteModel(int $articleId)
     {
-        return (new ArticleHandler())->deleteArticle($id);
+        return (new ArticleHandler())->deleteArticle($articleId);
     }
 }

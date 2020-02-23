@@ -8,15 +8,20 @@ use App\Http\Controllers\V1\ApiResourceInterface;
 use App\Service\Community\Article\CommentService;
 use Illuminate\Http\Request;
 
-class CommentController extends ApiControllerAbstract
+class CommentController extends ApiControllerAbstract implements ApiResourceInterface
 {
-    public function listComment(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function listModel(Request $request)
     {
-        $classification = $request->input('$classification');
+        $classification = $request->input('classification');
         $targetId = $request->input('target_id');
+        $withDiscussion = (bool)$request->input('with_discussion', false);
         $page = (int)$request->input('page', 1);
 
-        $result = (new CommentService())->listComment($classification, $targetId, $page);
+        $result = (new CommentService())->listModel($classification, $targetId,$withDiscussion, $page);
 
         return $this->response($result);
     }
@@ -26,34 +31,30 @@ class CommentController extends ApiControllerAbstract
      * @return \Illuminate\Http\JsonResponse
      * @throws \App\Exceptions\ServiceException
      */
-    public function create(Request $request)
+    public function createModel(Request $request)
     {
         $articleId = $request->input('article_id');
         $body = $request->input('body');
         $userId = config('client_id');
 
-        $result = (new CommentService())->createComment($userId, $articleId, $body);
+        $result = (new CommentService())->createModel($userId, $articleId, $body);
 
         return $this->response(['comment_id' => $result]);
     }
 
-    public function show(Request $request, $id)
+    public function showModel(Request $request, $id)
     {
-        // TODO: Implement show() method.
     }
 
-    public function edit(Request $request, $id)
+    public function editModel(Request $request, $id)
     {
-        // TODO: Implement edit() method.
     }
 
-    public function update(Request $request, $id)
+    public function updateModel(Request $request, $id)
     {
-        // TODO: Implement update() method.
     }
 
-    public function delete(Request $request, $id)
+    public function deleteModel(Request $request, $id)
     {
-        // TODO: Implement destroy() method.
     }
 }

@@ -66,21 +66,27 @@
             }
         },
         created: function () {
-            let thisVue = this;
-            axios.post(URI_API.user.login_check).then(function (response) {
-                if (response.data.status === STATUS_WSC.success) {
-                    thisVue.notLogin = false;
-                    thisVue.userId = response.data.data.user_id;
-                    thisVue.name = response.data.data.name;
-                    thisVue.avatar = response.data.data.avatar;
-                }
-            }).catch(function (error) {
-                if (error.response.status === 400) {
-                    console.debug(error.response.data.message);
-                }
-            });
+            this.loginCheck();
         },
         methods: {
+            loginCheck: function () {
+                let wscToken = gGetWscToken();
+                if (wscToken !== "") {
+                    let thisVue = this;
+                    axios.post(URI_API.user.login_check).then(function (response) {
+                        if (response.data.status === STATUS_WSC.success) {
+                            thisVue.notLogin = false;
+                            thisVue.userId = response.data.data.user_id;
+                            thisVue.name = response.data.data.name;
+                            thisVue.avatar = response.data.data.avatar;
+                        }
+                    }).catch(function (error) {
+                        if (error.response.status === 400) {
+                            console.debug(error.response.data.message);
+                        }
+                    });
+                }
+            },
             logout: function () {
             }
         }

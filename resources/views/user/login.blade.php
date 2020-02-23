@@ -21,7 +21,7 @@
                 </label>
                 <div class="input-group mb-3">
                     <input id="login-identity" type="text" class="form-control" placeholder="Email"
-                           :class="identityValid" v-model="identity">
+                           :class="identityValid" v-model="identityReg">
                     <div class="input-group-append">
                         <button tabindex="0" class="btn btn-outline-secondary" data-container="body"
                                 data-toggle="popover" data-trigger="focus" data-placement="right"
@@ -39,7 +39,7 @@
                 </label>
                 <div class="input-group mb-3">
                     <input id="login-identity" type="text" class="form-control" placeholder="Email"
-                           :class="identityValid" v-model="identity">
+                           :class="identityValid" v-model="identityReg">
                     <div class="input-group-append">
                         <button tabindex="0" class="btn btn-outline-secondary" data-container="body"
                                 data-toggle="popover" data-trigger="focus" data-placement="right"
@@ -55,7 +55,7 @@
                 <label for="login-password">登录密码：</label>
                 <div class="input-group mb-3">
                     <input type="password" id="login-password" class="form-control" placeholder="Password"
-                           :class="passwordValid" v-model="password">
+                           :class="passwordValid" v-model="passwordReg">
                     <div class="input-group-append">
                         <button tabindex="0" class="btn btn-outline-secondary" data-container="body"
                                 data-toggle="popover" data-trigger="focus" data-placement="right"
@@ -88,9 +88,13 @@
             template: "#template-login",
             data: function () {
                 return {
-                    identity: "", identityMsg: "", identityTag: false,
                     isEmail: true,
-                    password: "", passwordMsg: "", passwordTag: false
+                    identityReg: "",
+                    identityMsg: "",
+                    identityTag: false,
+                    passwordReg: "",
+                    passwordMsg: "",
+                    passwordTag: false
                 }
             },
             created: function () {
@@ -109,11 +113,11 @@
                 login: function () {
                     let thisVue = this;
                     axios.post(URI_API.user.login, {
-                        "identity": thisVue.identity,
-                        "password": thisVue.password,
+                        "identity": thisVue.identityReg,
+                        "password": thisVue.passwordReg,
                         "is_email": thisVue.isEmail
                     }).then(function (response) {
-                        if (response.data.status === STATUS.success) {
+                        if (response.data.status === STATUS_WSC.success) {
                             localStorage.setItem("user_id", response.data.data.user_id);
                             localStorage.setItem("wsc_token", response.data.data.token);
                         }
@@ -125,8 +129,12 @@
             },
             computed: {
                 identityValid: function () {
-                    if (this.isEmail && this.identity !== null && this.identity !== "") {
-                        if (REG_WSC.email.test(this.identity)) {
+                    if (gIsEmpty(this.identityReg)) {
+                        this.identityTag = false;
+                        return "";
+                    }
+                    if (this.isEmail) {
+                        if (REG_WSC.email.test(this.identityReg)) {
                             this.identityMsg = "";
                             this.identityTag = true;
                             return "is-valid";
@@ -135,8 +143,8 @@
                             this.identityTag = false;
                             return "is-invalid";
                         }
-                    } else if (!this.isEmail && this.identity !== null && this.identity !== "") {
-                        if (REG_WSC.phone.test(this.identity)) {
+                    } else {
+                        if (REG_WSC.phone.test(this.identityReg)) {
                             this.identityMsg = "";
                             this.identityTag = true;
                             return "is-valid";
@@ -145,23 +153,21 @@
                             this.identityTag = false;
                             return "is-invalid";
                         }
-                    } else {
-                        this.identityTag = false;
                     }
                 },
                 passwordValid: function () {
-                    if (this.password !== null && this.password !== "") {
-                        if (REG_WSC.password.test(this.password) && this.password.length <= 16) {
-                            this.passwordMsg = "";
-                            this.passwordTag = true;
-                            return "is-valid";
-                        } else {
-                            this.passwordMsg = REG_MESSAGE.password;
-                            this.passwordTag = false;
-                            return "is-invalid";
-                        }
-                    } else {
+                    if (gIsEmpty(this.passwordReg)) {
                         this.passwordTag = false;
+                        return "";
+                    }
+                    if (this.passwordReg.length <= 16 && REG_WSC.password.test(this.passwordReg)) {
+                        this.passwordMsg = "";
+                        this.passwordTag = true;
+                        return "is-valid";
+                    } else {
+                        this.passwordMsg = REG_MESSAGE.password;
+                        this.passwordTag = false;
+                        return "is-invalid";
                     }
                 },
                 loginValid: function () {

@@ -3,31 +3,27 @@
 namespace App\Service\Community\Article;
 
 
-use App\Service\Community\Article\Model\DiscussionModel;
+use App\Service\Community\Article\Handler\DiscussionHandler;
 
 class DiscussionService
 {
     /**
-     * @param $userId
-     * @param $commentId
-     * @param $body
-     * @return DiscussionModel
+     * @param int $commentId [评论 id]
+     * @return array
      */
-    public function create($userId, $commentId, $body)
+    public function listModel(int $commentId)
     {
-        $createField = [
-            'body'       => $body,
-            'user_id'    => $userId,
-            'comment_id' => $commentId,
-        ];
-        $dbDiscussion = DiscussionModel::create($createField);
-
-        return $dbDiscussion;
+        return (new DiscussionHandler())->listDiscussion($commentId);
     }
 
-    public function listDiscussion($commentId){
-        $whereField = ['comment_id'=>$commentId];
-        $discussionList = DiscussionModel::passExamine()->notInBlacklist()->where($whereField)->latest()->get();
-        return $discussionList;
+    /**
+     * @param $userId
+     * @param $commentId
+     * @param $discussionBody
+     * @return Model\DiscussionModel
+     */
+    public function createModel($userId, $commentId, $discussionBody)
+    {
+        return (new DiscussionHandler())->createModel($userId, $commentId, $discussionBody);
     }
 }

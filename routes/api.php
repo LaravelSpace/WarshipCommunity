@@ -31,38 +31,39 @@ Route::namespace('V1\Api')->group(function () {
 
     Route::prefix('article')->group(function () {
         // 获取帖子列表
-        Route::get('/', 'ArticleController@listArticle');
+        Route::get('/', 'ArticleController@listModel');
         // 新建帖子
-        Route::post('create', 'ArticleController@create');
+        Route::post('create', 'ArticleController@createModel');
         // 获取帖子内容
-        Route::get('{id}', 'ArticleController@show')->where('id', '[1-9]+\d*');
+        Route::get('{id}', 'ArticleController@showModel')->where('id', '[1-9]+\d*');
         // 获取帖子内容，原文数据
-        Route::get('{id}/edit', 'ArticleController@edit')->where('id', '[1-9]+\d*');
+        Route::get('{id}/edit', 'ArticleController@editModel')->where('id', '[1-9]+\d*');
         // 修改帖子内容
-        Route::put('{id}/update', 'ArticleController@update')->where('id', '[1-9]+\d*');
+        Route::put('{id}/update', 'ArticleController@updateModel')->where('id', '[1-9]+\d*');
         // 删除帖子
-        Route::delete('{id}/delete', 'ArticleController@delete')->where('id', '[1-9]+\d*');
-        // 获取帖子的评论列表
-        Route::get('{id}/comment', 'ArticleController@comment')->where('id', '[1-9]+\d*');
+        Route::delete('{id}/delete', 'ArticleController@deleteModel')->where('id', '[1-9]+\d*');
     });
 
     Route::prefix('comment')->group(function () {
         // 获取评论列表
-        Route::get('/', 'CommentController@listComment');
+        Route::get('/', 'CommentController@listModel');
         // 新建评论
-        Route::post('create', 'CommentController@create');
+        Route::post('create', 'CommentController@createModel');
         // 获取评论内容
-        Route::get('{id}', 'CommentController@show')->where('id', '[1-9]+\d*');
+        Route::get('{id}', 'CommentController@showModel')->where('id', '[1-9]+\d*');
         // 获取评论内容，原文数据
-        Route::get('{id}/edit', 'CommentController@edit')->where('id', '[1-9]+\d*');
+        Route::get('{id}/edit', 'CommentController@editModel')->where('id', '[1-9]+\d*');
         // 修改评论内容
-        Route::put('{id}/update', 'CommentController@update')->where('id', '[1-9]+\d*');
+        Route::put('{id}/update', 'CommentController@updateModel')->where('id', '[1-9]+\d*');
         // 删除评论
-        Route::delete('{id}/delete', 'CommentController@delete')->where('id', '[1-9]+\d*');
+        Route::delete('{id}/delete', 'CommentController@deleteModel')->where('id', '[1-9]+\d*');
     });
 
     Route::prefix('discussion')->group(function () {
-        Route::post('create', 'DiscussionController@create');
+        // 获取讨论列表
+        Route::get('/', 'DiscussionController@listModel');
+        // 新建讨论
+        Route::post('create', 'DiscussionController@createModel');
     });
 
     Route::prefix('image')->group(function () {

@@ -6,74 +6,54 @@ namespace App\Http\Controllers\V1\Api;
 use App\Http\Controllers\V1\ApiControllerAbstract;
 use App\Http\Controllers\V1\ApiResourceInterface;
 use App\Service\Community\Article\ArticleService;
-use App\Service\Community\Article\CommentService;
 use Illuminate\Http\Request;
 
-class ArticleController extends ApiControllerAbstract
+class ArticleController extends ApiControllerAbstract implements ApiResourceInterface
 {
-    public function listArticle(Request $request)
+    public function listModel(Request $request)
     {
         $page = (int)$request->input('page', 1);
-        $result = (new ArticleService())->listArticle($page);
+        $result = (new ArticleService())->listModel($page);
 
         return $this->response($result);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \App\Exceptions\ServiceException
-     */
-    public function create(Request $request)
+    public function createModel(Request $request)
     {
         $title = $request->input('title');
         $body = $request->input('body');
         $userId = config('client_id');
+        $dbArticle = (new ArticleService())->createModel($userId, $title, $body);
 
-        $result = (new ArticleService())->createArticle($userId, $title, $body);
-
-        return $this->response(['article_id' => $result]);
+        return $this->response(['article_id' => $dbArticle->id]);
     }
 
-    /**
-     * @param Request $request
-     * @param         $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \App\Exceptions\ServiceException
-     */
-    public function show(Request $request, $id)
+    public function showModel(Request $request, $id)
     {
-        $result = (new ArticleService())->getArticle($id, true);
+        $result = (new ArticleService())->getModel($id, true);
 
         return $this->response($result);
     }
 
-    /**
-     * @param Request $request
-     * @param         $id
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \App\Exceptions\ServiceException
-     */
-    public function edit(Request $request, $id)
+    public function editModel(Request $request, $id)
     {
-        $result = (new ArticleService())->getArticle($id);
+        $result = (new ArticleService())->getModel($id);
 
         return $this->response($result);
     }
 
-    public function update(Request $request, $id)
+    public function updateModel(Request $request, $id)
     {
         $title = $request->input('title');
         $body = $request->input('body');
-
-        $result = (new ArticleService())->updateArticle($id, $title, $body);
+        $result = (new ArticleService())->updateModel($id, $title, $body);
 
         return $this->response(['article_id' => $result]);
     }
 
-    public function delete(Request $request, $id)
+    public function deleteModel(Request $request, $id)
     {
-        $result = (new ArticleService())->deleteArticle($id);
+        $result = (new ArticleService())->deleteModel($id);
 
         return $this->response(['article_id' => $result]);
     }
