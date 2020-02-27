@@ -24,7 +24,7 @@ class DiscussionController extends ApiControllerAbstract implements ApiResourceI
         $body = $request->input('body');
         $userId = config('client_id');
         $sDiscussion = new DiscussionService();
-        $dbDiscussion = $sDiscussion->createModel($userId, $commentId, $body);
+        $sDiscussion->createModel($userId, $commentId, $body);
         $discussionList = $sDiscussion->listModel($commentId);
 
         return $this->response(['list' => $discussionList]);

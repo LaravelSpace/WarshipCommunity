@@ -119,7 +119,6 @@ if (!function_exists('gSaveExceptionToFile')) {
     {
         $filePath = config('constant.file_path.log_exception') . $fileName;
         $filePath = storage_path($filePath);
-        dd($filePath);
         $timeText = PHP_EOL . 'TIME IS:' . gDateTimeNow();
         $eText = PHP_EOL . 'ECode=' . $e->getCode() . PHP_EOL . 'EMessage=' . $e->getMessage();
         $eTrace = PHP_EOL . $e->getTraceAsString();
