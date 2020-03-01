@@ -15,7 +15,7 @@ class CommentService
      * @param int    $perPage        [每页数量]
      * @return array [评论列表]
      */
-    public function listModel(string $classification, int $targetId, bool $withDiscussion, int $page = 1, int $perPage = 10)
+    public function listModel(string $classification, int $targetId, bool $withDiscussion = false, int $page = 1, int $perPage = 10)
     {
         if ($withDiscussion) {
             return (new CommentHandler())->listCommentWithDiscussion($classification, $targetId, $page, $perPage);
@@ -27,7 +27,7 @@ class CommentService
      * @param int    $userId      [用户 id]
      * @param string $articleId   [帖子 id]
      * @param string $commentBody [评论内容]
-     * @return int [评论实例]
+     * @return \Illuminate\Database\Eloquent\Model [评论实例]
      * @throws \App\Exceptions\ServiceException
      */
     public function createModel(int $userId, string $articleId, string $commentBody)
@@ -35,8 +35,15 @@ class CommentService
         return (new CommentHandler())->createComment($userId, $articleId, $commentBody);
     }
 
-    public function getModel()
+    /**
+     * @param int  $commentId   [评论 id]
+     * @param bool $useMarkdown [是否使用 MarkDown 格式解析]
+     * @return array [评论实例]
+     * @throws \App\Exceptions\ServiceException
+     */
+    public function getModel(int $commentId, bool $useMarkdown = false)
     {
+        return (new CommentHandler())->getModel($commentId, $useMarkdown);
     }
 
     public function updateModel()

@@ -11,5 +11,5 @@ return [
         'approve' => 1,
         'reject'  => 2,
         'queue'   => 3,
-    ]
+    ],
 ];

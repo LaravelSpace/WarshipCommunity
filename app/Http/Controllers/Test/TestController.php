@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Test;
 
-use App\Service\Common\Image\Model\ImageModel;
+use App\Events\Community\CheckSensitiveEvent;
 use App\Service\Common\SensitiveWord\SensitiveWordService;
-use App\Service\Community\Article\Model\ArticleModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,19 +18,32 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        dd(storage_path('aaa'));
+        $this->iTestSensitiveByModel();
     }
 
-    private function iTestSensitiveWord()
+    private function iTestStoragePath()
+    {
+        dd(storage_path('logs'));
+    }
+
+    private function iTestSensitiveByStr()
     {
         $checkString = '王八羔王八子啊王八羔子啊兔崽兔崽子王八蛋';
-        $checkResult = (new SensitiveWordService('DFA'))->checkSensitiveWord($checkString);
+        $checkResult = (new SensitiveWordService('DFA'))->checkSensitiveByStr($checkString);
         $returnData = [
-            'controller'  => 'TestSensitiveWordController',
-            'function'    => 'test',
+            'controller'  => 'TestController',
+            'function'    => 'iTestSensitiveByStr',
             'checkResult' => $checkResult
         ];
 
         return $returnData;
+    }
+
+    private function iTestSensitiveByModel()
+    {
+        // $classification = config('constant.classification.article');
+        // $classification = config('constant.classification.comment');
+        $classification = config('constant.classification.discussion');
+        event(new CheckSensitiveEvent($classification, 4));
     }
 }

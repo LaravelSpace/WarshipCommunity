@@ -3,6 +3,7 @@
 namespace App\Service\Community\Article\Handler;
 
 
+use App\Events\Community\CheckSensitiveEvent;
 use App\Service\Community\Article\Model\DiscussionModel;
 
 class DiscussionHandler
@@ -24,7 +25,7 @@ class DiscussionHandler
      * @param $userId
      * @param $commentId
      * @param $discussionBody
-     * @return DiscussionModel
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function createModel($userId, $commentId, $discussionBody)
     {
@@ -34,7 +35,18 @@ class DiscussionHandler
             'comment_id' => $commentId,
         ];
         $dbDiscussion = DiscussionModel::create($createField);
+        $classification = config('constant.classification.discussion');
+        event(new CheckSensitiveEvent($classification, $dbDiscussion->id));
 
         return $dbDiscussion;
+    }
+
+    /**
+     * @param $targetId
+     * @return array
+     */
+    public function getModel($targetId)
+    {
+        return DiscussionModel::findOrFail($targetId)->toArray();
     }
 }

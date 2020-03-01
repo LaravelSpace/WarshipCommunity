@@ -18,8 +18,8 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\Community\ArticleSensitiveEvent' => [
-            'App\Listeners\Community\ArticleSensitiveListener',
+        'App\Events\Community\CheckSensitiveEvent' => [
+            'App\Listeners\Community\CheckSensitiveListener',
         ],
         'App\Events\Common\RequestLogEvent' => [
             'App\Listeners\Common\RequestLogListener',

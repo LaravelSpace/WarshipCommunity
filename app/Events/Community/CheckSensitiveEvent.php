@@ -10,26 +10,30 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ArticleSensitiveEvent
+class CheckSensitiveEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    // article|comment
+    /**
+     * @var string [目标类型]
+     */
     public $classification;
 
-    // DB:article->id|DB:comment->id
-    public $id;
+    /**
+     * @var int [目标 id]
+     */
+    public $targetId;
 
     /**
      * Create a new event instance.
      *
      * @param string $classification
-     * @param int    $id
+     * @param int    $targetId
      */
-    public function __construct(string $classification, int $id)
+    public function __construct(string $classification, int $targetId)
     {
         $this->classification = $classification;
-        $this->id = $id;
+        $this->targetId = $targetId;
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace App\Service\Community\Article\Handler;
 
 
-use App\Events\Community\ArticleSensitiveEvent;
+use App\Events\Community\CheckSensitiveEvent;
 use App\Service\Community\Article\Model\CommentModel;
 use Parsedown;
 
@@ -55,11 +55,11 @@ class CommentHandler
      * @param $perPage
      * @return array
      */
-    public function listCommentWithDiscussion($classification, $targetId, $page, $perPage)
+    public function listCommentWithDiscussion(string $classification, int $targetId, int $page, int $perPage)
     {
         $commentList = $this->listComment($classification, $targetId, $page, $perPage);
         $hDiscussion = new DiscussionHandler();
-        foreach ($commentList['list'] as $index => $itemComment){
+        foreach ($commentList['list'] as $index => $itemComment) {
             $commentList['list'][$index]['discussion_list'] = $hDiscussion->listDiscussion($itemComment['id']);
         }
 
@@ -70,7 +70,7 @@ class CommentHandler
      * @param int    $userId
      * @param string $articleId
      * @param string $commentBody
-     * @return int
+     * @return \Illuminate\Database\Eloquent\Model
      * @throws \App\Exceptions\ServiceException
      */
     public function createComment(int $userId, string $articleId, string $commentBody)
@@ -91,7 +91,29 @@ class CommentHandler
         ];
         $dbComment = CommentModel::create($createField);
         $classification = config('constant.classification.comment');
-        event(new ArticleSensitiveEvent($classification, $dbComment->id));
+        event(new CheckSensitiveEvent($classification, $dbComment->id));
+
+        return $dbComment;
+    }
+
+    /**
+     * @param int  $commentId
+     * @param bool $useMarkdown
+     * @return array
+     * @throws \App\Exceptions\ServiceException
+     */
+    public function getModel(int $commentId, bool $useMarkdown)
+    {
+        $dbComment = CommentModel::findOrFail($commentId)->toArray();
+        $dirPath = config('constant.file_path.comment_storage') . $dbComment['user_id'] . '/';
+        $dirPath = storage_path($dirPath);
+        $fileName = $dbComment['body'] . '.txt';
+        $commentBody = $this->getFromFile($dirPath, $fileName);
+        if ($useMarkdown) {
+            $dbComment['body'] = (new Parsedown())->text($commentBody);
+        } else {
+            $dbComment['body'] = $commentBody;
+        }
 
         return $dbComment;
     }

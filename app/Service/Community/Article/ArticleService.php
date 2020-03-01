@@ -25,7 +25,7 @@ class ArticleService
      * @param int    $userId       [用户 id]
      * @param string $articleTitle [帖子标题]
      * @param string $articleBody  [帖子内容]
-     * @return Model\ArticleModel [帖子实例]
+     * @return \Illuminate\Database\Eloquent\Model [帖子实例]
      * @throws \App\Exceptions\ServiceException
      */
     public function createModel(int $userId, string $articleTitle, string $articleBody)

@@ -41,7 +41,7 @@ class ImageService
         if ($imageType === 'base64') {
             return (new ImageHandler())->createImageBase64($userId, $imageFile);
         } else {
-            renderValidateException('image_type_not_exist');
+            gRenderValidationException('image_type_not_exist');
         }
         return [];
     }

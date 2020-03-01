@@ -6,9 +6,10 @@ return [
     'error'   => 'error',
 
     'classification' => [
-        'user'    => 'user',
-        'article' => 'article',
-        'comment' => 'comment',
+        'user'       => 'user',
+        'article'    => 'article',
+        'comment'    => 'comment',
+        'discussion' => 'discussion',
     ],
 
     'http' => [

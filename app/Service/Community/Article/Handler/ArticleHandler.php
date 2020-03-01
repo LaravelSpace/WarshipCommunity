@@ -3,7 +3,7 @@
 namespace App\Service\Community\Article\Handler;
 
 
-use App\Events\Community\ArticleSensitiveEvent;
+use App\Events\Community\CheckSensitiveEvent;
 use App\Service\Community\Article\Model\ArticleModel;
 use Parsedown;
 
@@ -28,7 +28,7 @@ class ArticleHandler
      * @param int    $userId
      * @param string $articleTitle
      * @param string $articleBody
-     * @return ArticleModel
+     * @return \Illuminate\Database\Eloquent\Model
      * @throws \App\Exceptions\ServiceException
      */
     public function createArticle(int $userId, string $articleTitle, string $articleBody)
@@ -46,7 +46,7 @@ class ArticleHandler
         ];
         $dbArticle = ArticleModel::create($createField);
         $classification = config('constant.classification.article');
-        event(new ArticleSensitiveEvent($classification, $dbArticle->id));
+        event(new CheckSensitiveEvent($classification, $dbArticle->id));
 
         return $dbArticle;
     }
@@ -84,7 +84,7 @@ class ArticleHandler
         $updateField = ['title' => $articleTitle, 'body' => $articleBody, 'examine' => 1];
         $rows = ArticleModel::where('id', '=', $articleId)->update($updateField);
         if ($rows > 0) {
-            event(new ArticleSensitiveEvent('article', $articleId));
+            event(new CheckSensitiveEvent('article', $articleId));
         }
 
         return $articleId;
