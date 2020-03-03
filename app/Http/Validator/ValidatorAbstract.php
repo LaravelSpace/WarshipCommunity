@@ -7,35 +7,56 @@ use Illuminate\Support\Facades\Validator;
 
 abstract class ValidatorAbstract
 {
-    // 执行检测的字段和规则
+    /**
+     * 执行检测的字段和规则
+     */
     protected $validateRule;
 
-    // 执行检测规则的提示文案
+    /**
+     * @var [执行检测规则的提示文案]
+     */
     protected $validateMessage;
 
-    // 执行检测规则的提示文案中需要替换的 :attribute
+    /**
+     * @var [执行检测规则的提示文案中需要替换的 :attribute]
+     */
     protected $validateAttributes;
 
-    // 通用的检测字段和规则
+    /**
+     * @var array [通用的检测字段和规则]
+     */
     protected $commonRule;
 
-    // 通用的检测规则的提示文案
+    /**
+     * @var array [通用的检测规则的提示文案]
+     */
     protected $commonMessage;
 
-    // 通用的检测规则的提示文案中需要替换的 `:attribute`
-    // 如果需要使用参考 `Validator::make()` 方法的第四个参数。
+    /**
+     * 如果需要使用参考 `Validator::make()` 方法的第四个参数。
+     *
+     * @var array [通用的检测规则的提示文案中需要替换的 `:attribute`]
+     */
     protected $commonAttributes;
 
-    // 私有的（由具体实例使用）检测字段和规则
+    /**
+     * @var array [私有的（由具体实例使用）检测字段和规则]
+     */
     protected $selfRule;
 
-    // 私有的（由具体实例使用）检测规则的提示文案
+    /**
+     * @var array [私有的（由具体实例使用）检测规则的提示文案]
+     */
     protected $selfMessage;
 
-    // 私有的（由具体实例使用）检测规则的提示文案中需要替换的 `:attribute`
+    /**
+     * @var array [私有的（由具体实例使用）检测规则的提示文案中需要替换的 `:attribute`]
+     */
     protected $selfAttributes;
 
-    // 私有的（由具体实例使用）不需要检测的字段
+    /**
+     * @var array [私有的（由具体实例使用）不需要检测的字段]
+     */
     protected $filterField;
 
     public function __construct(string $methodName)

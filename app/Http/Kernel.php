@@ -40,7 +40,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
-            'request_validate',
+            'request_validator',
             'request_throttle',
             'request_log',
         ],
@@ -63,7 +63,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'request_validate'=>\App\Http\Middleware\RequestValidate::class,
+        'request_validator'=>\App\Http\Middleware\RequestValidate::class,
         'request_throttle'=>\App\Http\Middleware\RequestThrottle::class,
         'request_log'=>\App\Http\Middleware\RequestLog::class,
     ];
