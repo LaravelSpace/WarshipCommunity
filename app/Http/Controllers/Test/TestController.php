@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Test;
 
 use App\Events\Community\CheckSensitiveEvent;
 use App\Service\Common\SensitiveWord\SensitiveWordService;
+use App\Service\User\UserService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,7 +19,8 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        $this->iTestSensitiveByModel();
+        (new UserService())->markSignCalendar(11);
+        (new UserService())->getSignCalendar(11);
     }
 
     private function iTestStoragePath()

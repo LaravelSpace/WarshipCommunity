@@ -5,6 +5,7 @@ namespace App\Service\User;
 
 use App\Service\User\Handler\OAuthHandler;
 use App\Service\User\Handler\RegisterHandler;
+use App\Service\User\Handler\SignCalendarHandler;
 
 class UserService
 {
@@ -33,13 +34,16 @@ class UserService
         return (new RegisterHandler())->login($identity, $password, $isEmail);
     }
 
+    /**
+     * @return array
+     */
     public function logout()
     {
         return (new RegisterHandler())->logout();
     }
 
     /**
-     * @param $authorization
+     * @param string $authorization
      * @return array
      * @throws \App\Exceptions\ServiceException
      */
@@ -52,5 +56,23 @@ class UserService
         list($client, $clientId) = explode(' ', $clientStr);
 
         return (new OAuthHandler)->validate($client, $clientId, $authStr);
+    }
+
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public function getSignCalendar(int $userId)
+    {
+        return (new SignCalendarHandler())->getSignCalendar($userId);
+    }
+
+    /**
+     * @param int $userId
+     * @return array
+     */
+    public function markSignCalendar(int $userId)
+    {
+        return (new SignCalendarHandler())->markSignCalendar($userId);
     }
 }

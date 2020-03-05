@@ -22,12 +22,12 @@ class DiscussionHandler
     }
 
     /**
-     * @param $userId
-     * @param $commentId
-     * @param $discussionBody
+     * @param int    $userId
+     * @param int    $commentId
+     * @param string $discussionBody
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function createModel($userId, $commentId, $discussionBody)
+    public function createModel(int $userId, int $commentId, string $discussionBody)
     {
         $createField = [
             'body'       => $discussionBody,
@@ -42,10 +42,10 @@ class DiscussionHandler
     }
 
     /**
-     * @param $targetId
+     * @param int $targetId
      * @return array
      */
-    public function getModel($targetId)
+    public function getModel(int $targetId)
     {
         return DiscussionModel::findOrFail($targetId)->toArray();
     }

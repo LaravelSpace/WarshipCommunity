@@ -17,21 +17,21 @@ class DiscussionService
     }
 
     /**
-     * @param $userId         [评论 id]
-     * @param $commentId      [评论 id]
-     * @param $discussionBody [讨论内容]
+     * @param int    $userId         [评论 id]
+     * @param int    $commentId      [评论 id]
+     * @param string $discussionBody [讨论内容]
      * @return \Illuminate\Database\Eloquent\Model [讨论实例]
      */
-    public function createModel($userId, $commentId, $discussionBody)
+    public function createModel(int $userId, int $commentId, string $discussionBody)
     {
         return (new DiscussionHandler())->createModel($userId, $commentId, $discussionBody);
     }
 
     /**
-     * @param $discussionId [讨论 id]
+     * @param int $discussionId [讨论 id]
      * @return array [讨论实例]
      */
-    public function getModel($discussionId)
+    public function getModel(int $discussionId)
     {
         return (new DiscussionHandler())->getModel($discussionId);
     }

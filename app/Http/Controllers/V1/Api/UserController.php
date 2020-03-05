@@ -62,4 +62,20 @@ class UserController extends ApiControllerAbstract
 
         return $this->response($result);
     }
+
+    public function getSignCalendar(Request $request)
+    {
+        $userId = config('client_id');
+        $result = (new UserService())->getSignCalendar($userId);
+
+        return $this->response($result);
+    }
+
+    public function markSignCalendar(Request $request)
+    {
+        $userId = config('client_id');
+        $result = (new UserService())->markSignCalendar($userId);
+
+        return $this->response($result);
+    }
 }

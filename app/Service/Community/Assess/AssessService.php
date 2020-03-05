@@ -9,6 +9,14 @@ use App\Service\Community\Assess\Model\StarModel;
 
 class AssessService
 {
+    /**
+     * 获取星标和收藏
+     *
+     * @param int    $userId         [用户 id]
+     * @param string $classification [查询类型]
+     * @param array  $idArr          [目标 id 列表]
+     * @return array
+     */
     public function getAssess(int $userId, string $classification, array $idArr)
     {
         $classificationArr = config('constant.classification');
@@ -27,26 +35,41 @@ class AssessService
         ];
     }
 
-    public function starToggle($userId, $classification, $id)
+    /**
+     * 切换星标状态
+     *
+     * @param int    $userId         [用户 id]
+     * @param string $classification [查询类型]
+     * @param int    $targetId       [目标 id]
+     * @return array
+     */
+    public function starToggle(int $userId, string $classification, int $targetId)
     {
         $classificationArr = config('constant.classification');
         if (!in_array($classification, $classificationArr, true)) {
         }
-        $sqlField = ['user_id' => $userId, 'classification' => $classification, 'target_id' => $id];
+        $sqlField = ['user_id' => $userId, 'classification' => $classification, 'target_id' => $targetId];
         $dbStar = StarModel::where($sqlField)->first();
         if (empty($dbStar)) {
             $sqlField['created_at'] = gDateTimeNow();
             StarModel::create($sqlField);
-            $this->updateTargetStar($classification, $id, true);
+            $this->updateTargetStar($classification, $targetId, true);
 
             return ['star' => true];
         }
         StarModel::where('id', '=', $dbStar->id)->delete();
-        $this->updateTargetStar($classification, $id, false);
+        $this->updateTargetStar($classification, $targetId, false);
 
         return ['star' => false];
     }
 
+    /**
+     * 更新目标的星标数量
+     *
+     * @param string $classification [查询类型]
+     * @param int    $targetId       [目标 id]
+     * @param bool   $isCreate       [true=>添加;false=>减少]
+     */
     public function updateTargetStar(string $classification, int $targetId, bool $isCreate)
     {
         if ($classification === config('constant.classification.article')) {
@@ -58,26 +81,41 @@ class AssessService
         }
     }
 
-    public function bookmarkToggle($userId, $classification, $id)
+    /**
+     * 切换收藏状态
+     *
+     * @param int    $userId         [用户 id]
+     * @param string $classification [查询类型]
+     * @param int    $targetId       [目标 id]
+     * @return array
+     */
+    public function bookmarkToggle(int $userId, string $classification, int $targetId)
     {
         $classificationArr = config('constant.classification');
         if (!in_array($classification, $classificationArr, true)) {
         }
-        $sqlField = ['user_id' => $userId, 'classification' => $classification, 'target_id' => $id];
+        $sqlField = ['user_id' => $userId, 'classification' => $classification, 'target_id' => $targetId];
         $dbStar = BookmarkModel::where($sqlField)->first();
         if (empty($dbStar)) {
             $sqlField['created_at'] = gDateTimeNow();
             BookmarkModel::create($sqlField);
-            $this->updateTargetBookmark($classification, $id, true);
+            $this->updateTargetBookmark($classification, $targetId, true);
 
             return ['bookmark' => true];
         }
         BookmarkModel::where('id', '=', $dbStar->id)->delete();
-        $this->updateTargetBookmark($classification, $id, false);
+        $this->updateTargetBookmark($classification, $targetId, false);
 
         return ['bookmark' => false];
     }
 
+    /**
+     * 更新目标收藏数量
+     *
+     * @param string $classification [查询类型]
+     * @param int    $targetId       [目标 id]
+     * @param bool   $isCreate       [true=>添加;false=>减少]
+     */
     public function updateTargetBookmark(string $classification, int $targetId, bool $isCreate)
     {
         if ($classification === config('constant.classification.article')) {

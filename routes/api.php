@@ -27,6 +27,10 @@ Route::namespace('V1\Api')->group(function () {
         Route::post('login_check', 'UserController@loginCheck');
         // 登出
         Route::post('logout', 'UserController@logout');
+        // 获取签到日历
+        Route::get('get_sign_calendar', 'UserController@getSignCalendar');
+        // 签到
+        Route::post('mark_sign_calendar', 'UserController@markSignCalendar');
     });
 
     Route::prefix('article')->group(function () {
