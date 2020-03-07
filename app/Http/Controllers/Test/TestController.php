@@ -19,8 +19,11 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        (new UserService())->markSignCalendar(11);
-        (new UserService())->getSignCalendar(11);
+        broadcast(new \App\Events\Community\NotificationEvent());
+        // broadcast(new \App\Events\AEvent());
+
+        // (new UserService())->markSignCalendar(11);
+        // (new UserService())->getSignCalendar(11);
     }
 
     private function iTestStoragePath()

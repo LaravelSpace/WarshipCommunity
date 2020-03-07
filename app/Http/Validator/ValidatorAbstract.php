@@ -78,6 +78,7 @@ abstract class ValidatorAbstract
             && !empty($this->selfRule[$methodName])) {
             $this->validateRule = array_merge($this->commonRule, $this->selfRule[$methodName]);
         }
+        // 过滤不需要校验的字段
         if (!empty($this->filterField)) {
             foreach ($this->filterField as $itemField) {
                 if (array_key_exists($itemField, $this->validateRule)) {
@@ -85,7 +86,6 @@ abstract class ValidatorAbstract
                 }
             }
         }
-
         // 组合执行检测规则的提示文案
         $this->validateMessage = $this->commonMessage;
         if (!empty($this->selfMessage)
@@ -103,7 +103,7 @@ abstract class ValidatorAbstract
     {
         $validator = Validator::make($validateData, $this->validateRule, $this->validateMessage);
         // $validator = Validator::make($validateData, $this->validateRule, $this->validateMessage, $this->commonAttributes);
-        if ($validator->fails() >= 1) {
+        if ($validator->fails()) {
             $errors = $validator->errors()->messages();
             $resultMessage = '';
             foreach ($errors as $itemError) {

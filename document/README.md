@@ -10,13 +10,17 @@
 
 ## 更新记录
 
+#### 2020-03-07
+
+laravel-echo-server 服务搭建完成。
+
 #### 2020-03-05
 
 设计签到模块。
 
 #### 2020-03-02
 
-使用 laravel-echo 和 socket-io 实现聊天室。
+设计使用 laravel-echo-server 和 socket-io 实现实时应用。
 
 #### 2020-02-23 ~ 2020-03-01
 
