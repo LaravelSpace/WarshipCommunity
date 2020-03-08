@@ -28,9 +28,9 @@ Route::namespace('V1\Api')->group(function () {
         // 登出
         Route::post('logout', 'UserController@logout');
         // 获取签到日历
-        Route::get('get_sign_calendar', 'UserController@getSignCalendar');
+        Route::get('sign_calendar', 'UserController@getSignCalendar');
         // 签到
-        Route::post('mark_sign_calendar', 'UserController@markSignCalendar');
+        Route::post('sign_calendar', 'UserController@markSignCalendar');
     });
 
     Route::prefix('article')->group(function () {
@@ -86,3 +86,8 @@ Route::namespace('V1\Api')->group(function () {
         Route::post('bookmark/toggle', 'AssessController@bookmarkToggle');
     });
 });
+
+if (env('APP_DEBUG')) {
+    // 测试路由
+    Route::get('/test', 'Test\TestController@test');
+}

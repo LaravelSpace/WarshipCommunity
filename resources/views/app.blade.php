@@ -34,15 +34,7 @@
     <script src="/js/simplemde.min.js"></script>
     <script src="/js/cropper.min.js"></script>
     <script src="/js/lodash.min.js"></script>
-    <script src="/js/laravel_echo.js"></script>
-    <script>
-        console.debug(window.location.hostname);
-        console.log(Echo);
-        window.Echo.channel('test-event')
-            .listen('Community\\NotificationEvent', (e) => {
-                console.log(e);
-            });
-    </script>
+    {{--<script src="/js/laravel-echo.js"></script>--}}
     @yield('js')
     @include('common.global-constant')
     @include('common.global-function')

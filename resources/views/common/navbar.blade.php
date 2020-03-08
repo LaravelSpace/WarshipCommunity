@@ -45,7 +45,7 @@
                         @{{ name }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="/user/index">个人中心</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" @click="logout()">退出登录</a>
                     </div>

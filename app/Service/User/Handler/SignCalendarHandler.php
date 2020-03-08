@@ -10,9 +10,11 @@ class SignCalendarHandler
     public function getSignCalendar(int $userId)
     {
         $time = time();
+        // 获取本月字符串前缀
         $monthStr = date('Y-m', $time);
         // 获取本月有多少天
         $dayNum = date('t', $time);
+        $todayStr = gDateNow();
         $dbCalendarList = SignCalendarModel::query()
             ->select('sign_date')
             ->where('user_id', '=', $userId)
@@ -31,8 +33,11 @@ class SignCalendarHandler
             $dateStr = "{$monthStr}-{$iStr}";
             if (isset($signDateList[$dateStr])) {
                 continue;
+            } else if ($todayStr === $dateStr) {
+                $signDateList[$dateStr] = 2;
+            } else {
+                $signDateList[$dateStr] = 0;
             }
-            $signDateList[$dateStr] = 0;
         }
         ksort($signDateList);
 

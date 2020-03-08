@@ -14,7 +14,7 @@ class CreateCommentTable extends Migration
     public function up()
     {
         if (Schema::hasTable('comment')) {
-            echo "Table comment Is Already Exist! \n";
+            echo 'Table comment Is Already Exist!' . PHP_EOL;
             return;
         }
         // \DB::connection()->enableQueryLog();
@@ -43,7 +43,7 @@ class CreateCommentTable extends Migration
     public function down()
     {
         if (env('APP_ENV') !== 'local') {
-            echo "Not In Local Environment! \n";
+            echo 'Not In Local Environment!' . PHP_EOL;
             return;
         }
         Schema::dropIfExists('comment');

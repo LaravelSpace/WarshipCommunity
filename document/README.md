@@ -10,9 +10,13 @@
 
 ## 更新记录
 
+#### 2020-03-08
+
+签到功能前端页面。
+
 #### 2020-03-07
 
-laravel-echo-server 服务搭建完成。
+搭建 laravel-echo-server 服务。
 
 #### 2020-03-05
 
@@ -20,7 +24,7 @@ laravel-echo-server 服务搭建完成。
 
 #### 2020-03-02
 
-设计使用 laravel-echo-server 和 socket-io 实现实时应用。
+设计使用 laravel-echo-server 和 socket-io 实现的实时应用。
 
 #### 2020-02-23 ~ 2020-03-01
 

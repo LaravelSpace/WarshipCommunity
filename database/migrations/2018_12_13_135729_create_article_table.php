@@ -14,7 +14,7 @@ class CreateArticleTable extends Migration
     public function up()
     {
         if (Schema::hasTable('article')) {
-            echo "Table article Is Already Exist! \n";
+            echo 'Table article Is Already Exist!' . PHP_EOL;
             return;
         }
         // \DB::connection()->enableQueryLog();
@@ -44,7 +44,7 @@ class CreateArticleTable extends Migration
     public function down()
     {
         if (env('APP_ENV') !== 'local') {
-            echo "Not In Local Environment! \n";
+            echo 'Not In Local Environment!' . PHP_EOL;
             return;
         }
         Schema::dropIfExists('article');

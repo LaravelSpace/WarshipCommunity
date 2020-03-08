@@ -9,14 +9,14 @@ use Illuminate\Http\Request;
 
 class ArticleController extends WebControllerAbstract implements WebResourceInterface
 {
-    public function create(Request $request)
-    {
-        return view('community.article.create');
-    }
-
     public function index(Request $request)
     {
         return view('community.article.index');
+    }
+
+    public function create(Request $request)
+    {
+        return view('community.article.create');
     }
 
     public function show(Request $request)

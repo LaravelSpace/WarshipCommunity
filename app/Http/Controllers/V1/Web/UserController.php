@@ -17,4 +17,19 @@ class UserController extends WebControllerAbstract
     {
         return view('user.login');
     }
+
+    public function index(Request $request)
+    {
+        return view('user.index');
+    }
+
+    public function info(Request $request)
+    {
+        return view('user.info');
+    }
+
+    public function avatar(Request $request)
+    {
+        return view('user.avatar');
+    }
 }

@@ -38,6 +38,7 @@
             'register': '/api/user/register',
             'login': '/api/user/login',
             'login_check': '/api/user/login_check',
+            'sign_calendar':'/api/user/sign_calendar',
         },
         'article': '/api/article',
         'comment': '/api/comment',
@@ -45,6 +46,7 @@
         'image': '/api/image',
         'assess': '/api/assess',
     };
+
     const URI_CONFIG = {
         'create': '/create',
         'edit': '/edit',

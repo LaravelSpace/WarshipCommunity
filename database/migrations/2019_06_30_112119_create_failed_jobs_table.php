@@ -14,7 +14,7 @@ class CreateFailedJobsTable extends Migration
     public function up()
     {
         if (Schema::hasTable('failed_jobs')) {
-            echo "Table failed_jobs Is Already Exist! \n";
+            echo 'Table failed_jobs Is Already Exist!' . PHP_EOL;
             return;
         }
         // \DB::connection()->enableQueryLog();
@@ -37,7 +37,7 @@ class CreateFailedJobsTable extends Migration
     public function down()
     {
         if (env('APP_ENV') !== 'local') {
-            echo "Not In Local Environment! \n";
+            echo 'Not In Local Environment!' . PHP_EOL;
             return;
         }
         Schema::dropIfExists('failed_jobs');

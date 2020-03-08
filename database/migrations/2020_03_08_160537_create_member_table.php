@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionTable extends Migration
+class CreateMemberTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,18 @@ class CreatePermissionTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('permission')) {
-            echo 'Table permission Is Already Exist!' . PHP_EOL;
+        if (Schema::hasTable('member')) {
+            echo 'Table member Is Already Exist!' . PHP_EOL;
             return;
         }
         // \DB::connection()->enableQueryLog();
-        Schema::create('permission', function (Blueprint $table) {
-            $table->charset = 'utf8mb4';
+        Schema::create('member', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 64)->unique();
-            $table->string('describe',255)->nullable()->default('');
-            $table->dateTime('created_at')->useCurrent();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('point');
+            $table->unsignedInteger('level');
+            $table->unsignedInteger('coin');
+            $table->timestamps();
         });
         // \Log::debug(\DB::getQueryLog());
     }
@@ -39,6 +40,6 @@ class CreatePermissionTable extends Migration
             echo 'Not In Local Environment!' . PHP_EOL;
             return;
         }
-        Schema::dropIfExists('permission');
+        Schema::dropIfExists('member');
     }
 }

@@ -14,7 +14,7 @@ class CreateRolePermissionTable extends Migration
     public function up()
     {
         if (Schema::hasTable('role_permission')) {
-            echo "Table role_permission Is Already Exist! \n";
+            echo 'Table role_permission Is Already Exist!' . PHP_EOL;
             return;
         }
         // \DB::connection()->enableQueryLog();
@@ -36,7 +36,7 @@ class CreateRolePermissionTable extends Migration
     public function down()
     {
         if (env('APP_ENV') !== 'local') {
-            echo "Not In Local Environment! \n";
+            echo 'Not In Local Environment!' . PHP_EOL;
             return;
         }
         Schema::dropIfExists('role_permission');

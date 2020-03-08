@@ -1,34 +1,34 @@
 <script>
     function gIsEmpty(param) {
         if (param === undefined) {
-            console.debug("param is undefined");
+            // console.debug("param is undefined");
             return true;
         }
         if (param === null) {
-            console.debug("param is null");
+            // console.debug("param is null");
             return true;
         }
         if (typeof param === "string") {
             if (param === "") {
-                console.debug("param is empty string");
+                // console.debug("param is empty string");
                 return true;
             }
         }
         if (typeof param === "number") {
             if (isNaN(param)) {
-                console.debug("param is NaN");
+                // console.debug("param is NaN");
                 return true;
             }
         }
         if (typeof param === "object") {
             // object
             if (JSON.stringify(param) === "{}") {
-                console.debug("param is empty object");
+                // console.debug("param is empty object");
                 return true;
             }
             // array
             if (JSON.stringify(param) === "[]") {
-                console.debug("param is empty array");
+                // console.debug("param is empty array");
                 return true;
             }
         }
