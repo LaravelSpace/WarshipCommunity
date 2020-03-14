@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'request_validator'=>\App\Http\Middleware\RequestValidate::class,
         'request_throttle'=>\App\Http\Middleware\RequestThrottle::class,
         'request_log'=>\App\Http\Middleware\RequestLog::class,
+        'channel_Auth'=>\App\Http\Middleware\ChannelAuth::class,
     ];
 
     /**

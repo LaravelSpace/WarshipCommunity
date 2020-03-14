@@ -26,6 +26,8 @@
     {{--<script src="https://cdn.bootcss.com/cropperjs/1.5.6/cropper.min.js"></script>--}}
     {{--<script src="https://cdn.bootcss.com/lodash.js/4.17.15/lodash.min.js"></script>--}}
     {{--本地--}}
+    @include('common.global-constant')
+    @include('common.global-function')
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
@@ -34,10 +36,21 @@
     <script src="/js/simplemde.min.js"></script>
     <script src="/js/cropper.min.js"></script>
     <script src="/js/lodash.min.js"></script>
-    {{--<script src="/js/laravel-echo.js"></script>--}}
+    <script src="/js/laravel-echo.js"></script>
+    <script>
+        window.Echo.channel("broadcast-public")
+            .listen(".public-notification", (e) => {
+                console.log(".public-notification");
+                console.log(e);
+            });
+
+        window.Echo.private("broadcast-user.13")
+            .listen(".private-user", (e) => {
+                console.log(".private-user");
+                console.log(e);
+            })
+    </script>
     @yield('js')
-    @include('common.global-constant')
-    @include('common.global-function')
     @include('common.global-config')
 </head>
 <body style="min-width: 1600px">

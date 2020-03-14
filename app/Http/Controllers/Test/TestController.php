@@ -19,8 +19,7 @@ class TestController extends Controller
 
     public function test(Request $request)
     {
-        broadcast(new \App\Events\Community\NotificationEvent());
-        // broadcast(new \App\Events\AEvent());
+        // broadcast(new \App\Events\Community\NotificationEvent());
 
         // (new UserService())->markSignCalendar(11);
         // (new UserService())->getSignCalendar(11);

@@ -15,14 +15,20 @@ class NotificationEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $broadcastQueue = 'broadcast';
+
     public function __construct()
     {
-        // dd(2);
     }
 
     public function broadcastOn()
     {
-        return new Channel('test-event');
+        return new PrivateChannel('broadcast-user.1');
+    }
+
+    public function broadcastAs()
+    {
+        return 'private-user';
     }
 
     public function broadcastWith()

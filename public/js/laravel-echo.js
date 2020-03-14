@@ -5466,10 +5466,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__(25);
 
 
+var wscToken = gGetWscToken();
+if (gIsEmpty(wscToken)) {
+    wscToken = '';
+}
 window.io = __webpack_require__(26);
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo__["a" /* default */]({
     broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
+    host: window.location.hostname + ':6001',
+    auth: {
+        headers: {
+            'authorization': wscToken
+        }
+    }
 });
 
 /***/ }),
