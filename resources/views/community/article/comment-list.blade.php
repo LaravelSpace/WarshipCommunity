@@ -76,7 +76,6 @@
                 }
                 axios.get(uri).then(function (response) {
                     thisVue.commentList = response.data.data.list;
-                    console.debug(thisVue.commentList);
                     if (thisVue.commentList.length > 0) {
                         thisVue.vifCommentShow = true;
                     }

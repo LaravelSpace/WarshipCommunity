@@ -26,10 +26,14 @@ Route::namespace('V1\Web')->group(function () {
         Route::get('login', 'UserController@login');
         // 个人中心
         Route::get('index', 'UserController@index');
-        // 个人信息
+        // 我的信息
         Route::get('info', 'UserController@info');
-        // 个人头像
+        // 我的头像
         Route::get('avatar', 'UserController@avatar');
+        // 我的收藏
+        Route::get('bookmark', 'UserController@bookmark');
+        // 消息中心
+        Route::get('notification', 'UserController@notification');
     });
 
     Route::prefix('article')->group(function () {

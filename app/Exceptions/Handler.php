@@ -62,22 +62,22 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ServiceException) {
             // 业务异常，默认错误码 400
-            return $this->response(['trace' => $trace[0]], $status, 400, $exception->getMessage());
+            return $this->response([], $status, 400, $exception->getMessage());
         }
 
         if ($exception instanceof ValidationException) {
             // 效验异常，默认错误码 422
-            return $this->response(['trace' => $trace[0]], $status, 422, $exception->getMessage());
+            return $this->response([], $status, 422, $exception->getMessage());
         }
 
         if ($exception instanceof NotFoundHttpException) {
             // 访问不存在的路由，默认错误码 404
-            return $this->response(['trace' => $trace[0]], $status, 404, $exception->getMessage());
+            return $this->response([], $status, 404, $exception->getMessage());
         }
 
         if ($exception instanceof MethodNotAllowedHttpException) {
             // 访问路由不存在的方法(GET,POST...)，默认错误码 404
-            return $this->response(['trace' => $trace[0]], $status, 404, $exception->getMessage());
+            return $this->response([], $status, 404, $exception->getMessage());
         }
 
         if ($exception instanceof Exception) {

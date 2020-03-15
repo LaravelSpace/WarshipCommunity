@@ -43,19 +43,13 @@
                 console.log(".public-notification");
                 console.log(e);
             });
-
-        window.Echo.private("broadcast-user.13")
-            .listen(".private-user", (e) => {
-                console.log(".private-user");
-                console.log(e);
-            })
     </script>
     @yield('js')
     @include('common.global-config')
 </head>
 <body style="min-width: 1600px">
 <!-- head -->
-@include('common.navbar')
+@include('common.nav-bar')
 <div class="jumbotron text-center">
     <p class="lead">公告</p>
     <hr class="my-4">

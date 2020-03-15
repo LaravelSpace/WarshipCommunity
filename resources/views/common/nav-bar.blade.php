@@ -80,10 +80,6 @@
                             thisVue.name = response.data.data.name;
                             thisVue.avatar = response.data.data.avatar;
                         }
-                    }).catch(function (error) {
-                        if (error.response.status === 400) {
-                            console.debug(error.response.data.message);
-                        }
                     });
                 }
             },

@@ -1,50 +1,46 @@
 <?php
 
 use App\Service\User\Model\UserModel;
-
-;
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ArticleTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         $faker = \Faker\Factory::create();
-        $articleList = [];
-        $bodyList = [];
+
         $userIdList = UserModel::pluck('id');
 
-        $length = 50;
-        for ($i = 0; $i < $length; $i++) {
+        $articleList = [];
+        $bodyList = [];
+
+        for ($i = 0; $i < 50; $i++) {
             $key = Str::random(32);
             $userId = $faker->randomElement($userIdList);
             $articleList[] = [
-                'title'      => $faker->sentence(2),
+                'title'      => $faker->sentence(4),
                 'body'       => $key,
                 'user_id'    => $userId,
-                'examine'    => 2,
+                'examine'    => 1,
                 'blacklist'  => $faker->boolean,
                 'created_at' => $faker->dateTimeBetween('-1 years', 'now'),
-                'updated_at' => $faker->dateTimeBetween('-1 years', 'now')
+                'updated_at' => $faker->dateTimeBetween('-1 years', 'now'),
             ];
             $bodyList[] = [
                 'body'    => $faker->text,
                 'key'     => $key,
-                'user_id' => $userId
+                'user_id' => $userId,
             ];
         }
 
         $handler = new \App\Service\Community\Article\Handler\ArticleHandler();
         foreach ($bodyList as $item) {
-            $handler->saveToFile($item['user_id'], $item['key'], $item['body']);
+            $dirPath = config('constant.file_path.article_storage') . $item['user_id'] . '/';
+            $dirPath = storage_path($dirPath);
+            $fileName = $item['key'] . '.txt';
+            $handler->saveToFile($dirPath, $fileName, $item['body']);
         }
 
         DB::table('article')->insert($articleList);

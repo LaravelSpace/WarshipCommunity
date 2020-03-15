@@ -32,4 +32,14 @@ class UserController extends WebControllerAbstract
     {
         return view('user.avatar');
     }
+
+    public function notification(Request $request)
+    {
+        return view('user.notification');
+    }
+
+    public function bookmark(Request $request)
+    {
+        return view('user.bookmark');
+    }
 }

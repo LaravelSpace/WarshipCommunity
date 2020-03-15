@@ -24,7 +24,8 @@ class CreateMemberTable extends Migration
             $table->unsignedInteger('point');
             $table->unsignedInteger('level');
             $table->unsignedInteger('coin');
-            $table->timestamps();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->nullable();
         });
         // \Log::debug(\DB::getQueryLog());
     }
