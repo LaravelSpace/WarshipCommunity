@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{--<meta name="api-token" content="{{ Auth::check() ? 'Bearer' . Auth::user()->api_token : 'Bearer' }}">--}}
-    <title>@yield('title','WarshipCommunity')</title>
+    <title>@yield('title','KTCommunity')</title>
     {{--BootCDN--}}
     {{--<link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">--}}
     {{--<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">--}}
@@ -15,6 +15,7 @@
     <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/simplemde.min.css" rel="stylesheet">
     <link href="/css/cropper.min.css" rel="stylesheet">
+    <link href="/css/kt-common.css" rel="stylesheet">
     @yield('css')
     {{--BootCDN--}}
     {{--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>--}}
@@ -36,18 +37,18 @@
     <script src="/js/simplemde.min.js"></script>
     <script src="/js/cropper.min.js"></script>
     <script src="/js/lodash.min.js"></script>
-    <script src="/js/laravel-echo.js"></script>
-    <script>
-        window.Echo.channel("broadcast-public")
-            .listen(".public-notification", (e) => {
-                console.log(".public-notification");
-                console.log(e);
-            });
-    </script>
-    @yield('js')
+    {{--<script src="/js/laravel-echo.js"></script>--}}
+    {{--<script>--}}
+    {{--    window.Echo.channel("broadcast-public")--}}
+    {{--        .listen(".public-notification", (e) => {--}}
+    {{--            console.log(".public-notification");--}}
+    {{--            console.log(e);--}}
+    {{--        });--}}
+    {{--</script>--}}
     @include('common.global-config')
+    @yield('js')
 </head>
-<body style="min-width: 1600px">
+<body class="kt-container">
 <!-- head -->
 @include('common.nav-bar')
 <div class="jumbotron text-center">
@@ -61,3 +62,5 @@
 {{--@include('community.common.live2d')--}}
 </body>
 </html>
+
+

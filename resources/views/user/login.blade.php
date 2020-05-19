@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('body')
-    <div id="main-body" class="container" style="min-width: 1600px">
+    <div id="main-body" class="container">
         <div class="row">
             <div id="vue-login" class="col-md-4 offset-md-4">
                 <vue-login></vue-login>

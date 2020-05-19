@@ -7,10 +7,9 @@ trait FileStorageTrait
 {
     /**
      * 将内容保存到文件
-     *
-     * @param string $dirPath  [存储目录]
+     * @param string $dirPath [存储目录]
      * @param string $fileName [文件名]
-     * @param string $body     [文件内容]
+     * @param string $body [文件内容]
      * @return bool|int
      * @throws \App\Exceptions\ServiceException
      */
@@ -35,8 +34,7 @@ trait FileStorageTrait
 
     /**
      * 从文件中读取内容
-     *
-     * @param string $dirPath  [存储目录]
+     * @param string $dirPath [存储目录]
      * @param string $fileName [文件名]
      * @return bool|string
      * @throws \App\Exceptions\ServiceException

@@ -1,7 +1,7 @@
 @extends('app')
 
 @section('body')
-    <div id="main-body" class="container" style="min-width: 1600px">
+    <div id="main-body" class="container">
         <div class="row">
             <div id="article-list" class="col-md-9">
                 <article-list></article-list>
@@ -16,4 +16,5 @@
         </div>
     </div>
     @include('community.article.article-list')
+    @include('community.article.vue-paginate')
 @endsection

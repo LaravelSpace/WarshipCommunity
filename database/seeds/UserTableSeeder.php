@@ -18,12 +18,12 @@ class UserTableSeeder extends Seeder
         $userList = [];
         $avatarList = [
             'default_avatar.jpg',
-            'lex.jpg',
+            'lex.png',
             'mao.jpg',
             'mao_remake.jpg',
             'ougen.jpg',
             'quincy.jpg',
-            'vv.jpg',
+            'vv.png',
         ];
         for ($i = 0; $i < 10; $i++) {
             $tempName = 'xhy_' . ($i + 1);

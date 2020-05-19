@@ -9,8 +9,7 @@ class ArticleService
 {
     /**
      * 获取帖子列表
-     *
-     * @param int $page    [当前页数]
+     * @param int $page [当前页数]
      * @param int $perPage [每页数量]
      * @return array [帖子列表]
      */
@@ -21,10 +20,9 @@ class ArticleService
 
     /**
      * 创建帖子
-     *
-     * @param int    $userId       [用户 id]
+     * @param int $userId [用户 id]
      * @param string $articleTitle [帖子标题]
-     * @param string $articleBody  [帖子内容]
+     * @param string $articleBody [帖子内容]
      * @return \Illuminate\Database\Eloquent\Model [帖子实例]
      * @throws \App\Exceptions\ServiceException
      */
@@ -35,8 +33,7 @@ class ArticleService
 
     /**
      * 获取帖子
-     *
-     * @param int  $articleId   [帖子 id]
+     * @param int $articleId [帖子 id]
      * @param bool $useMarkdown [是否使用 MarkDown 格式解析]
      * @return array [帖子实例]
      * @throws \App\Exceptions\ServiceException
@@ -48,10 +45,9 @@ class ArticleService
 
     /**
      * 更新帖子
-     *
-     * @param int    $articleId    [帖子 id]
+     * @param int $articleId [帖子 id]
      * @param string $articleTitle [帖子标题]
-     * @param string $articleBody  [帖子内容]
+     * @param string $articleBody [帖子内容]
      * @return int [帖子 id]
      */
     public function updateModel(int $articleId, string $articleTitle, string $articleBody)
@@ -61,7 +57,6 @@ class ArticleService
 
     /**
      * 删除帖子
-     *
      * @param int $articleId [帖子 id]
      * @return int [帖子 id]
      */
